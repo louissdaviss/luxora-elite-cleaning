@@ -52,9 +52,6 @@
         .gold-bg-gradient {
             background: linear-gradient(135deg, #D4AF37 0%, #C5A059 50%, #9A7B38 100%);
         }
-        .gold-border {
-            border-image: linear-gradient(to bottom right, #D4AF37, #E5E7EB) 1;
-        }
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-[#C5A059] selection:text-white">
@@ -110,7 +107,6 @@
     </header>
 
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
-        <!-- Background modern living room clean image with luxury overlay -->
         <div class="absolute inset-0 z-0 opacity-15">
             <img src="https://placehold.co/1920x1080/FFFFFF/CCCCCC?text=Luxora+Elite+Estate" alt="Luxury Interior" class="w-full h-full object-cover">
         </div>
@@ -326,34 +322,8 @@
             </div>
 
             <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl">
-  <form action="https://formspree.io/f/xvkokkod" method="POST">
-  <!-- Contact Fields -->
-  <input type="text" name="name" placeholder="Full Name" required>
-  <input type="email" name="email" placeholder="Email Address" required>
-  <input type="tel" name="phone" placeholder="Phone Number">
-  <textarea name="message" placeholder="Tell us about your property..." required></textarea>
-
-  <!-- Service Tiers -->
-  <div>
-    <label>1. Select Service Tier</label>
-    <!-- radio buttons here -->
-  </div>
-
-  <!-- Square Footage -->
-  <div>
-    <label>2. Property Square Footage</label>
-    <select name="sqft">...</select>
-  </div>
-
-  <!-- Frequency -->
-  <div>
-    <label>3. Service Frequency</label>
-    <!-- radio buttons here -->
-  </div>
-
-  <!-- Submit Button -->
-  <button type="submit">Submit Request</button>
-</form>
+                <div id="estimate-form" class="space-y-8">
+                    <!-- Service Tiers -->
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-[#C5A059] mb-3 font-semibold">1. Select Service Tier</label>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -418,7 +388,7 @@
                             Lock In Estimate
                         </a>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </section>
@@ -466,36 +436,33 @@
 
                 <!-- Form Card -->
                 <div class="bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl">
-                   <form action="https://formspree.io/f/xvkokkod" method="POST" class="space-y-6">
+                    <form action="https://formspree.io/f/xvkokkod" method="POST" class="space-y-6">
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Full Name</label>
-                            <input type="text" required placeholder="Lord/Lady or Mr./Ms. Surname" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
+                            <input type="text" name="name" required placeholder="Lord/Lady or Mr./Ms. Surname" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Phone Number</label>
-                                <input type="tel" required placeholder="(210) 000-0000" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
+                                <input type="tel" name="phone" required placeholder="(210) 000-0000" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
                             </div>
                             <div>
                                 <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Email Address</label>
-                                <input type="email" required placeholder="name@domain.com" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
+                                <input type="email" name="email" required placeholder="name@domain.com" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
                             </div>
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Property Location / Neighborhood</label>
-                            <input type="text" required placeholder="e.g., The Dominion, San Antonio, TX" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
+                            <input type="text" name="location" required placeholder="e.g., The Dominion, San Antonio, TX" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
                         </div>
                         <div>
                             <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Specific Requirements or Notes</label>
-                            <textarea rows="4" placeholder="Detail any fine marble, artwork, or scheduling preferences..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]"></textarea>
+                            <textarea name="message" rows="4" placeholder="Detail any fine marble, artwork, or scheduling preferences..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]"></textarea>
                         </div>
                         <button type="submit" class="w-full py-4 rounded-full text-xs font-bold uppercase tracking-widest gold-bg-gradient text-white hover:opacity-90 transition-opacity shadow-xl shadow-[#C5A059]/20">
                             Submit Consultation Request
                         </button>
                     </form>
-                    <div id="success-msg" class="hidden mt-6 p-6 rounded-2xl bg-slate-900 border border-[#C5A059] text-center text-[#C5A059] text-sm font-medium">
-                        Thank you. Your consultation request has been received. Our Concierge Director will reach out within 2 hours.
-                    </div>
                 </div>
             </div>
         </div>
@@ -554,15 +521,6 @@
 
         estimateForm.addEventListener('change', calculateEstimate);
         calculateEstimate();
-
-        // Booking Form Submission Handler
-        function handleBooking(e) {
-            e.preventDefault();
-            const form = document.getElementById('booking-form');
-            const successMsg = document.getElementById('success-msg');
-            form.style.display = 'none';
-            successMsg.classList.remove('hidden');
-        }
     </script>
 </body>
 </html>
