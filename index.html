@@ -326,11 +326,32 @@
             </div>
 
             <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl">
-       <form action="https://formspree.io/f/xvkokkod" method="POST">
+  <form action="https://formspree.io/f/xvkokkod" method="POST">
+  <!-- Contact Fields -->
   <input type="text" name="name" placeholder="Full Name" required>
   <input type="email" name="email" placeholder="Email Address" required>
   <input type="tel" name="phone" placeholder="Phone Number">
   <textarea name="message" placeholder="Tell us about your property..." required></textarea>
+
+  <!-- Service Tiers -->
+  <div>
+    <label>1. Select Service Tier</label>
+    <!-- radio buttons here -->
+  </div>
+
+  <!-- Square Footage -->
+  <div>
+    <label>2. Property Square Footage</label>
+    <select name="sqft">...</select>
+  </div>
+
+  <!-- Frequency -->
+  <div>
+    <label>3. Service Frequency</label>
+    <!-- radio buttons here -->
+  </div>
+
+  <!-- Submit Button -->
   <button type="submit">Submit Request</button>
 </form>
                     <div>
