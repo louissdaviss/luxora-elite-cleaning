@@ -326,8 +326,21 @@
             </div>
 
             <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl">
-                <form action="https://formspree.io/f/xvkokkod" method="POST">
-                    <!-- Service Type -->
+                <form
+  action="https://formspree.io/f/xvkokkod"
+  method="POST"
+>
+  <label>
+    Your email:
+    <input type="email" name="email">
+  </label>
+  <label>
+    Your message:
+    <textarea name="message"></textarea>
+  </label>
+  <!-- your other form fields go here -->
+  <button type="submit">Send</button>
+</form>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-[#C5A059] mb-3 font-semibold">1. Select Service Tier</label>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
