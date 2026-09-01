@@ -326,20 +326,12 @@
             </div>
 
             <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl">
-                <form
-  action="https://formspree.io/f/xvkokkod"
-  method="POST"
->
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
+       <form action="https://formspree.io/f/xvkokkod" method="POST">
+  <input type="text" name="name" placeholder="Full Name" required>
+  <input type="email" name="email" placeholder="Email Address" required>
+  <input type="tel" name="phone" placeholder="Phone Number">
+  <textarea name="message" placeholder="Tell us about your property..." required></textarea>
+  <button type="submit">Submit Request</button>
 </form>
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-[#C5A059] mb-3 font-semibold">1. Select Service Tier</label>
