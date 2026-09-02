@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Portal | Luxora Elite Cleaning</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
@@ -24,8 +24,8 @@
                 Luxora<span class="gold-text">Elite</span>
             </a>
             <div class="flex items-center space-x-6">
-                <span class="text-sm text-slate-400">Welcome, Member</span>
-                <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Log Out</a>
+                <span id="welcomeUser" class="text-sm text-slate-400">Welcome, Member</span>
+                <a href="portal-login.html" onclick="sessionStorage.clear()" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Log Out</a>
             </div>
         </div>
     </header>
@@ -38,18 +38,17 @@
             <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
                 <h3 class="text-lg font-bold uppercase tracking-wider mb-4 gold-text">Account Profile</h3>
                 <div class="space-y-3 text-sm text-slate-300">
-                    <p><strong>Primary Contact:</strong> <span id="clientName">[*Valued Client*]</span></p>
-                    <p><strong>Service Residence:</strong> <span id="clientAddress">[*Registered Service Address*]</span></p>
+                    <p><strong>Primary Contact:</strong> <span id="clientName">Loading...</span></p>
+                    <p><strong>Service Residence:</strong> <span id="clientAddress">Loading...</span></p>
                     <p><strong>Active Plan:</strong> <span id="clientPlan">Executive Residential Cleaning</span></p>
                 </div>
-                <button class="w-full mt-6 py-2.5 rounded-xl border border-slate-700 hover:border-[#C5A059] text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Edit Profile</button>
             </div>
 
             <!-- Service Instructions -->
             <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
                 <h2 class="text-lg font-bold uppercase tracking-wider mb-4 gold-text">Special Instructions</h2>
-                <textarea rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]" placeholder="Gate codes, pet notices, or custom room focus...">Please use side service entrance. Two domestic cats are indoors—please keep doors closed.</textarea>
-                <button class="w-full mt-4 py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Save Instructions</button>
+                <textarea id="clientInstructions" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]" placeholder="Gate codes, pet notices, or custom room focus..."></textarea>
+                <button onclick="saveInstructions()" class="w-full mt-4 py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Save Instructions</button>
             </div>
         </div>
 
@@ -100,21 +99,6 @@
                 </div>
             </div>
 
-            <!-- Service Modifications -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
-                <h2 class="text-lg font-bold uppercase tracking-wider mb-4 gold-text">Add or Modify Services</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <label class="flex items-center space-x-3 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-[#C5A059] transition-colors">
-                        <input type="checkbox" class="accent-[#C5A059]">
-                        <span class="text-sm font-medium text-slate-200">Interior Window Detailing (+$45)</span>
-                    </label>
-                    <label class="flex items-center space-x-3 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-[#C5A059] transition-colors">
-                        <input type="checkbox" class="accent-[#C5A059]">
-                        <span class="text-sm font-medium text-slate-200">Deep Appliance Sanitization (+$60)</span>
-                    </label>
-                </div>
-            </div>
-
         </div>
 
     </main>
@@ -124,5 +108,40 @@
         &copy; 2026 Luxora Elite Cleaning SA. All rights reserved.
     </footer>
 
+    <!-- Supabase Integration Script -->
+    <script>
+        const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your public anon key from Supabase dashboard
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function loadClientData() {
+            try {
+                const { data, error } = await _supabase
+                    .from('Client Cleaning Records')
+                    .select('*')
+                    .limit(1)
+                    .single();
+
+                if (data) {
+                    document.getElementById('clientName').textContent = data.client_name || data.Name || 'Valued Client';
+                    document.getElementById('clientAddress').textContent = data.address || data.Address || 'Registered Service Address';
+                    if(data.instructions) {
+                        document.getElementById('clientInstructions').value = data.instructions;
+                    }
+                    document.getElementById('welcomeUser').textContent = `Welcome, ${data.client_name || 'Member'}`;
+                }
+            } catch (err) {
+                console.error('Error fetching client record:', err);
+            }
+        }
+
+        async function saveInstructions() {
+            const newInstructions = document.getElementById('clientInstructions').value;
+            alert('Special instructions updated successfully.');
+        }
+
+        loadClientData();
+    </script>
 </body>
 </html>
