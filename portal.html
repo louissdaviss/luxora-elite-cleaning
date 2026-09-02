@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+    <script>
+        if (sessionStorage.getItem('lxe_auth_token') !== 'active') {
+            window.location.href = 'portal-login.html';
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Portal | Luxora Elite Cleaning</title>
@@ -25,7 +30,7 @@
             </a>
             <div class="flex items-center space-x-6">
                 <span id="welcomeUser" class="text-sm text-slate-400">Welcome, Member</span>
-                <a href="portal-login.html" onclick="sessionStorage.clear()" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Log Out</a>
+                <a href="portal-login.html" onclick="sessionStorage.removeItem('lxe_auth_token')" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Log Out</a>
             </div>
         </div>
     </header>
@@ -111,13 +116,16 @@
     <!-- Supabase Integration Script -->
     <script>
         const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your public anon key from Supabase dashboard
-        const { createClient } = supabase;
-        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllYWJ3bnlzamhobWpvaW1wcmJiIiwiccm9sZSI6ImFub24iLCJpàWF0IjoxNzE1MjMzNzA5LCJleHAiOjIwMzA4MDk3MDl9...'; // Ensure your correct public key is here
+        
+        // Safety check to ensure token is evaluated immediately
+        if (!sessionStorage.getItem('lxe_auth_token') || sessionStorage.getItem('lxe_auth_token') !== 'active') {
+            window.location.replace('portal-login.html');
+        }
 
         async function loadClientData() {
             try {
-                const { data, error } = await _supabase
+                const { data, error } = await supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
                     .from('Client Cleaning Records')
                     .select('*')
                     .limit(1)
@@ -136,8 +144,7 @@
             }
         }
 
-        async function saveInstructions() {
-            const newInstructions = document.getElementById('clientInstructions').value;
+        function saveInstructions() {
             alert('Special instructions updated successfully.');
         }
 
