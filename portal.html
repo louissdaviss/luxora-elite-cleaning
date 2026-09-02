@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+    <script>
+    if (sessionStorage.getItem('lxe_auth_token') !== 'active') {
+        window.location.href = 'portal-login.html';
+    }
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Portal | Luxora Elite Cleaning</title>
