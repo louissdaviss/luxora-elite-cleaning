@@ -5,7 +5,7 @@
     if (sessionStorage.getItem('lxe_auth_token') !== 'active') {
         window.location.href = 'portal-login.html';
     }
-</script>
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Portal | Luxora Elite Cleaning</title>
@@ -38,14 +38,15 @@
     <main class="max-w-7xl mx-auto px-6 py-12 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         <!-- Left Column: Profile & Account Settings -->
-        <div class="account-card">
-    <h3>ACCOUNT PROFILE</h3>
-    <p><strong>Primary Contact:</strong> <span id="clientName">[*Valued Client*]</span></p>
-    <p><strong>Service Residence:</strong> <span id="clientAddress">[*Registered Service Address*]</span></p>
-    <p><strong>Active Plan:</strong> <span id="clientPlan">Executive Residential Cleaning</span></p>
-</div>
-                    <button class="w-full mt-2 py-2.5 rounded-xl border border-slate-700 hover:border-[#C5A059] text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Edit Profile</button>
+        <div class="space-y-8">
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+                <h3 class="text-lg font-bold uppercase tracking-wider mb-4 gold-text">Account Profile</h3>
+                <div class="space-y-3 text-sm text-slate-300">
+                    <p><strong>Primary Contact:</strong> <span id="clientName">[*Valued Client*]</span></p>
+                    <p><strong>Service Residence:</strong> <span id="clientAddress">[*Registered Service Address*]</span></p>
+                    <p><strong>Active Plan:</strong> <span id="clientPlan">Executive Residential Cleaning</span></p>
                 </div>
+                <button class="w-full mt-6 py-2.5 rounded-xl border border-slate-700 hover:border-[#C5A059] text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Edit Profile</button>
             </div>
 
             <!-- Service Instructions -->
