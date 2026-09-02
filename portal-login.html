@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    if (sessionStorage.getItem('lxe_auth_token') !== 'active') {
-        window.location.href = 'portal-login.html';
-    }
-</script>
     <meta charset="UTF-8">
     <title>Client Portal Login | Luxora Elite Cleaning SA</title>
     <style>
@@ -30,8 +25,7 @@
     </div>
 
     <script>
-        // SHA-256 Hash of your client password (Change 'YourSecurePasswordHere' to your desired password)
-        // This default hash corresponds to the password: "LuxoraClient2026"
+        // SHA-256 Hash corresponding to the password: "LuxoraClient2026"
         const CORRECT_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 
         async function sha256(message) {
