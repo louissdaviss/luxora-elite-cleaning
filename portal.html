@@ -38,22 +38,12 @@
     <main class="max-w-7xl mx-auto px-6 py-12 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         <!-- Left Column: Profile & Account Settings -->
-        <div class="space-y-8">
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
-                <h2 class="text-lg font-bold uppercase tracking-wider mb-4 gold-text">Account Profile</h2>
-                <div class="space-y-4 text-sm">
-                    <div>
-                        <label class="text-slate-400 block text-xs uppercase">Primary Contact</label>
-                        <p class="font-medium text-white">Louis H. Davis</p>
-                    </div>
-                    <div>
-                        <label class="text-slate-400 block text-xs uppercase">Service Residence</label>
-                        <p class="font-medium text-white">Oasis at Stone Oak, Unit 3001</p>
-                    </div>
-                    <div>
-                        <label class="text-slate-400 block text-xs uppercase">Active Plan</label>
-                        <p class="font-medium text-white">Executive Residential Cleaning ($180/visit)</p>
-                    </div>
+        <div class="account-card">
+    <h3>ACCOUNT PROFILE</h3>
+    <p><strong>Primary Contact:</strong> <span id="clientName">[Loading...]</span></p>
+    <p><strong>Service Residence:</strong> <span id="clientAddress">[Loading...]</span></p>
+    <p><strong>Active Plan:</strong> <span id="clientPlan">Executive Residential Cleaning</span></p>
+</div>
                     <button class="w-full mt-2 py-2.5 rounded-xl border border-slate-700 hover:border-[#C5A059] text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Edit Profile</button>
                 </div>
             </div>
