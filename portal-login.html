@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Client Portal Login | Luxora Elite Cleaning SA</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
         .gold-text { color: #C5A059; }
@@ -12,40 +13,59 @@
 </head>
 <body class="min-h-screen flex items-center justify-center px-4">
     <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
-        <h2 class="text-2xl font-bold uppercase tracking-wider gold-text mb-2">Client Portal</h2>
-        <p class="text-xs text-slate-400 mb-6">Enter your authorized password to access estate records.</p>
+        <h2 id="formTitle" class="text-2xl font-bold uppercase tracking-wider gold-text mb-2">Client Portal</h2>
+        <p id="formSub" class="text-xs text-slate-400 mb-6">Sign in to access your estate records.</p>
         
-        <form id="loginForm" class="space-y-4">
-            <input type="password" id="passwordInput" placeholder="Enter password" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
-            <div id="errorMsg" class="text-red-400 text-xs hidden">Incorrect password. Please try again.</div>
-            <button type="submit" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Authenticate</button>
+        <form id="authForm" class="space-y-4">
+            <input type="email" id="emailInput" placeholder="Email Address" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
+            <input type="password" id="passwordInput" placeholder="Password" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
+            <div id="errorMsg" class="text-red-400 text-xs hidden"></div>
+            <button type="submit" id="submitBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Sign In</button>
         </form>
+
+        <button onclick="toggleMode()" id="toggleBtn" class="mt-4 text-xs text-slate-400 hover:text-[#C5A059] transition-colors bg-transparent border-none cursor-pointer">Need an account? Register here</button>
     </div>
 
     <script>
-        // Clear any old active session tokens when hitting the login screen
-        sessionStorage.removeItem('lxe_auth_token');
+        const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your public anon key
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // SHA-256 Hash for "LuxoraClient2026"
-        const CORRECT_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+        let isRegistering = false;
 
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        function toggleMode() {
+            isRegistering = !isRegistering;
+            document.getElementById('formTitle').textContent = isRegistering ? 'Create Account' : 'Client Portal';
+            document.getElementById('formSub').textContent = isRegistering ? 'Register your email to manage cleaning services.' : 'Sign in to access your estate records.';
+            document.getElementById('submitBtn').textContent = isRegistering ? 'Register' : 'Sign In';
+            document.getElementById('toggleBtn').textContent = isRegistering ? 'Already have an account? Sign in' : 'Need an account? Register here';
+            document.getElementById('errorMsg').classList.add('hidden');
         }
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const inputVal = document.getElementById('passwordInput').value;
-            const hashedInput = await sha256(inputVal);
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.classList.add('hidden');
 
-            if (hashedInput === CORRECT_HASH) {
-                sessionStorage.setItem('lxe_auth_token', 'active');
-                window.location.href = 'portal.html';
+            if (isRegistering) {
+                const { data, error } = await _supabase.auth.signUp({ email, password });
+                if (error) {
+                    errorDiv.textContent = error.message;
+                    errorDiv.classList.remove('hidden');
+                } else {
+                    alert('Account created successfully! You can now sign in.');
+                    toggleMode();
+                }
             } else {
-                document.getElementById('errorMsg').classList.remove('hidden');
+                const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    errorDiv.textContent = error.message;
+                    errorDiv.classList.remove('hidden');
+                } else {
+                    window.location.href = 'portal.html';
+                }
             }
         });
     </script>
