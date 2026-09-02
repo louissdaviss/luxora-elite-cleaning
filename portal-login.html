@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    if (sessionStorage.getItem('lxe_auth_token') !== 'active') {
+        window.location.href = 'portal-login.html';
+    }
+</script>
+    <meta charset="UTF-8">
+    <title>Client Portal Login | Luxora Elite Cleaning SA</title>
+    <style>
+        body { font-family: sans-serif; background: #0b0f19; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: #1e293b; padding: 2.5rem; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); width: 320px; text-align: center; border: 1px solid #334155; }
+        h2 { color: #c5a059; margin-bottom: 0.5rem; }
+        input { width: 100%; padding: 0.75rem; margin: 1rem 0; border: 1px solid #475569; background: #0f172a; color: #fff; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 0.75rem; background: #c5a059; color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+        button:hover { background: #d4af37; }
+        .error { color: #f87171; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>Client Portal</h2>
+        <p style="font-size: 0.85rem; color: #94a3b8;">Enter your password to access estate records.</p>
+        <form id="loginForm">
+            <input type="password" id="passwordInput" placeholder="Password" required>
+            <div id="errorMsg" class="error">Incorrect password. Please try again.</div>
+            <button type="submit">Authenticate</button>
+        </form>
+    </div>
+
+    <script>
+        // SHA-256 Hash of your client password (Change 'YourSecurePasswordHere' to your desired password)
+        // This default hash corresponds to the password: "LuxoraClient2026"
+        const CORRECT_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const inputVal = document.getElementById('passwordInput').value;
+            const hashedInput = await sha256(inputVal);
+
+            if (hashedInput === CORRECT_HASH) {
+                sessionStorage.setItem('lxe_auth_token', 'active');
+                window.location.href = 'portal.html';
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
