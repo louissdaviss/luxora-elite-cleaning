@@ -2,257 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Concierge Portal | Luxora Elite Cleaning SA</title>
+    <title>Client Portal Login | Luxora Elite Cleaning SA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
         .gold-text { color: #C5A059; }
         .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-        .gold-border { border-color: #C5A059; }
-        
-        .slot-btn {
-            background-color: #020617;
-            border: 1px solid #1e293b;
-            color: #94a3b8;
-            padding: 0.6rem;
-            border-radius: 0.75rem;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-        }
-        .slot-btn:hover:not(:disabled) {
-            border-color: #C5A059;
-            color: #F8FAFC;
-        }
-        .slot-btn.selected {
-            background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%);
-            color: #000000;
-            font-weight: 700;
-            border-color: #C5A059;
-        }
-        .slot-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            text-decoration: line-through;
-        }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
-
-    <!-- Top Navigation Bar -->
-    <header class="max-w-6xl mx-auto flex justify-between items-center pb-6 border-b border-slate-800 mb-8">
-        <div>
-            <h1 class="text-xl font-bold uppercase tracking-wider gold-text">Luxora Concierge Portal</h1>
-            <p id="userEmailDisplay" class="text-xs text-slate-400 mt-1">Loading session...</p>
-        </div>
-        <button id="logoutBtn" class="text-xs text-slate-400 hover:text-red-400 transition-colors border border-slate-800 px-4 py-2 rounded-xl bg-slate-900">
-            Sign Out
-        </button>
-    </header>
-
-    <!-- Main Scheduler Grid -->
-    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+<body class="min-h-screen flex items-center justify-center px-4">
+    <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
+        <h2 id="formTitle" class="text-2xl font-bold uppercase tracking-wider gold-text mb-2">Client Portal</h2>
+        <p id="formSub" class="text-xs text-slate-400 mb-6">Sign in to access your estate records.</p>
         
-        <!-- Booking Panel -->
-        <section class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-            <h2 class="text-lg font-bold uppercase tracking-wider gold-text mb-1">Book Concierge Service</h2>
-            <p class="text-xs text-slate-400 mb-6">Select a service, date, and available private slot.</p>
+        <form id="authForm" class="space-y-4">
+            <input type="email" id="emailInput" placeholder="Email Address" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
+            <input type="password" id="passwordInput" placeholder="Password" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
+            <div id="errorMsg" class="text-red-400 text-xs hidden"></div>
+            <button type="submit" id="submitBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Sign In</button>
+        </form>
 
-            <form id="bookingForm" class="space-y-5">
-                <div>
-                    <label for="serviceSelect" class="block text-xs text-slate-400 mb-2">Service Type</label>
-                    <select id="serviceSelect" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
-                        <option value="Executive Estate Detail">Executive Estate Detail</option>
-                        <option value="Deep Detail Concierge">Deep Detail Concierge</option>
-                        <option value="Property Management Inspection">Property Management Inspection</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="bookingDate" class="block text-xs text-slate-400 mb-2">Appointment Date</label>
-                    <input type="date" id="bookingDate" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
-                </div>
-
-                <div>
-                    <label class="block text-xs text-slate-400 mb-2">Available Time Slots</label>
-                    <div id="slotsContainer" class="grid grid-cols-2 gap-3">
-                        <!-- Rendered by JS -->
-                    </div>
-                </div>
-
-                <div id="statusMsg" class="text-xs hidden"></div>
-
-                <button type="submit" id="submitBookingBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">
-                    Confirm Concierge Reservation
-                </button>
-            </form>
-        </section>
-
-        <!-- Scheduled Appointments Panel -->
-        <section class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-            <h2 class="text-lg font-bold uppercase tracking-wider gold-text mb-1">Your Estate Appointments</h2>
-            <p class="text-xs text-slate-400 mb-6">Manage and view your upcoming concierge bookings.</p>
-
-            <div id="appointmentsList" class="space-y-4">
-                <!-- Rendered by JS -->
-            </div>
-        </section>
-
-    </main>
+        <button onclick="toggleMode()" id="toggleBtn" class="mt-4 text-xs text-slate-400 hover:text-[#C5A059] transition-colors bg-transparent border-none cursor-pointer">Need an account? Register here</button>
+    </div>
 
     <script>
-        // Supabase Initialization
         const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const availableSlots = ["09:00 AM", "11:00 AM", "02:00 PM", "04:00 PM"];
-        let selectedTime = null;
-        let currentUser = null;
+        let isRegistering = false;
 
-        const bookingDate = document.getElementById('bookingDate');
-        const slotsContainer = document.getElementById('slotsContainer');
-        const appointmentsList = document.getElementById('appointmentsList');
-        const bookingForm = document.getElementById('bookingForm');
-        const statusMsg = document.getElementById('statusMsg');
-
-        // Set default minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        bookingDate.min = today;
-        bookingDate.value = today;
-
-        // Session Check & User Guard
-        async function initPortal() {
-            const { data: { user }, error } = await _supabase.auth.getUser();
-            if (error || !user) {
-                window.location.href = 'portal-login.html';
-                return;
-            }
-            currentUser = user;
-            document.getElementById('userEmailDisplay').textContent = `Logged in as ${user.email}`;
-
-            await renderSlots();
-            await renderAppointments();
+        function toggleMode() {
+            isRegistering = !isRegistering;
+            document.getElementById('formTitle').textContent = isRegistering ? 'Create Account' : 'Client Portal';
+            document.getElementById('formSub').textContent = isRegistering ? 'Register your email to manage cleaning services.' : 'Sign in to access your estate records.';
+            document.getElementById('submitBtn').textContent = isRegistering ? 'Register' : 'Sign In';
+            document.getElementById('toggleBtn').textContent = isRegistering ? 'Already have an account? Sign in' : 'Need an account? Register here';
+            document.getElementById('errorMsg').classList.add('hidden');
         }
 
-        // Fetch booked slots across all clients for a specific date
-        async function fetchBookedSlots(date) {
-            const { data, error } = await _supabase
-                .from('appointments')
-                .select('booking_time')
-                .eq('booking_date', date);
-
-            if (error) {
-                console.error('Error checking available slots:', error);
-                return [];
-            }
-            return data.map(item => item.booking_time);
-        }
-
-        // Render interactive slot selector
-        async function renderSlots() {
-            slotsContainer.innerHTML = '<p class="text-xs text-slate-500 col-span-2">Checking availability...</p>';
-            selectedTime = null;
-
-            const chosenDate = bookingDate.value;
-            const bookedTimes = await fetchBookedSlots(chosenDate);
-
-            slotsContainer.innerHTML = '';
-            availableSlots.forEach(time => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'slot-btn';
-                btn.textContent = time;
-
-                if (bookedTimes.includes(time)) {
-                    btn.disabled = true;
-                } else {
-                    btn.addEventListener('click', () => {
-                        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
-                        btn.classList.add('selected');
-                        selectedTime = time;
-                    });
-                }
-                slotsContainer.appendChild(btn);
-            });
-        }
-
-        // Render logged-in user's appointments
-        async function renderAppointments() {
-            appointmentsList.innerHTML = '<p class="text-xs text-slate-500">Loading appointments...</p>';
-
-            const { data: appointments, error } = await _supabase
-                .from('appointments')
-                .select('*')
-                .order('booking_date', { ascending: true });
-
-            if (error) {
-                appointmentsList.innerHTML = '<p class="text-xs text-red-400">Error loading appointments.</p>';
-                return;
-            }
-
-            if (!appointments || appointments.length === 0) {
-                appointmentsList.innerHTML = '<p class="text-xs text-slate-500">No scheduled appointments found.</p>';
-                return;
-            }
-
-            appointmentsList.innerHTML = '';
-            appointments.forEach(app => {
-                const card = document.createElement('div');
-                card.className = 'bg-slate-950 border border-slate-800 border-l-4 gold-border rounded-xl p-4';
-                card.innerHTML = `
-                    <h3 class="text-sm font-semibold text-slate-200 mb-1">${app.service}</h3>
-                    <p class="text-xs text-slate-400">📅 ${app.booking_date} at ${app.booking_time}</p>
-                `;
-                appointmentsList.appendChild(card);
-            });
-        }
-
-        // Submit Booking
-        bookingForm.addEventListener('submit', async (e) => {
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            statusMsg.classList.add('hidden');
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.classList.add('hidden');
 
-            if (!selectedTime) {
-                statusMsg.textContent = 'Please select an available time slot.';
-                statusMsg.className = 'text-xs text-red-400 block';
-                return;
-            }
-
-            const service = document.getElementById('serviceSelect').value;
-            const date = bookingDate.value;
-
-            const { error } = await _supabase
-                .from('appointments')
-                .insert([{
-                    service: service,
-                    booking_date: date,
-                    booking_time: selectedTime,
-                    user_id: currentUser.id
-                }]);
-
-            if (error) {
-                statusMsg.textContent = 'Booking failed: ' + error.message;
-                statusMsg.className = 'text-xs text-red-400 block';
+            if (isRegistering) {
+                const { data, error } = await _supabase.auth.signUp({ email, password });
+                if (error) {
+                    errorDiv.textContent = error.message;
+                    errorDiv.classList.remove('hidden');
+                } else {
+                    alert('Account created successfully! You can now sign in.');
+                    toggleMode();
+                }
             } else {
-                statusMsg.textContent = 'Appointment successfully reserved!';
-                statusMsg.className = 'text-xs text-emerald-400 block';
-                await renderSlots();
-                await renderAppointments();
+                const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    errorDiv.textContent = error.message;
+                    errorDiv.classList.remove('hidden');
+                } else {
+                    window.location.href = 'portal.html';
+                }
             }
         });
-
-        // Sign Out
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-            await _supabase.auth.signOut();
-            window.location.href = 'portal-login.html';
-        });
-
-        bookingDate.addEventListener('change', renderSlots);
-
-        // Run Session Guard and Initial Load
-        initPortal();
     </script>
 </body>
 </html>
