@@ -10,20 +10,29 @@
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
     .gold-text { color: #C5A059; }
-    .gold-border { border-color: #C5A059; }
-    .gold-bg { background-color: #C5A059; }
     .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-    .time-slot-btn.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.2); }
+    .calendar-day.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.2); font-weight: bold; }
+    .time-slot-btn.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.25); color: #FFF; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
   <!-- Header Navigation -->
   <header class="border-b border-slate-800 bg-[#0B0F17]/90 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="index.html" class="text-xl font-bold tracking-widest uppercase text-white">
-        Luxora <span class="gold-text">Elite</span>
+    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+      <!-- Logo + Brand Title + Subtitle -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="Logo.png" alt="Luxora Elite Logo" class="h-12 w-auto object-contain">
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-widest uppercase text-white leading-tight">
+            Luxora <span class="gold-text">Elite</span>
+          </span>
+          <span class="text-[10px] font-semibold tracking-[0.25em] text-white uppercase mt-0.5">
+            CLEANING SA
+          </span>
+        </div>
       </a>
+
       <div class="flex items-center space-x-6">
         <span id="welcomeUser" class="text-sm text-slate-400">Welcome, Member</span>
         <button id="logoutBtn" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Log Out</button>
@@ -34,79 +43,88 @@
   <!-- Main Portal Content -->
   <main class="max-w-7xl mx-auto px-6 py-12 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
     
-    <!-- Left Column: Profile & Account Settings -->
+    <!-- Left Column: Profile & Special Instructions -->
     <div class="space-y-8">
-      <!-- Account Profile Card -->
-      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-bold uppercase tracking-wider gold-text">Account Profile</h3>
-          <button id="editProfileBtn" class="text-xs gold-text hover:underline font-semibold">Edit Info</button>
+      <!-- Expanded Account Profile Card -->
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+        <div class="flex justify-between items-center pb-2 border-b border-slate-800">
+          <h3 class="text-base font-bold uppercase tracking-wider gold-text">Account Profile</h3>
+          <button id="editProfileBtn" class="text-xs gold-text hover:underline font-semibold">Edit Profile</button>
         </div>
-        <div class="space-y-3 text-sm text-slate-300">
-          <p><strong>Primary Contact:</strong> <span id="clientName">Loading...</span></p>
-          <p><strong>Service Residence:</strong> <span id="clientAddress">Pending Profile Configuration</span></p>
-          <p><strong>Active Plan:</strong> <span id="clientPlan">Executive Residential Cleaning</span></p>
+        <div class="space-y-2 text-xs text-slate-300">
+          <p><strong>Full Name:</strong> <span id="clientName">Louis Davis</span></p>
+          <p><strong>Email Address:</strong> <span id="clientEmail">louissdaviss@gmail.com</span></p>
+          <p><strong>Phone Number:</strong> <span id="clientPhone">(210) 555-0199</span></p>
+          <p><strong>Service Residence:</strong> <span id="clientAddress">23609 Canyon Golf Rd. #3001 SAN ANTONIO, TX 78260</span></p>
+          <p><strong>Membership / Plan:</strong> <span id="clientPlan" class="gold-text font-semibold">Executive Residential Cleaning</span></p>
         </div>
       </div>
 
       <!-- Service Instructions Card -->
-      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
-        <h2 class="text-lg font-bold uppercase tracking-wider mb-4 gold-text">Special Instructions</h2>
-        <textarea id="clientInstructions" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]" placeholder="Gate codes, pet notices, or custom room focus..."></textarea>
-        <button id="saveInstructionsBtn" class="w-full mt-4 py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Save Instructions</button>
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+        <h3 class="text-base font-bold uppercase tracking-wider gold-text">Special Instructions</h3>
+        <textarea id="clientInstructions" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 focus:outline-none focus:border-[#C5A059]" placeholder="Gate codes, pet notices, custom focus areas..."></textarea>
+        <button id="saveInstructionsBtn" class="w-full py-2.5 rounded-xl border border-slate-700 text-xs font-bold uppercase tracking-wider gold-text hover:border-[#C5A059] transition-colors">Save Instructions</button>
       </div>
     </div>
 
-    <!-- Center & Right Columns: Calendar, Appointments & Billing -->
+    <!-- Center & Right Columns: Interactive Scheduler & Credits -->
     <div class="lg:col-span-2 space-y-8">
       
-      <!-- Billing & Balance Overview -->
+      <!-- Balance & Dynamic Prepaid Credits -->
       <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
         <div>
           <span class="text-xs uppercase text-slate-400 block">Current Balance</span>
-          <span class="text-3xl font-bold text-white">$0.00</span>
+          <span class="text-2xl font-bold text-white">$0.00</span>
         </div>
         <div>
           <span class="text-xs uppercase text-slate-400 block">Prepaid Credits</span>
-          <span class="text-3xl font-bold gold-text">2 Sessions</span>
+          <span id="creditCount" class="text-2xl font-bold gold-text">2 Sessions</span>
         </div>
         <div>
           <button class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Make Payment / Prepay</button>
         </div>
       </div>
 
-      <!-- Schedule & Availability -->
+      <!-- Full Interactive Calendar & 24-Hour Time Slots -->
       <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-6">
-        <h3 class="text-lg font-bold uppercase tracking-wider gold-text">Schedule & Availability</h3>
+        <h3 class="text-base font-bold uppercase tracking-wider gold-text">Schedule & Availability</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Calendar Selector -->
           <div>
-            <label class="block text-xs uppercase tracking-wider text-slate-400 mb-2">Select Date</label>
-            <input type="date" id="scheduleDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
+            <div class="flex justify-between items-center mb-3">
+              <span id="calendarMonthLabel" class="text-xs font-bold text-slate-300 uppercase tracking-wider">September 2026</span>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-slate-500 font-bold mb-1">
+              <div>SU</div><div>MO</div><div>TU</div><div>WE</div><div>TH</div><div>FR</div><div>SA</div>
+            </div>
+            <div id="calendarDaysGrid" class="grid grid-cols-7 gap-1">
+              <!-- Dynamically populated days -->
+            </div>
           </div>
 
+          <!-- 24-Hour Time Slot Selector -->
           <div>
-            <label class="block text-xs uppercase tracking-wider text-slate-400 mb-2">Available Time Slots</label>
-            <div class="space-y-2" id="slotContainer">
-              <button class="time-slot-btn w-full border border-slate-800 bg-slate-950 p-3 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="09:00 AM - 12:00 PM">
-                09:00 AM - 12:00 PM
-              </button>
-              <button class="time-slot-btn w-full border border-slate-800 bg-slate-950 p-3 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="01:00 PM - 04:00 PM">
-                01:00 PM - 04:00 PM
-              </button>
+            <label class="block text-xs uppercase tracking-wider text-slate-400 mb-2">Select 24-Hr Window</label>
+            <div id="timeSlotContainer" class="grid grid-cols-1 gap-2 max-h-56 overflow-y-auto pr-1">
+              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="00:00 - 04:00 (Night Service)">00:00 - 04:00 (Night Service)</button>
+              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="04:00 - 08:00 (Early Morning)">04:00 - 08:00 (Early Morning)</button>
+              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="08:00 - 12:00 (Morning)">08:00 - 12:00 (Morning)</button>
+              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="12:00 - 16:00 (Afternoon)">12:00 - 16:00 (Afternoon)</button>
+              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="16:00 - 20:00 (Evening)">16:00 - 20:00 (Evening)</button>
+              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="20:00 - 24:00 (Overnight)">20:00 - 24:00 (Overnight)</button>
             </div>
           </div>
         </div>
 
-        <!-- Upcoming Appointment Summary -->
+        <!-- Upcoming Appointment Confirmation -->
         <div class="pt-6 border-t border-slate-800 space-y-4">
-          <h4 class="text-sm font-bold uppercase tracking-wider gold-text">Upcoming Appointment</h4>
-          <div id="appointmentDisplay" class="text-sm text-slate-400 bg-slate-950 p-4 rounded-xl border border-slate-800">
-            No active bookings scheduled for this cycle. Choose a date and slot above to lock in your next estate maintenance.
+          <h4 class="text-xs font-bold uppercase tracking-wider gold-text">Upcoming Appointment</h4>
+          <div id="appointmentDisplay" class="text-xs text-slate-400 bg-slate-950 p-4 rounded-xl border border-slate-800">
+            No active bookings scheduled for this cycle. Select a date and time window above to lock in your next service.
           </div>
-          <button id="confirmAppointmentBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">
-            Confirm Appointment
-          </button>
+          <button id="confirmAppointmentBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Confirm Appointment</button>
         </div>
       </div>
 
@@ -117,89 +135,157 @@
     © 2026 Luxora Elite Cleaning SA. All rights reserved.
   </footer>
 
-  <!-- Script Logic -->
+  <!-- Logic & Supabase Integration -->
   <script>
     const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let selectedTimeSlot = null;
+    let selectedDate = '2026-09-03';
+    let selectedSlot = null;
 
     document.addEventListener('DOMContentLoaded', async () => {
-      // Set initial date picker default to today
-      const dateInput = document.getElementById('scheduleDate');
-      if (dateInput) {
-        dateInput.value = new Date().toISOString().split('T')[0];
-      }
-
-      // 1. Auth Check & Profile Setup
+      // 1. Fetch Session & Profile Data
       const { data: { session } } = await _supabase.auth.getSession();
       if (session && session.user) {
-        const userEmail = session.user.email;
-        document.getElementById('welcomeUser').textContent = `Welcome, ${userEmail}`;
-        document.getElementById('clientName').textContent = userEmail;
+        const userId = session.user.id;
+        document.getElementById('welcomeUser').textContent = `Welcome, ${session.user.email}`;
+        document.getElementById('clientEmail').textContent = session.user.email;
+
+        // Pull dynamic profile and prepaid credits from Supabase backend
+        const { data: profile } = await _supabase.from('profiles').select('*').eq('id', userId).single();
+        if (profile) {
+          if (profile.full_name) document.getElementById('clientName').textContent = profile.full_name;
+          if (profile.phone) document.getElementById('clientPhone').textContent = profile.phone;
+          if (profile.address) document.getElementById('clientAddress').textContent = profile.address;
+          if (profile.plan) document.getElementById('clientPlan').textContent = profile.plan;
+          if (profile.prepaid_credits !== undefined) {
+            document.getElementById('creditCount').textContent = `${profile.prepaid_credits} Sessions`;
+          }
+          if (profile.instructions) {
+            document.getElementById('clientInstructions').value = profile.instructions;
+          }
+        }
       }
 
-      // 2. Edit Profile Action
-      document.getElementById('editProfileBtn')?.addEventListener('click', () => {
-        const addressSpan = document.getElementById('clientAddress');
-        const currentAddr = addressSpan.textContent === 'Pending Profile Configuration' ? '' : addressSpan.textContent;
-        const newAddress = prompt('Enter Service Residence Address:', currentAddr);
-        if (newAddress && newAddress.trim() !== '') {
-          addressSpan.textContent = newAddress.trim();
-          alert('Residence address updated!');
+      // 2. Render Interactive Calendar Grid
+      renderCalendar();
+
+      // 3. Edit Profile Modal / Prompts
+      document.getElementById('editProfileBtn')?.addEventListener('click', async () => {
+        const name = prompt('Full Name:', document.getElementById('clientName').textContent);
+        const phone = prompt('Phone Number:', document.getElementById('clientPhone').textContent);
+        const address = prompt('Service Residence Address:', document.getElementById('clientAddress').textContent);
+        const plan = prompt('Membership / Plan:', document.getElementById('clientPlan').textContent);
+
+        if (name) document.getElementById('clientName').textContent = name;
+        if (phone) document.getElementById('clientPhone').textContent = phone;
+        if (address) document.getElementById('clientAddress').textContent = address;
+        if (plan) document.getElementById('clientPlan').textContent = plan;
+
+        if (session?.user) {
+          await _supabase.from('profiles').upsert({
+            id: session.user.id,
+            full_name: name,
+            phone: phone,
+            address: address,
+            plan: plan
+          });
         }
+        alert('Account Profile updated successfully!');
       });
 
-      // 3. Time Slot Selector
+      // 4. Time Slot Selector
       const slotBtns = document.querySelectorAll('.time-slot-btn');
       slotBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           slotBtns.forEach(b => b.classList.remove('selected'));
           btn.classList.add('selected');
-          selectedTimeSlot = btn.dataset.slot;
+          selectedSlot = btn.dataset.slot;
         });
       });
 
-      // 4. Save Special Instructions
-      document.getElementById('saveInstructionsBtn')?.addEventListener('click', () => {
-        const instructions = document.getElementById('clientInstructions').value;
-        if (!instructions.trim()) {
-          alert('Please enter your special instructions before saving.');
-          return;
+      // 5. Save Special Instructions to Backend
+      document.getElementById('saveInstructionsBtn')?.addEventListener('click', async () => {
+        const text = document.getElementById('clientInstructions').value;
+        if (session?.user) {
+          await _supabase.from('profiles').upsert({ id: session.user.id, instructions: text });
         }
         alert('Special instructions saved!');
       });
 
-      // 5. Confirm Appointment
-      document.getElementById('confirmAppointmentBtn')?.addEventListener('click', () => {
-        const dateVal = document.getElementById('scheduleDate').value;
-        const instructionsVal = document.getElementById('clientInstructions').value;
+      // 6. Confirm Appointment
+      document.getElementById('confirmAppointmentBtn')?.addEventListener('click', async () => {
+        const text = document.getElementById('clientInstructions').value;
 
-        if (!dateVal || !selectedTimeSlot) {
-          alert('Please select both a date and an available time slot.');
+        if (!selectedDate || !selectedSlot) {
+          alert('Please select both a date from the calendar and a 24-hour time window.');
           return;
         }
 
-        const displayBox = document.getElementById('appointmentDisplay');
-        displayBox.innerHTML = `
+        if (session?.user) {
+          await _supabase.from('bookings').insert([{
+            user_id: session.user.id,
+            booking_date: selectedDate,
+            time_slot: selectedSlot,
+            instructions: text
+          }]);
+        }
+
+        document.getElementById('appointmentDisplay').innerHTML = `
           <div class="text-slate-200 space-y-1">
-            <p><strong>Scheduled Date:</strong> ${dateVal}</p>
-            <p><strong>Time Window:</strong> ${selectedTimeSlot}</p>
-            <p><strong>Instructions:</strong> ${instructionsVal || 'None provided'}</p>
-            <span class="inline-block mt-2 text-xs bg-emerald-900/50 text-emerald-400 border border-emerald-700 px-2.5 py-1 rounded-md font-semibold">Confirmed</span>
+            <p><strong>Scheduled Date:</strong> ${selectedDate}</p>
+            <p><strong>Time Window:</strong> ${selectedSlot}</p>
+            <p><strong>Instructions:</strong> ${text || 'None provided'}</p>
+            <span class="inline-block mt-2 text-[10px] bg-emerald-900/50 text-emerald-400 border border-emerald-700 px-2 py-0.5 rounded font-semibold">Confirmed</span>
           </div>
         `;
 
-        alert('Appointment successfully confirmed!');
+        alert('Appointment successfully saved and confirmed!');
       });
 
-      // 6. Logout Button
+      // 7. Logout Action
       document.getElementById('logoutBtn')?.addEventListener('click', async () => {
         await _supabase.auth.signOut();
         window.location.href = 'portal-login.html';
       });
     });
+
+    function renderCalendar() {
+      const calendarGrid = document.getElementById('calendarDaysGrid');
+      if (!calendarGrid) return;
+      calendarGrid.innerHTML = '';
+
+      // Days in September 2026 (Starting Tuesday offset = 2)
+      const offset = 2;
+      const totalDays = 30;
+
+      for (let i = 0; i < offset; i++) {
+        const empty = document.createElement('div');
+        calendarGrid.appendChild(empty);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const btn = document.createElement('button');
+        const formattedDay = day < 10 ? `0${day}` : day;
+        const dateStr = `2026-09-${formattedDay}`;
+
+        btn.className = 'calendar-day border border-slate-800 bg-slate-950 py-2 rounded-lg text-xs text-slate-300 hover:border-[#C5A059] transition-colors';
+        btn.textContent = day;
+
+        if (dateStr === selectedDate) {
+          btn.classList.add('selected');
+        }
+
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedDate = dateStr;
+        });
+
+        calendarGrid.appendChild(btn);
+      }
+    }
   </script>
 </body>
 </html>
