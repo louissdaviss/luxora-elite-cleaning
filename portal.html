@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <!-- Full Interactive Calendar & 24-Hour Time Slots -->
+      <!-- Full Interactive Calendar & AM/PM Time Slots -->
       <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-6">
         <h3 class="text-base font-bold uppercase tracking-wider gold-text">Schedule & Availability</h3>
         
@@ -107,14 +107,14 @@
             </div>
           </div>
 
-          <!-- 24-Hour Time Slot Selector -->
+          <!-- 12-Hour AM/PM Time Slot Selector -->
           <div>
             <div class="flex justify-between items-center mb-2">
-              <label class="block text-xs uppercase tracking-wider text-slate-400">Select 24-Hr Time Slot</label>
+              <label class="block text-xs uppercase tracking-wider text-slate-400">Select Time Slot</label>
               <span class="text-[10px] text-slate-500">1-Hour Windows</span>
             </div>
             <div id="timeSlotContainer" class="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1">
-              <!-- Dynamically generated 24 1-hour slots -->
+              <!-- Dynamically generated 24 AM/PM 1-hour slots -->
             </div>
           </div>
         </div>
@@ -169,14 +169,13 @@
           }
         }
 
-        // Set First Name in Header Welcome
         const firstName = fullName.trim().split(' ')[0] || userEmail.split('@')[0];
         document.getElementById('welcomeUser').textContent = `Welcome, ${firstName}`;
       }
 
       // 2. Initial Calendar & Time Slots
       renderCalendar();
-      generate24HourSlots();
+      generateAmPmSlots();
       await fetchAndApplyBookedSlots();
 
       // Month Navigation Handlers
@@ -314,19 +313,27 @@
       }
     }
 
-    function generate24HourSlots() {
+    // Helper to format hours into 12-hour AM/PM format
+    function format12Hour(hour) {
+      const period = hour >= 12 && hour < 24 ? 'PM' : 'AM';
+      let h12 = hour % 12;
+      if (h12 === 0) h12 = 12;
+      const formattedH = h12 < 10 ? `0${h12}` : `${h12}`;
+      return `${formattedH}:00 ${period}`;
+    }
+
+    function generateAmPmSlots() {
       const container = document.getElementById('timeSlotContainer');
       if (!container) return;
       container.innerHTML = '';
 
       for (let hour = 0; hour < 24; hour++) {
-        const start = hour < 10 ? `0${hour}:00` : `${hour}:00`;
-        const nextHour = (hour + 1) % 24;
-        const end = nextHour < 10 ? `0${nextHour}:00` : `${nextHour}:00`;
-        const slotText = `${start} - ${end}`;
+        const startStr = format12Hour(hour);
+        const endStr = format12Hour((hour + 1) % 24);
+        const slotText = `${startStr} - ${endStr}`;
 
         const btn = document.createElement('button');
-        btn.className = 'time-slot-btn border border-slate-800 bg-slate-950 p-2 rounded-xl text-[11px] text-slate-300 hover:border-[#C5A059] transition-colors text-center';
+        btn.className = 'time-slot-btn border border-slate-800 bg-slate-950 p-2 rounded-xl text-[10px] text-slate-300 hover:border-[#C5A059] transition-colors text-center';
         btn.dataset.slot = slotText;
         btn.textContent = slotText;
 
@@ -346,9 +353,9 @@
       slotBtns.forEach(btn => {
         btn.classList.remove('booked', 'selected');
         btn.disabled = false;
+        btn.textContent = btn.dataset.slot;
       });
 
-      // Query Supabase for all booked slots on the selected date
       const { data: booked } = await _supabase.from('bookings').select('time_slot').eq('booking_date', selectedDateStr);
       
       if (booked && booked.length > 0) {
