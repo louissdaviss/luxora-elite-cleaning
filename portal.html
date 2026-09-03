@@ -6,6 +6,8 @@
   <title>Client Portal | Luxora Elite Cleaning</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
@@ -125,6 +127,11 @@
   </footer>
 
   <script>
+    // Initialize EmailJS with your Public Key
+    (function(){
+      emailjs.init("0zMvCnJB9Jy4_IokL");
+    })();
+
     const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -174,6 +181,8 @@
 
       document.getElementById('confirmAppointmentBtn')?.addEventListener('click', async () => {
         const text = document.getElementById('clientInstructions').value;
+        const clientName = document.getElementById('clientName').textContent;
+        const clientEmail = document.getElementById('clientEmail').textContent;
 
         if (!selectedDateStr || !selectedSlot) {
           alert('Please select both a date from the calendar and an available time slot.');
@@ -183,6 +192,7 @@
         const { data: { session } } = await _supabase.auth.getSession();
         const activeUserId = session?.user?.id || null;
 
+        // 1. Save booking to Supabase
         const { error } = await _supabase.from('bookings').insert([{
           user_id: activeUserId,
           booking_date: selectedDateStr,
@@ -196,6 +206,19 @@
           return;
         }
 
+        // 2. Send instant email alert via EmailJS
+        emailjs.send("service_oklex4t", "template_vznxczl", {
+          to_email: "luxoraelitecleaningsa@gmail.com",
+          client_name: clientName,
+          client_email: clientEmail,
+          booking_date: selectedDateStr,
+          time_slot: selectedSlot,
+          instructions: text || 'None provided'
+        }).then(
+          () => console.log('Booking notification sent to luxoraelitecleaningsa@gmail.com'),
+          (err) => console.error('EmailJS Error:', err)
+        );
+
         document.getElementById('appointmentDisplay').innerHTML = `
           <div class="text-slate-200 space-y-1">
             <p><strong>Scheduled Date:</strong> ${selectedDateStr}</p>
@@ -205,7 +228,7 @@
           </div>
         `;
 
-        alert('Appointment successfully saved and confirmed!');
+        alert('Appointment successfully saved and notification email sent!');
         await fetchAndApplyBookedSlots();
       });
 
