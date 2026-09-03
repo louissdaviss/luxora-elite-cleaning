@@ -11,8 +11,9 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
     .gold-text { color: #C5A059; }
     .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-    .calendar-day.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.2); font-weight: bold; }
-    .time-slot-btn.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.25); color: #FFF; }
+    .calendar-day.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.25); font-weight: bold; color: #FFF; }
+    .time-slot-btn.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.25); color: #FFF; font-weight: bold; }
+    .time-slot-btn.booked { opacity: 0.3; cursor: not-allowed; background-color: #1E293B; border-color: #334155; text-decoration: line-through; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -91,10 +92,12 @@
         <h3 class="text-base font-bold uppercase tracking-wider gold-text">Schedule & Availability</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Calendar Selector -->
+          <!-- Calendar Selector with Navigation -->
           <div>
             <div class="flex justify-between items-center mb-3">
+              <button id="prevMonthBtn" class="text-xs text-slate-400 hover:gold-text">&lt; Prev</button>
               <span id="calendarMonthLabel" class="text-xs font-bold text-slate-300 uppercase tracking-wider">September 2026</span>
+              <button id="nextMonthBtn" class="text-xs text-slate-400 hover:gold-text">Next &gt;</button>
             </div>
             <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-slate-500 font-bold mb-1">
               <div>SU</div><div>MO</div><div>TU</div><div>WE</div><div>TH</div><div>FR</div><div>SA</div>
@@ -106,14 +109,12 @@
 
           <!-- 24-Hour Time Slot Selector -->
           <div>
-            <label class="block text-xs uppercase tracking-wider text-slate-400 mb-2">Select 24-Hr Window</label>
-            <div id="timeSlotContainer" class="grid grid-cols-1 gap-2 max-h-56 overflow-y-auto pr-1">
-              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="00:00 - 04:00 (Night Service)">00:00 - 04:00 (Night Service)</button>
-              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="04:00 - 08:00 (Early Morning)">04:00 - 08:00 (Early Morning)</button>
-              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="08:00 - 12:00 (Morning)">08:00 - 12:00 (Morning)</button>
-              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="12:00 - 16:00 (Afternoon)">12:00 - 16:00 (Afternoon)</button>
-              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="16:00 - 20:00 (Evening)">16:00 - 20:00 (Evening)</button>
-              <button class="time-slot-btn border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors text-left" data-slot="20:00 - 24:00 (Overnight)">20:00 - 24:00 (Overnight)</button>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-xs uppercase tracking-wider text-slate-400">Select 24-Hr Time Slot</label>
+              <span class="text-[10px] text-slate-500">1-Hour Windows</span>
+            </div>
+            <div id="timeSlotContainer" class="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1">
+              <!-- Dynamically generated 24 1-hour slots -->
             </div>
           </div>
         </div>
@@ -122,7 +123,7 @@
         <div class="pt-6 border-t border-slate-800 space-y-4">
           <h4 class="text-xs font-bold uppercase tracking-wider gold-text">Upcoming Appointment</h4>
           <div id="appointmentDisplay" class="text-xs text-slate-400 bg-slate-950 p-4 rounded-xl border border-slate-800">
-            No active bookings scheduled for this cycle. Select a date and time window above to lock in your next service.
+            No active bookings scheduled for this cycle. Select a date and time slot above to lock in your next service.
           </div>
           <button id="confirmAppointmentBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Confirm Appointment</button>
         </div>
@@ -141,7 +142,8 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let selectedDate = '2026-09-03';
+    let currentDate = new Date(2026, 8, 3); // September 2026 default
+    let selectedDateStr = '2026-09-03';
     let selectedSlot = null;
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -149,13 +151,13 @@
       const { data: { session } } = await _supabase.auth.getSession();
       if (session && session.user) {
         const userId = session.user.id;
-        document.getElementById('welcomeUser').textContent = `Welcome, ${session.user.email}`;
-        document.getElementById('clientEmail').textContent = session.user.email;
+        const userEmail = session.user.email;
+        document.getElementById('clientEmail').textContent = userEmail;
 
-        // Pull dynamic profile and prepaid credits from Supabase backend
         const { data: profile } = await _supabase.from('profiles').select('*').eq('id', userId).single();
+        let fullName = profile?.full_name || 'Louis Davis';
         if (profile) {
-          if (profile.full_name) document.getElementById('clientName').textContent = profile.full_name;
+          document.getElementById('clientName').textContent = fullName;
           if (profile.phone) document.getElementById('clientPhone').textContent = profile.phone;
           if (profile.address) document.getElementById('clientAddress').textContent = profile.address;
           if (profile.plan) document.getElementById('clientPlan').textContent = profile.plan;
@@ -166,19 +168,39 @@
             document.getElementById('clientInstructions').value = profile.instructions;
           }
         }
+
+        // Set First Name in Header Welcome
+        const firstName = fullName.trim().split(' ')[0] || userEmail.split('@')[0];
+        document.getElementById('welcomeUser').textContent = `Welcome, ${firstName}`;
       }
 
-      // 2. Render Interactive Calendar Grid
+      // 2. Initial Calendar & Time Slots
       renderCalendar();
+      generate24HourSlots();
+      await fetchAndApplyBookedSlots();
 
-      // 3. Edit Profile Modal / Prompts
+      // Month Navigation Handlers
+      document.getElementById('prevMonthBtn').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+      });
+      document.getElementById('nextMonthBtn').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      });
+
+      // 3. Edit Profile Action
       document.getElementById('editProfileBtn')?.addEventListener('click', async () => {
         const name = prompt('Full Name:', document.getElementById('clientName').textContent);
         const phone = prompt('Phone Number:', document.getElementById('clientPhone').textContent);
         const address = prompt('Service Residence Address:', document.getElementById('clientAddress').textContent);
         const plan = prompt('Membership / Plan:', document.getElementById('clientPlan').textContent);
 
-        if (name) document.getElementById('clientName').textContent = name;
+        if (name) {
+          document.getElementById('clientName').textContent = name;
+          const firstName = name.trim().split(' ')[0];
+          document.getElementById('welcomeUser').textContent = `Welcome, ${firstName}`;
+        }
         if (phone) document.getElementById('clientPhone').textContent = phone;
         if (address) document.getElementById('clientAddress').textContent = address;
         if (plan) document.getElementById('clientPlan').textContent = plan;
@@ -195,17 +217,7 @@
         alert('Account Profile updated successfully!');
       });
 
-      // 4. Time Slot Selector
-      const slotBtns = document.querySelectorAll('.time-slot-btn');
-      slotBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          slotBtns.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          selectedSlot = btn.dataset.slot;
-        });
-      });
-
-      // 5. Save Special Instructions to Backend
+      // 4. Save Special Instructions
       document.getElementById('saveInstructionsBtn')?.addEventListener('click', async () => {
         const text = document.getElementById('clientInstructions').value;
         if (session?.user) {
@@ -214,37 +226,43 @@
         alert('Special instructions saved!');
       });
 
-      // 6. Confirm Appointment
+      // 5. Confirm Appointment Action
       document.getElementById('confirmAppointmentBtn')?.addEventListener('click', async () => {
         const text = document.getElementById('clientInstructions').value;
 
-        if (!selectedDate || !selectedSlot) {
-          alert('Please select both a date from the calendar and a 24-hour time window.');
+        if (!selectedDateStr || !selectedSlot) {
+          alert('Please select both a date from the calendar and an available time slot.');
           return;
         }
 
         if (session?.user) {
-          await _supabase.from('bookings').insert([{
+          const { error } = await _supabase.from('bookings').insert([{
             user_id: session.user.id,
-            booking_date: selectedDate,
+            booking_date: selectedDateStr,
             time_slot: selectedSlot,
             instructions: text
           }]);
+
+          if (error) {
+            alert('Failed to lock in slot. It may have already been reserved.');
+            return;
+          }
         }
 
         document.getElementById('appointmentDisplay').innerHTML = `
           <div class="text-slate-200 space-y-1">
-            <p><strong>Scheduled Date:</strong> ${selectedDate}</p>
-            <p><strong>Time Window:</strong> ${selectedSlot}</p>
+            <p><strong>Scheduled Date:</strong> ${selectedDateStr}</p>
+            <p><strong>Time Slot:</strong> ${selectedSlot}</p>
             <p><strong>Instructions:</strong> ${text || 'None provided'}</p>
             <span class="inline-block mt-2 text-[10px] bg-emerald-900/50 text-emerald-400 border border-emerald-700 px-2 py-0.5 rounded font-semibold">Confirmed</span>
           </div>
         `;
 
         alert('Appointment successfully saved and confirmed!');
+        await fetchAndApplyBookedSlots();
       });
 
-      // 7. Logout Action
+      // 6. Logout Action
       document.getElementById('logoutBtn')?.addEventListener('click', async () => {
         await _supabase.auth.signOut();
         window.location.href = 'portal-login.html';
@@ -253,37 +271,95 @@
 
     function renderCalendar() {
       const calendarGrid = document.getElementById('calendarDaysGrid');
+      const label = document.getElementById('calendarMonthLabel');
       if (!calendarGrid) return;
+
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      label.textContent = `${monthNames[month]} ${year}`;
+
       calendarGrid.innerHTML = '';
 
-      // Days in September 2026 (Starting Tuesday offset = 2)
-      const offset = 2;
-      const totalDays = 30;
+      const firstDay = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
 
-      for (let i = 0; i < offset; i++) {
-        const empty = document.createElement('div');
-        calendarGrid.appendChild(empty);
+      for (let i = 0; i < firstDay; i++) {
+        calendarGrid.appendChild(document.createElement('div'));
       }
 
       for (let day = 1; day <= totalDays; day++) {
         const btn = document.createElement('button');
         const formattedDay = day < 10 ? `0${day}` : day;
-        const dateStr = `2026-09-${formattedDay}`;
+        const formattedMonth = (month + 1) < 10 ? `0${month + 1}` : month + 1;
+        const dateStr = `${year}-${formattedMonth}-${formattedDay}`;
 
         btn.className = 'calendar-day border border-slate-800 bg-slate-950 py-2 rounded-lg text-xs text-slate-300 hover:border-[#C5A059] transition-colors';
         btn.textContent = day;
 
-        if (dateStr === selectedDate) {
+        if (dateStr === selectedDateStr) {
           btn.classList.add('selected');
         }
 
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
           btn.classList.add('selected');
-          selectedDate = dateStr;
+          selectedDateStr = dateStr;
+          selectedSlot = null;
+          await fetchAndApplyBookedSlots();
         });
 
         calendarGrid.appendChild(btn);
+      }
+    }
+
+    function generate24HourSlots() {
+      const container = document.getElementById('timeSlotContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      for (let hour = 0; hour < 24; hour++) {
+        const start = hour < 10 ? `0${hour}:00` : `${hour}:00`;
+        const nextHour = (hour + 1) % 24;
+        const end = nextHour < 10 ? `0${nextHour}:00` : `${nextHour}:00`;
+        const slotText = `${start} - ${end}`;
+
+        const btn = document.createElement('button');
+        btn.className = 'time-slot-btn border border-slate-800 bg-slate-950 p-2 rounded-xl text-[11px] text-slate-300 hover:border-[#C5A059] transition-colors text-center';
+        btn.dataset.slot = slotText;
+        btn.textContent = slotText;
+
+        btn.addEventListener('click', () => {
+          if (btn.classList.contains('booked')) return;
+          document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedSlot = slotText;
+        });
+
+        container.appendChild(btn);
+      }
+    }
+
+    async function fetchAndApplyBookedSlots() {
+      const slotBtns = document.querySelectorAll('.time-slot-btn');
+      slotBtns.forEach(btn => {
+        btn.classList.remove('booked', 'selected');
+        btn.disabled = false;
+      });
+
+      // Query Supabase for all booked slots on the selected date
+      const { data: booked } = await _supabase.from('bookings').select('time_slot').eq('booking_date', selectedDateStr);
+      
+      if (booked && booked.length > 0) {
+        const bookedList = booked.map(b => b.time_slot);
+        slotBtns.forEach(btn => {
+          if (bookedList.includes(btn.dataset.slot)) {
+            btn.classList.add('booked');
+            btn.disabled = true;
+            btn.textContent = `${btn.dataset.slot} (Booked)`;
+          }
+        });
       }
     }
   </script>
