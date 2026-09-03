@@ -1,73 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Client Portal Login | Luxora Elite Cleaning SA</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
-        .gold-text { color: #C5A059; }
-        .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Portal | Luxora Elite Cleaning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
+    .gold-text { color: #C5A059; }
+    .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
+    .time-slot.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.2); }
+  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center px-4">
-    <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
-        <h2 id="formTitle" class="text-2xl font-bold uppercase tracking-wider gold-text mb-2">Client Portal</h2>
-        <p id="formSub" class="text-xs text-slate-400 mb-6">Sign in to access your estate records.</p>
-        
-        <form id="authForm" class="space-y-4">
-            <input type="email" id="emailInput" placeholder="Email Address" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
-            <input type="password" id="passwordInput" placeholder="Password" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:border-[#C5A059]">
-            <div id="errorMsg" class="text-red-400 text-xs hidden"></div>
-            <button type="submit" id="submitBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Sign In</button>
-        </form>
-
-        <button onclick="toggleMode()" id="toggleBtn" class="mt-4 text-xs text-slate-400 hover:text-[#C5A059] transition-colors bg-transparent border-none cursor-pointer">Need an account? Register here</button>
+<body class="min-h-screen p-6">
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto flex justify-between items-center pb-6 border-b border-slate-800">
+    <h1 class="text-xl font-bold tracking-wider gold-text">LUXORA ELITE</h1>
+    <div class="flex items-center gap-4 text-xs">
+      <span id="userEmail" class="text-slate-400">Loading...</span>
+      <button id="logoutBtn" class="border border-slate-700 px-3 py-1 rounded-lg hover:border-red-500 hover:text-red-400 transition-colors">LOG OUT</button>
     </div>
+  </header>
 
-    <script>
-        const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <!-- Account Profile Section -->
+    <section class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-sm font-bold uppercase tracking-wider gold-text">Account Profile</h2>
+        <button id="editProfileBtn" class="text-xs gold-text hover:underline">Edit Profile</button>
+      </div>
+      <div class="text-xs space-y-2 text-slate-300">
+        <p><strong>Primary Contact:</strong> <span id="profileEmail">Loading...</span></p>
+        <p><strong>Service Residence:</strong> <span id="residenceText">Pending Profile Configuration</span></p>
+        <p><strong>Active Plan:</strong> Executive Residential Cleaning</p>
+      </div>
 
-        let isRegistering = false;
+      <!-- Special Instructions -->
+      <div class="pt-4 border-t border-slate-800 space-y-2">
+        <h3 class="text-xs font-bold uppercase tracking-wider gold-text">Special Instructions</h3>
+        <textarea id="instructionsInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 focus:outline-none focus:border-[#C5A059]" placeholder="clean the kitchen counter sweep and mop"></textarea>
+        <button id="saveInstructionsBtn" class="w-full py-2 rounded-xl border border-slate-700 text-xs font-bold uppercase tracking-wider hover:border-[#C5A059] gold-text transition-colors">Save Instructions</button>
+      </div>
 
-        function toggleMode() {
-            isRegistering = !isRegistering;
-            document.getElementById('formTitle').textContent = isRegistering ? 'Create Account' : 'Client Portal';
-            document.getElementById('formSub').textContent = isRegistering ? 'Register your email to manage cleaning services.' : 'Sign in to access your estate records.';
-            document.getElementById('submitBtn').textContent = isRegistering ? 'Register' : 'Sign In';
-            document.getElementById('toggleBtn').textContent = isRegistering ? 'Already have an account? Sign in' : 'Need an account? Register here';
-            document.getElementById('errorMsg').classList.add('hidden');
+      <!-- Balance & Billing -->
+      <div class="pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
+        <div>
+          <p class="text-slate-400">Current Balance: <strong class="text-white">$0.00</strong></p>
+          <p class="text-slate-400">Prepaid Credits: <strong class="text-white">2 Sessions</strong></p>
+        </div>
+        <button class="gold-bg-gradient text-white px-3 py-2 rounded-xl text-xs font-bold uppercase hover:opacity-90 transition-opacity">Make Payment / Prepay</button>
+      </div>
+    </section>
+
+    <!-- Schedule & Availability Section -->
+    <section class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4 flex flex-col justify-between">
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wider gold-text mb-4">Schedule & Availability</h2>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Select Date</label>
+            <input type="date" id="scheduleDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 focus:outline-none focus:border-[#C5A059]">
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-400 mb-2">Available Time Slots</label>
+            <div class="grid grid-cols-2 gap-2" id="slotContainer">
+              <button class="time-slot border border-slate-800 bg-slate-950 p-3 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors" data-slot="09:00 AM - 12:00 PM">09:00 AM - 12:00 PM</button>
+              <button class="time-slot border border-slate-800 bg-slate-950 p-3 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors" data-slot="01:00 PM - 04:00 PM">01:00 PM - 04:00 PM</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Appointment Confirmation -->
+      <div class="pt-4 border-t border-slate-800 space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider gold-text">Upcoming Appointment</h3>
+        <div id="appointmentCard" class="text-xs text-slate-400 bg-slate-950 p-3 rounded-xl border border-slate-800">
+          No active bookings scheduled for this cycle. Choose a date and slot above to lock in your next estate maintenance.
+        </div>
+        <button id="confirmAppointmentBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Confirm Appointment</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let selectedTimeSlot = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Check Auth Session
+      const { data: { session } } = await _supabase.auth.getSession();
+      if (!session) {
+        window.location.href = 'portal-login.html';
+        return;
+      }
+
+      const userEmail = session.user.email;
+      document.getElementById('userEmail').textContent = userEmail;
+      document.getElementById('profileEmail').textContent = userEmail;
+
+      // Set default date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('scheduleDate').value = today;
+
+      // 2. Time Slot Selection Handler
+      const slotButtons = document.querySelectorAll('.time-slot');
+      slotButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          slotButtons.forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedTimeSlot = btn.dataset.slot;
+        });
+      });
+
+      // 3. Edit Profile Action
+      document.getElementById('editProfileBtn').addEventListener('click', () => {
+        const residenceElem = document.getElementById('residenceText');
+        const currentRes = residenceElem.textContent === 'Pending Profile Configuration' ? '' : residenceElem.textContent;
+        const newAddress = prompt('Enter Service Residence Address:', currentRes);
+        if (newAddress && newAddress.trim() !== '') {
+          residenceElem.textContent = newAddress.trim();
+          alert('Residence address updated!');
+        }
+      });
+
+      // 4. Save Special Instructions
+      document.getElementById('saveInstructionsBtn').addEventListener('click', () => {
+        const text = document.getElementById('instructionsInput').value;
+        if (text.trim() === '') {
+          alert('Please write special instructions before saving.');
+        } else {
+          alert('Special instructions saved!');
+        }
+      });
+
+      // 5. Confirm Appointment Action
+      document.getElementById('confirmAppointmentBtn').addEventListener('click', () => {
+        const dateVal = document.getElementById('scheduleDate').value;
+        const instructionsVal = document.getElementById('instructionsInput').value;
+
+        if (!dateVal || !selectedTimeSlot) {
+          alert('Please select both a date and an available time slot.');
+          return;
         }
 
-        document.getElementById('authForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passwordInput').value;
-            const errorDiv = document.getElementById('errorMsg');
-            errorDiv.classList.add('hidden');
+        const appointmentCard = document.getElementById('appointmentCard');
+        appointmentCard.innerHTML = `
+          <div class="text-slate-200 space-y-1">
+            <p><strong>Date:</strong> ${dateVal}</p>
+            <p><strong>Slot:</strong> ${selectedTimeSlot}</p>
+            <p><strong>Instructions:</strong> ${instructionsVal || 'None provided'}</p>
+            <span class="inline-block mt-2 text-[10px] bg-emerald-900/50 text-emerald-400 border border-emerald-700 px-2 py-0.5 rounded">Confirmed</span>
+          </div>
+        `;
 
-            if (isRegistering) {
-                const { data, error } = await _supabase.auth.signUp({ email, password });
-                if (error) {
-                    errorDiv.textContent = error.message;
-                    errorDiv.classList.remove('hidden');
-                } else {
-                    alert('Account created successfully! You can now sign in.');
-                    toggleMode();
-                }
-            } else {
-                const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
-                if (error) {
-                    errorDiv.textContent = error.message;
-                    errorDiv.classList.remove('hidden');
-                } else {
-                    window.location.href = 'portal.html';
-                }
-            }
-        });
-    </script>
+        alert('Appointment successfully confirmed!');
+      });
+
+      // 6. Logout Action
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        await _supabase.auth.signOut();
+        window.location.href = 'portal-login.html';
+      });
+    });
+  </script>
 </body>
 </html>
