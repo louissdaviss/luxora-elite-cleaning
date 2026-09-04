@@ -3,132 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Portal Login | Luxora Elite Cleaning</title>
+  <title>Client Account Portal | Luxora Elite</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-6">
+<body class="bg-slate-950 text-slate-100 min-h-screen">
 
-  <div class="max-w-md w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-xl space-y-6">
-    <div class="text-center">
-      <h1 class="text-2xl font-bold text-[#C5A059] tracking-wider font-serif">LUXORA ELITE</h1>
-      <p id="form-title" class="text-slate-400 text-sm mt-1">Sign in to access your private portal</p>
+  <nav class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-full border border-[#C5A059] flex items-center justify-center bg-slate-800 text-[#C5A059] font-bold text-xs">LXE</div>
+      <span class="font-bold text-slate-200 tracking-wider text-sm font-serif">LUXORA ELITE PORTAL</span>
     </div>
+    
+    <button id="logout-btn" class="px-4 py-2 rounded-lg bg-red-950/80 border border-red-800 text-red-200 hover:bg-red-900 transition-colors text-xs uppercase font-semibold">
+      Log Out
+    </button>
+  </nav>
 
-    <!-- Alert Box -->
-    <div id="alert-box" class="hidden p-3 rounded-lg text-xs font-semibold text-center"></div>
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
+      
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-end">
+        <div>
+          <!-- Member ID Badge above Name in White -->
+          <div class="inline-block px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700 mb-2">
+            <span class="text-[10px] font-mono tracking-widest text-slate-400 uppercase mr-1">Member No.</span>
+            <span id="welcome-member-no" class="text-xs font-mono font-bold text-white">#LXE-00000</span>
+          </div>
 
-    <!-- Auth Form -->
-    <form id="auth-form" class="space-y-4">
-      <div id="name-field" class="hidden">
-        <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Full Name</label>
-        <input type="text" id="full-name" placeholder="John Doe" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]">
+          <h1 class="text-2xl font-serif font-bold text-[#C5A059]">Welcome, <span id="welcome-name">Client</span></h1>
+          <p class="text-slate-400 text-sm mt-1">Here is your personal estate care profile and account details.</p>
+        </div>
       </div>
 
-      <div>
-        <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Email Address</label>
-        <input type="email" id="email" required placeholder="client@example.com" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]">
+      <!-- User Specific Profile Data -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Account Holder Name</span>
+          <p id="user-display-name" class="text-slate-200 font-semibold text-base">Loading...</p>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Email Address</span>
+          <p id="user-display-email" class="text-slate-200 font-semibold text-base">Loading...</p>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 md:col-span-2">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Service Address</span>
+          <p id="user-display-address" class="text-slate-200 font-semibold text-base">No service address provided yet</p>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 md:col-span-2">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Unique Client ID</span>
+          <p id="user-display-id" class="font-mono text-slate-400 text-xs">Loading...</p>
+        </div>
       </div>
 
-      <div>
-        <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Password</label>
-        <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]">
-      </div>
-
-      <button type="submit" id="submit-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-xs font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity">
-        Log In
-      </button>
-    </form>
-
-    <!-- Toggle Login / Signup -->
-    <div class="text-center pt-2">
-      <button id="toggle-mode-btn" class="text-xs text-slate-400 hover:text-[#C5A059] transition-colors">
-        Don't have an account? Create one here
-      </button>
     </div>
-  </div>
+  </main>
 
   <script>
     const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let isSignUp = false;
-
-    const form = document.getElementById('auth-form');
-    const formTitle = document.getElementById('form-title');
-    const nameField = document.getElementById('name-field');
-    const submitBtn = document.getElementById('submit-btn');
-    const toggleBtn = document.getElementById('toggle-mode-btn');
-    const alertBox = document.getElementById('alert-box');
-
-    // Toggle between Login & Account Creation
-    toggleBtn.addEventListener('click', () => {
-      isSignUp = !isSignUp;
-      showAlert('', false);
-
-      if (isSignUp) {
-        formTitle.textContent = 'Create a new client profile';
-        nameField.classList.remove('hidden');
-        submitBtn.textContent = 'Create Account';
-        toggleBtn.textContent = 'Already have an account? Log in';
-      } else {
-        formTitle.textContent = 'Sign in to access your private portal';
-        nameField.classList.add('hidden');
-        submitBtn.textContent = 'Log In';
-        toggleBtn.textContent = "Don't have an account? Create one here";
-      }
-    });
-
-    function showAlert(message, isError = true) {
-      if (!message) {
-        alertBox.classList.add('hidden');
-        return;
-      }
-      alertBox.classList.remove('hidden', 'bg-red-900/50', 'text-red-300', 'bg-emerald-900/50', 'text-emerald-300');
-      if (isError) {
-        alertBox.classList.add('bg-red-900/50', 'text-red-300');
-      } else {
-        alertBox.classList.add('bg-emerald-900/50', 'text-emerald-300');
-      }
-      alertBox.textContent = message;
+    // Generate a clean Member Number from user ID string
+    function generateMemberNo(userId) {
+      if (!userId) return '#LXE-00000';
+      const hash = userId.replace(/[^a-zA-Z0-9]/g, '').slice(-5).toUpperCase();
+      return `#LXE-${hash}`;
     }
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const fullName = document.getElementById('full-name').value;
+    async function initPortal() {
+      const { data: { session } } = await _supabase.auth.getSession();
 
-      showAlert('', false);
-
-      if (isSignUp) {
-        // Handle User Sign Up
-        const { data, error } = await _supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: { full_name: fullName }
-          }
-        });
-
-        if (error) {
-          showAlert(error.message, true);
-        } else {
-          showAlert('Account created! Redirecting to your portal...', false);
-          setTimeout(() => { window.location.href = 'portal.html'; }, 1500);
-        }
-      } else {
-        // Handle User Login
-        const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
-
-        if (error) {
-          showAlert(error.message, true);
-        } else {
-          window.location.href = 'portal.html';
-        }
+      if (!session) {
+        window.location.href = 'portal-login.html';
+        return;
       }
+
+      // Read session details
+      const user = session.user;
+      const fullName = user.user_metadata?.full_name || 'Client Member';
+      const address = user.user_metadata?.address || 'No service address provided yet';
+      const memberNumber = generateMemberNo(user.id);
+
+      // Inject values into UI
+      document.getElementById('welcome-member-no').textContent = memberNumber;
+      document.getElementById('welcome-name').textContent = fullName;
+      document.getElementById('user-display-name').textContent = fullName;
+      document.getElementById('user-display-email').textContent = user.email;
+      document.getElementById('user-display-address').textContent = address;
+      document.getElementById('user-display-id').textContent = user.id;
+    }
+
+    // Log Out
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await _supabase.auth.signOut();
+      window.location.href = 'index.html';
     });
+
+    initPortal();
   </script>
 </body>
 </html>
