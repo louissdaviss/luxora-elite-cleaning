@@ -80,7 +80,7 @@
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
       <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
         <div>
-          <h2 class="text-xl font-serif font-bold text-[#C5A059]">Confirmed Service Appointments</h2>
+          <h2 class="text-xl font-serif font-bold text-[#C5A059]">Service Appointments</h2>
           <p class="text-slate-400 text-sm mt-1">Your upcoming scheduled estate cleanings and maintenance sessions.</p>
         </div>
         <button id="open-booking-btn" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity">
@@ -90,7 +90,7 @@
 
       <div id="appointments-container" class="space-y-4">
         <div class="text-center py-8 border border-dashed border-slate-800 rounded-xl">
-          <p class="text-slate-500 text-sm">No upcoming confirmed appointments scheduled.</p>
+          <p class="text-slate-500 text-sm">No service appointments scheduled.</p>
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@
 
         <div class="flex justify-end space-x-3 pt-2">
           <button type="button" id="cancel-booking-btn" class="px-4 py-2.5 rounded-xl border border-slate-700 text-slate-400 hover:text-white text-xs font-semibold uppercase tracking-wider">Cancel</button>
-          <button type="submit" id="confirm-booking-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider hover:opacity-90">Confirm Booking</button>
+          <button type="submit" id="confirm-booking-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider hover:opacity-90">Submit Booking Request</button>
         </div>
       </form>
     </div>
@@ -208,29 +208,35 @@
       if (error || !appointments || appointments.length === 0) {
         container.innerHTML = `
           <div class="text-center py-8 border border-dashed border-slate-800 rounded-xl">
-            <p class="text-slate-500 text-sm">No upcoming confirmed appointments scheduled.</p>
+            <p class="text-slate-500 text-sm">No service appointments scheduled.</p>
           </div>`;
         return;
       }
 
-      container.innerHTML = appointments.map(appt => `
-        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded ${
-                appt.status === 'confirmed' ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' : 'bg-amber-950 border border-amber-800 text-amber-400'
-              }">${appt.status}</span>
-              <span class="text-xs text-slate-400">${appt.service || appt.service_type || 'Estate Cleaning'}</span>
+      container.innerHTML = appointments.map(appt => {
+        const isConfirmed = appt.status === 'confirmed';
+        const badgeClass = isConfirmed 
+          ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' 
+          : 'bg-amber-950 border border-amber-800 text-amber-400';
+        const statusText = isConfirmed ? 'Confirmed & Scheduled' : 'Pending Review';
+
+        return `
+          <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded ${badgeClass}">${statusText}</span>
+                <span class="text-xs text-slate-400">${appt.service || appt.service_type || 'Estate Cleaning'}</span>
+              </div>
+              <p class="text-slate-200 font-semibold text-base mt-1">${appt.appointment_date || 'TBD'}</p>
+              <p class="text-slate-400 text-xs mt-0.5">${appt.notes || 'Standard Service Package'}</p>
             </div>
-            <p class="text-slate-200 font-semibold text-base mt-1">${appt.appointment_date || 'TBD'}</p>
-            <p class="text-slate-400 text-xs mt-0.5">${appt.notes || 'Standard Service Package'}</p>
+            <div class="text-right border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
+              <span class="text-xs uppercase tracking-wider text-slate-500 block">Time Slot</span>
+              <span class="text-sm font-mono text-[#C5A059] font-semibold">${appt.time_slot || 'Morning Session'}</span>
+            </div>
           </div>
-          <div class="text-right border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
-            <span class="text-xs uppercase tracking-wider text-slate-500 block">Time Slot</span>
-            <span class="text-sm font-mono text-[#C5A059] font-semibold">${appt.time_slot || 'Morning Session'}</span>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     // Modal Controls
@@ -246,7 +252,7 @@
 
       const confirmBtn = document.getElementById('confirm-booking-btn');
       confirmBtn.disabled = true;
-      confirmBtn.textContent = 'Scheduling...';
+      confirmBtn.textContent = 'Submitting...';
 
       const serviceVal = document.getElementById('book-service').value || 'Signature Estate Cleaning';
       const appointmentDateVal = document.getElementById('book-date').value;
@@ -254,6 +260,7 @@
       const notesVal = document.getElementById('book-notes').value;
 
       try {
+        // 1. Insert appointment as 'pending'
         const { error } = await _supabase
           .from('appointments')
           .insert([{
@@ -263,38 +270,43 @@
             appointment_date: appointmentDateVal,
             time_slot: timeSlotVal,
             notes: notesVal,
-            status: 'confirmed'
+            status: 'pending'
           }]);
 
         if (error) {
           throw new Error(error.message);
         }
 
+        // 2. Send email notification to concierge addresses via EmailJS
         try {
           if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
-            await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
+            const emailParams = {
               client_email: currentUser.email,
+              client_name: currentUser.user_metadata?.full_name || 'Client',
               service: serviceVal,
               appointment_date: appointmentDateVal,
               time_slot: timeSlotVal,
-              notes: notesVal
-            });
+              notes: notesVal,
+              to_email: 'concierge@luxoraelitecsa.com, conciege@luxoraelitecleaningsa.com'
+            };
+
+            await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, emailParams);
           }
         } catch (emailError) {
-          console.warn("EmailJS notification skipped:", emailError);
+          console.warn("Concierge email notification skipped/errored:", emailError);
         }
 
         bookingModal.classList.add('hidden');
         document.getElementById('booking-form').reset();
-        showStatus('Appointment scheduled successfully!');
+        showStatus('Booking request submitted! Pending administrator review.');
         fetchAppointments(currentUser.id);
 
       } catch (err) {
         console.error("Booking error:", err);
-        showStatus(err.message || 'Failed to create appointment.', true);
+        showStatus(err.message || 'Failed to submit appointment request.', true);
       } finally {
         confirmBtn.disabled = false;
-        confirmBtn.textContent = 'Confirm Booking';
+        confirmBtn.textContent = 'Submit Booking Request';
       }
     });
 
@@ -354,4 +366,3 @@
   </script>
 </body>
 </html>
-
