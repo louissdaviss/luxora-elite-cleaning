@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Client Account Portal | Luxora Elite</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">
 
@@ -142,6 +142,9 @@
   </div>
 
   <script>
+    // Initialize EmailJS
+    emailjs.init("0zMvCnJB9Jy4_IokL");
+
     const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -246,6 +249,7 @@
       const time_slot = document.getElementById('book-time').value;
       const notes = document.getElementById('book-notes').value;
 
+      // 1. Save to Supabase Database
       const { error } = await _supabase
         .from('appointments')
         .insert([{
@@ -259,12 +263,27 @@
 
       if (error) {
         showStatus(error.message, true);
-      } else {
-        showStatus('Appointment scheduled successfully!');
-        bookingModal.classList.add('hidden');
-        document.getElementById('booking-form').reset();
-        fetchAppointments(currentUser.id);
+        return;
       }
+
+      // 2. Send Instant Email Notification via EmailJS
+      try {
+        await emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+          client_email: currentUser.email,
+          service_type: service_type,
+          appointment_date: appointment_date,
+          time_slot: time_slot,
+          notes: notes
+        });
+
+        showStatus('Appointment scheduled and email notification sent!');
+      } catch (emailError) {
+        showStatus('Appointment saved, but email notification failed.', true);
+      }
+
+      bookingModal.classList.add('hidden');
+      document.getElementById('booking-form').reset();
+      fetchAppointments(currentUser.id);
     });
 
     // Profile Edit Controls
