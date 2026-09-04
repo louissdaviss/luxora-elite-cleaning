@@ -1,343 +1,103 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Portal | Luxora Elite Cleaning</title>
+  <title>Client Account Portal | Luxora Elite</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- EmailJS SDK -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
-    .gold-text { color: #C5A059; }
-    .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-    .calendar-day.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.25); font-weight: bold; color: #FFF; }
-    .time-slot-btn.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.25); color: #FFF; font-weight: bold; }
-    .time-slot-btn.booked { opacity: 0.3; cursor: not-allowed; background-color: #1E293B; border-color: #334155; text-decoration: line-through; }
-  </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 min-h-screen">
 
-  <!-- Header Navigation -->
-  <header class="border-b border-slate-800 bg-[#0B0F17]/90 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3 group">
-        <img src="Logo.png" alt="Luxora Elite Logo" class="h-12 w-auto object-contain">
-        <div class="flex flex-col">
-          <span class="text-xl font-bold tracking-widest uppercase text-white leading-tight">
-            Luxora <span class="gold-text">Elite</span>
-          </span>
-          <span class="text-[10px] font-semibold tracking-[0.25em] text-white uppercase mt-0.5">
-            CLEANING SA
-          </span>
-        </div>
-      </a>
-
-      <div class="flex items-center space-x-6">
-        <span id="welcomeUser" class="text-sm text-slate-400">Welcome, Member</span>
-        <button id="logoutBtn" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-[#C5A059] transition-colors">Log Out</button>
-      </div>
+  <nav class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-full border border-[#C5A059] flex items-center justify-center bg-slate-800 text-[#C5A059] font-bold text-xs">LXE</div>
+      <span class="font-bold text-slate-200 tracking-wider text-sm font-serif">LUXORA ELITE PORTAL</span>
     </div>
-  </header>
-
-  <!-- Main Portal Content -->
-  <main class="max-w-7xl mx-auto px-6 py-12 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
     
-    <!-- Left Column: Profile & Special Instructions -->
-    <div class="space-y-8">
-      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
-        <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-          <h3 class="text-base font-bold uppercase tracking-wider gold-text">Account Profile</h3>
-          <button id="editProfileBtn" class="text-xs gold-text hover:underline font-semibold">Edit Profile</button>
-        </div>
-        <div class="space-y-2 text-xs text-slate-300">
-          <p><strong>Full Name:</strong> <span id="clientName">Louis Davis</span></p>
-          <p><strong>Email Address:</strong> <span id="clientEmail">louissdaviss@gmail.com</span></p>
-          <p><strong>Phone Number:</strong> <span id="clientPhone">(210) 555-0199</span></p>
-          <p><strong>Service Residence:</strong> <span id="clientAddress">23609 Canyon Golf Rd. #3001 SAN ANTONIO, TX 78260</span></p>
-          <p><strong>Membership / Plan:</strong> <span id="clientPlan" class="gold-text font-semibold">Executive Residential Cleaning</span></p>
-        </div>
-      </div>
+    <button id="logout-btn" class="px-4 py-2 rounded-lg bg-red-950/80 border border-red-800 text-red-200 hover:bg-red-900 transition-colors text-xs uppercase font-semibold">
+      Log Out
+    </button>
+  </nav>
 
-      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
-        <h3 class="text-base font-bold uppercase tracking-wider gold-text">Special Instructions</h3>
-        <textarea id="clientInstructions" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 focus:outline-none focus:border-[#C5A059]" placeholder="Gate codes, pet notices, custom focus areas..."></textarea>
-        <button id="saveInstructionsBtn" class="w-full py-2.5 rounded-xl border border-slate-700 text-xs font-bold uppercase tracking-wider gold-text hover:border-[#C5A059] transition-colors">Save Instructions</button>
-      </div>
-    </div>
-
-    <!-- Center & Right Columns: Interactive Scheduler & Credits -->
-    <div class="lg:col-span-2 space-y-8">
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
       
-      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-end">
         <div>
-          <span class="text-xs uppercase text-slate-400 block">Current Balance</span>
-          <span class="text-2xl font-bold text-white">$0.00</span>
-        </div>
-        <div>
-          <span class="text-xs uppercase text-slate-400 block">Prepaid Credits</span>
-          <span id="creditCount" class="text-2xl font-bold gold-text">2 Sessions</span>
-        </div>
-        <div>
-          <button class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Make Payment / Prepay</button>
+          <div class="inline-block px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700 mb-2">
+            <span class="text-[10px] font-mono tracking-widest text-slate-400 uppercase mr-1">Member No.</span>
+            <span id="welcome-member-no" class="text-xs font-mono font-bold text-white">#LXE-00000</span>
+          </div>
+
+          <h1 class="text-2xl font-serif font-bold text-[#C5A059]">Welcome, <span id="welcome-name">Client</span></h1>
+          <p class="text-slate-400 text-sm mt-1">Here is your personal estate care profile and account details.</p>
         </div>
       </div>
 
-      <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-6">
-        <h3 class="text-base font-bold uppercase tracking-wider gold-text">Schedule & Availability</h3>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <button id="prevMonthBtn" class="text-xs text-slate-400 hover:gold-text">&lt; Prev</button>
-              <span id="calendarMonthLabel" class="text-xs font-bold text-slate-300 uppercase tracking-wider">September 2026</span>
-              <button id="nextMonthBtn" class="text-xs text-slate-400 hover:gold-text">Next &gt;</button>
-            </div>
-            <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-slate-500 font-bold mb-1">
-              <div>SU</div><div>MO</div><div>TU</div><div>WE</div><div>TH</div><div>FR</div><div>SA</div>
-            </div>
-            <div id="calendarDaysGrid" class="grid grid-cols-7 gap-1"></div>
-          </div>
-
-          <div>
-            <div class="flex justify-between items-center mb-2">
-              <label class="block text-xs uppercase tracking-wider text-slate-400">Select Time Slot</label>
-              <span class="text-[10px] text-slate-500">1-Hour Windows</span>
-            </div>
-            <div id="timeSlotContainer" class="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1"></div>
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Account Holder Name</span>
+          <p id="user-display-name" class="text-slate-200 font-semibold text-base">Loading...</p>
         </div>
 
-        <div class="pt-6 border-t border-slate-800 space-y-4">
-          <h4 class="text-xs font-bold uppercase tracking-wider gold-text">Upcoming Appointment</h4>
-          <div id="appointmentDisplay" class="text-xs text-slate-400 bg-slate-950 p-4 rounded-xl border border-slate-800">
-            No active bookings scheduled for this cycle. Select a date and time slot above to lock in your next service.
-          </div>
-          <button id="confirmAppointmentBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Confirm Appointment</button>
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Email Address</span>
+          <p id="user-display-email" class="text-slate-200 font-semibold text-base">Loading...</p>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 md:col-span-2">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Service Address</span>
+          <p id="user-display-address" class="text-slate-200 font-semibold text-base">No service address provided yet</p>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 md:col-span-2">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Unique Client ID</span>
+          <p id="user-display-id" class="font-mono text-slate-400 text-xs">Loading...</p>
         </div>
       </div>
 
     </div>
   </main>
 
-  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-    © 2026 Luxora Elite Cleaning SA. All rights reserved.
-  </footer>
-
   <script>
-    // Initialize EmailJS with your Public Key
-    (function(){
-      emailjs.init("0zMvCnJB9Jy4_IokL");
-    })();
-
     const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let currentDate = new Date(2026, 8, 3); 
-    let selectedDateStr = '2026-09-03';
-    let selectedSlot = null;
+    function generateMemberNo(userId) {
+      if (!userId) return '#LXE-00000';
+      const hash = userId.replace(/[^a-zA-Z0-9]/g, '').slice(-5).toUpperCase();
+      return `#LXE-${hash}`;
+    }
 
-    document.addEventListener('DOMContentLoaded', async () => {
+    async function initPortal() {
       const { data: { session } } = await _supabase.auth.getSession();
-      if (session && session.user) {
-        const userId = session.user.id;
-        const userEmail = session.user.email;
-        document.getElementById('clientEmail').textContent = userEmail;
 
-        const { data: profile } = await _supabase.from('profiles').select('*').eq('id', userId).single();
-        let fullName = profile?.full_name || 'Louis Davis';
-        if (profile) {
-          document.getElementById('clientName').textContent = fullName;
-          if (profile.phone) document.getElementById('clientPhone').textContent = profile.phone;
-          if (profile.address) document.getElementById('clientAddress').textContent = profile.address;
-          if (profile.plan) document.getElementById('clientPlan').textContent = profile.plan;
-          if (profile.prepaid_credits !== undefined) {
-            document.getElementById('creditCount').textContent = `${profile.prepaid_credits} Sessions`;
-          }
-          if (profile.instructions) {
-            document.getElementById('clientInstructions').value = profile.instructions;
-          }
-        }
-
-        const firstName = fullName.trim().split(' ')[0] || userEmail.split('@')[0];
-        document.getElementById('welcomeUser').textContent = `Welcome, ${firstName}`;
+      if (!session) {
+        window.location.href = 'portal-login.html';
+        return;
       }
 
-      renderCalendar();
-      generateAmPmSlots();
-      await fetchAndApplyBookedSlots();
+      const user = session.user;
+      const fullName = user.user_metadata?.full_name || 'Client Member';
+      const address = user.user_metadata?.address || 'No service address provided yet';
+      const memberNumber = generateMemberNo(user.id);
 
-      document.getElementById('prevMonthBtn').addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar();
-      });
-      document.getElementById('nextMonthBtn').addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar();
-      });
+      document.getElementById('welcome-member-no').textContent = memberNumber;
+      document.getElementById('welcome-name').textContent = fullName;
+      document.getElementById('user-display-name').textContent = fullName;
+      document.getElementById('user-display-email').textContent = user.email;
+      document.getElementById('user-display-address').textContent = address;
+      document.getElementById('user-display-id').textContent = user.id;
+    }
 
-      document.getElementById('confirmAppointmentBtn')?.addEventListener('click', async () => {
-        const text = document.getElementById('clientInstructions').value;
-        const clientName = document.getElementById('clientName').textContent;
-        const clientEmail = document.getElementById('clientEmail').textContent;
-
-        if (!selectedDateStr || !selectedSlot) {
-          alert('Please select both a date from the calendar and an available time slot.');
-          return;
-        }
-
-        const { data: { session } } = await _supabase.auth.getSession();
-        const activeUserId = session?.user?.id || null;
-
-        // 1. Save booking to Supabase
-        const { error } = await _supabase.from('bookings').insert([{
-          user_id: activeUserId,
-          booking_date: selectedDateStr,
-          time_slot: selectedSlot,
-          instructions: text
-        }]);
-
-        if (error) {
-          console.error(error);
-          alert(`Booking error: ${error.message}`);
-          return;
-        }
-
-        // 2. Send instant email alert via EmailJS
-        emailjs.send("service_oklex4t", "template_vznxczl", {
-          to_email: "luxoraelitecleaningsa@gmail.com",
-          client_name: clientName,
-          client_email: clientEmail,
-          booking_date: selectedDateStr,
-          time_slot: selectedSlot,
-          instructions: text || 'None provided'
-        }).then(
-          () => console.log('Booking notification sent to luxoraelitecleaningsa@gmail.com'),
-          (err) => console.error('EmailJS Error:', err)
-        );
-
-        document.getElementById('appointmentDisplay').innerHTML = `
-          <div class="text-slate-200 space-y-1">
-            <p><strong>Scheduled Date:</strong> ${selectedDateStr}</p>
-            <p><strong>Time Slot:</strong> ${selectedSlot}</p>
-            <p><strong>Instructions:</strong> ${text || 'None provided'}</p>
-            <span class="inline-block mt-2 text-[10px] bg-emerald-900/50 text-emerald-400 border border-emerald-700 px-2 py-0.5 rounded font-semibold">Confirmed</span>
-          </div>
-        `;
-
-        alert('Appointment successfully saved and notification email sent!');
-        await fetchAndApplyBookedSlots();
-      });
-
-      document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-        await _supabase.auth.signOut();
-        window.location.href = 'portal-login.html';
-      });
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await _supabase.auth.signOut();
+      window.location.href = 'index.html';
     });
 
-    function renderCalendar() {
-      const calendarGrid = document.getElementById('calendarDaysGrid');
-      const label = document.getElementById('calendarMonthLabel');
-      if (!calendarGrid) return;
-
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-
-      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      label.textContent = `${monthNames[month]} ${year}`;
-
-      calendarGrid.innerHTML = '';
-
-      const firstDay = new Date(year, month, 1).getDay();
-      const totalDays = new Date(year, month + 1, 0).getDate();
-
-      for (let i = 0; i < firstDay; i++) {
-        calendarGrid.appendChild(document.createElement('div'));
-      }
-
-      for (let day = 1; day <= totalDays; day++) {
-        const btn = document.createElement('button');
-        const formattedDay = day < 10 ? `0${day}` : day;
-        const formattedMonth = (month + 1) < 10 ? `0${month + 1}` : month + 1;
-        const dateStr = `${year}-${formattedMonth}-${formattedDay}`;
-
-        btn.className = 'calendar-day border border-slate-800 bg-slate-950 py-2 rounded-lg text-xs text-slate-300 hover:border-[#C5A059] transition-colors';
-        btn.textContent = day;
-
-        if (dateStr === selectedDateStr) {
-          btn.classList.add('selected');
-        }
-
-        btn.addEventListener('click', async () => {
-          document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-          btn.classList.add('selected');
-          selectedDateStr = dateStr;
-          selectedSlot = null;
-          await fetchAndApplyBookedSlots();
-        });
-
-        calendarGrid.appendChild(btn);
-      }
-    }
-
-    function format12Hour(hour) {
-      const period = hour >= 12 && hour < 24 ? 'PM' : 'AM';
-      let h12 = hour % 12;
-      if (h12 === 0) h12 = 12;
-      const formattedH = h12 < 10 ? `0${h12}` : `${h12}`;
-      return `${formattedH}:00 ${period}`;
-    }
-
-    function generateAmPmSlots() {
-      const container = document.getElementById('timeSlotContainer');
-      if (!container) return;
-      container.innerHTML = '';
-
-      for (let hour = 0; hour < 24; hour++) {
-        const startStr = format12Hour(hour);
-        const endStr = format12Hour((hour + 1) % 24);
-        const slotText = `${startStr} - ${endStr}`;
-
-        const btn = document.createElement('button');
-        btn.className = 'time-slot-btn border border-slate-800 bg-slate-950 p-2 rounded-xl text-[10px] text-slate-300 hover:border-[#C5A059] transition-colors text-center';
-        btn.dataset.slot = slotText;
-        btn.textContent = slotText;
-
-        btn.addEventListener('click', () => {
-          if (btn.classList.contains('booked')) return;
-          document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          selectedSlot = slotText;
-        });
-
-        container.appendChild(btn);
-      }
-    }
-
-    async function fetchAndApplyBookedSlots() {
-      const slotBtns = document.querySelectorAll('.time-slot-btn');
-      slotBtns.forEach(btn => {
-        btn.classList.remove('booked', 'selected');
-        btn.disabled = false;
-        btn.textContent = btn.dataset.slot;
-      });
-
-      const { data: booked } = await _supabase.from('bookings').select('time_slot').eq('booking_date', selectedDateStr);
-      
-      if (booked && booked.length > 0) {
-        const bookedList = booked.map(b => b.time_slot);
-        slotBtns.forEach(btn => {
-          if (bookedList.includes(btn.dataset.slot)) {
-            btn.classList.add('booked');
-            btn.disabled = true;
-            btn.textContent = `${btn.dataset.slot} (Booked)`;
-          }
-        });
-      }
-    }
+    initPortal();
   </script>
 </body>
 </html>
