@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,7 +136,7 @@
 
         <div class="flex justify-end space-x-3 pt-2">
           <button type="button" id="cancel-booking-btn" class="px-4 py-2.5 rounded-xl border border-slate-700 text-slate-400 hover:text-white text-xs font-semibold uppercase tracking-wider">Cancel</button>
-          <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider hover:opacity-90">Confirm Booking</button>
+          <button type="submit" id="confirm-booking-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider hover:opacity-90">Confirm Booking</button>
         </div>
       </form>
     </div>
@@ -239,53 +240,65 @@
     document.getElementById('close-modal-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
     document.getElementById('cancel-booking-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
 
-    // Handle Appointment Booking Submission
+    // Handle Appointment Booking Submission with Robust Error Trapping
     document.getElementById('booking-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!currentUser) return;
+
+      const confirmBtn = document.getElementById('confirm-booking-btn');
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Scheduling...';
 
       const service_type = document.getElementById('book-service').value;
       const appointment_date = document.getElementById('book-date').value;
       const time_slot = document.getElementById('book-time').value;
       const notes = document.getElementById('book-notes').value;
 
-      // 1. Save directly to Supabase Database
-      const { error } = await _supabase
-        .from('appointments')
-        .insert([{
-          user_id: currentUser.id,
-          service_type: service_type,
-          appointment_date: appointment_date,
-          time_slot: time_slot,
-          notes: notes,
-          status: 'confirmed'
-        }]);
-
-      if (error) {
-        showStatus(error.message, true);
-        return;
-      }
-
-      // 2. Safely attempt EmailJS notification
       try {
-        if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
-          await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
-            client_email: currentUser.email,
+        // 1. Save directly to Supabase Database
+        const { error } = await _supabase
+          .from('appointments')
+          .insert([{
+            user_id: currentUser.id,
             service_type: service_type,
             appointment_date: appointment_date,
             time_slot: time_slot,
-            notes: notes
-          });
-        }
-      } catch (emailError) {
-        console.error("EmailJS notification error:", emailError);
-      }
+            notes: notes,
+            status: 'confirmed'
+          }]);
 
-      // 3. Close Modal, Reset Form, Display Status, and Refresh List
-      bookingModal.classList.add('hidden');
-      document.getElementById('booking-form').reset();
-      showStatus('Appointment scheduled successfully!');
-      fetchAppointments(currentUser.id);
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        // 2. Safely attempt EmailJS notification (Optional/Safe fallback)
+        try {
+          if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
+            await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
+              client_email: currentUser.email,
+              service_type: service_type,
+              appointment_date: appointment_date,
+              time_slot: time_slot,
+              notes: notes
+            });
+          }
+        } catch (emailError) {
+          console.warn("EmailJS notification skipped/errored:", emailError);
+        }
+
+        // 3. Close Modal, Reset Form, Display Status, and Refresh List
+        bookingModal.classList.add('hidden');
+        document.getElementById('booking-form').reset();
+        showStatus('Appointment scheduled successfully!');
+        fetchAppointments(currentUser.id);
+
+      } catch (err) {
+        console.error("Booking error:", err);
+        showStatus(err.message || 'Failed to create appointment. Please check your database connection or table schema.', true);
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Confirm Booking';
+      }
     });
 
     // Profile Edit Controls
@@ -320,16 +333,16 @@
       }
     });
 
-    // Auth Listener
+    // Auth Listener & Session Guard
     _supabase.auth.onAuthStateChange((event, session) => {
       if (!session && event !== 'INITIAL_SESSION') {
-        window.location.replace('portal-login.html');
+        window.location.replace('index.html');
       } else if (session) {
         renderUser(session.user);
       } else {
         _supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
           if (!currentSession) {
-            window.location.replace('portal-login.html');
+            window.location.replace('index.html');
           } else {
             renderUser(currentSession.user);
           }
@@ -344,3 +357,5 @@
   </script>
 </body>
 </html>
+
+```
