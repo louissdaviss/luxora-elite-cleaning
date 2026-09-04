@@ -1,346 +1,202 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Account Portal | Luxora Elite</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<script>
+  // Initialize EmailJS with your Public Key
+  emailjs.init("0zMvCnJB9Jy4_IokL");
 
-  <nav class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 flex justify-between items-center">
-    <div class="flex items-center space-x-3">
-      <div class="w-8 h-8 rounded-full border border-[#C5A059] flex items-center justify-center bg-slate-800 text-[#C5A059] font-bold text-xs">LXE</div>
-      <span class="font-bold text-slate-200 tracking-wider text-sm font-serif">LUXORA ELITE PORTAL</span>
-    </div>
-    
-    <button id="logout-btn" class="px-4 py-2 rounded-lg bg-red-950/80 border border-red-800 text-red-200 hover:bg-red-900 transition-colors text-xs uppercase font-semibold">
-      Log Out
-    </button>
-  </nav>
+  const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  <main class="max-w-4xl mx-auto px-6 py-12 space-y-8">
-    
-    <!-- Profile Section -->
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
-      <div class="border-b border-slate-800 pb-4 flex justify-between items-end">
-        <div>
-          <div class="inline-block px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700 mb-2">
-            <span class="text-[10px] font-mono tracking-widest text-slate-400 uppercase mr-1">Member No.</span>
-            <span id="welcome-member-no" class="text-xs font-mono font-bold text-white">#LXE-00000</span>
-          </div>
+  let isEditing = false;
+  let currentUser = null;
 
-          <h1 class="text-2xl font-serif font-bold text-[#C5A059]">Welcome, <span id="welcome-name">Client</span></h1>
-          <p class="text-slate-400 text-sm mt-1">Manage your private estate profile and view account details.</p>
-        </div>
+  function generateMemberNo(userId) {
+    if (!userId) return '#LXE-00000';
+    const hash = userId.replace(/[^a-zA-Z0-9]/g, '').slice(-5).toUpperCase();
+    return `#LXE-${hash}`;
+  }
 
-        <button id="edit-toggle-btn" class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 hover:text-[#C5A059] transition-colors text-xs font-semibold uppercase tracking-wider">
-          Edit Profile
-        </button>
-      </div>
+  function showStatus(message, isError = false) {
+    const alertBox = document.getElementById('status-alert');
+    alertBox.classList.remove('hidden', 'bg-red-900/50', 'text-red-300', 'bg-emerald-900/50', 'text-emerald-300');
+    alertBox.classList.add(isError ? 'bg-red-900/50' : 'bg-emerald-900/50', isError ? 'text-red-300' : 'text-emerald-300');
+    alertBox.textContent = message;
+    setTimeout(() => alertBox.classList.add('hidden'), 4000);
+  }
 
-      <div id="status-alert" class="hidden p-3 rounded-xl text-xs font-semibold text-center"></div>
+  function toggleEditMode(enable) {
+    isEditing = enable;
+    const inputs = ['input-name', 'input-phone', 'input-address'];
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      el.disabled = !enable;
+      el.classList.toggle('bg-slate-900', enable);
+      el.classList.toggle('bg-slate-950', !enable);
+    });
 
-      <form id="profile-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Full Name</label>
-          <input type="text" id="input-name" disabled class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#C5A059] disabled:opacity-80">
-        </div>
+    document.getElementById('save-actions').classList.toggle('hidden', !enable);
+    document.getElementById('edit-toggle-btn').classList.toggle('hidden', enable);
+  }
 
-        <div>
-          <label class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Email Address (Read-only)</label>
-          <input type="email" id="input-email" disabled class="w-full bg-slate-950/50 border border-slate-800/60 text-slate-400 rounded-xl p-3 text-sm focus:outline-none cursor-not-allowed">
-        </div>
+  function renderUser(user) {
+    currentUser = user;
+    const meta = user.user_metadata || {};
+    const fullName = meta.full_name || 'Client Member';
 
-        <div>
-          <label class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Phone Number</label>
-          <input type="tel" id="input-phone" placeholder="(555) 000-0000" disabled class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#C5A059] disabled:opacity-80">
-        </div>
+    document.getElementById('welcome-member-no').textContent = generateMemberNo(user.id);
+    document.getElementById('welcome-name').textContent = fullName;
+    document.getElementById('input-name').value = fullName;
+    document.getElementById('input-email').value = user.email;
+    document.getElementById('input-phone').value = meta.phone || '';
+    document.getElementById('input-address').value = meta.address || '';
+    document.getElementById('user-display-id').textContent = user.id;
 
-        <div>
-          <label class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Unique Client ID</label>
-          <p id="user-display-id" class="font-mono text-slate-400 text-xs bg-slate-950/50 border border-slate-800/60 p-3.5 rounded-xl truncate">Loading...</p>
-        </div>
+    fetchAppointments(user.id);
+  }
 
-        <div class="md:col-span-2">
-          <label class="text-xs uppercase tracking-wider text-slate-500 block mb-1">Service Address</label>
-          <input type="text" id="input-address" placeholder="123 Estate Blvd, Suite 100" disabled class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#C5A059] disabled:opacity-80">
-        </div>
+  async function fetchAppointments(userId) {
+    const container = document.getElementById('appointments-container');
 
-        <div id="save-actions" class="hidden md:col-span-2 flex justify-end space-x-3 pt-2">
-          <button type="button" id="cancel-btn" class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-400 hover:text-slate-200 text-xs font-semibold uppercase tracking-wider">Cancel</button>
-          <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider hover:opacity-90">Save Changes</button>
-        </div>
-      </form>
-    </div>
+    const { data: appointments, error } = await _supabase
+      .from('appointments')
+      .select('*')
+      .eq('user_id', userId)
+      .order('appointment_date', { ascending: true });
 
-    <!-- Confirmed Appointments Section -->
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
-      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
-        <div>
-          <h2 class="text-xl font-serif font-bold text-[#C5A059]">Confirmed Service Appointments</h2>
-          <p class="text-slate-400 text-sm mt-1">Your upcoming scheduled estate cleanings and maintenance sessions.</p>
-        </div>
-        <button id="open-booking-btn" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity">
-          Book New Service
-        </button>
-      </div>
-
-      <div id="appointments-container" class="space-y-4">
+    if (error || !appointments || appointments.length === 0) {
+      container.innerHTML = `
         <div class="text-center py-8 border border-dashed border-slate-800 rounded-xl">
           <p class="text-slate-500 text-sm">No upcoming confirmed appointments scheduled.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = appointments.map(appt => `
+      <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded ${
+              appt.status === 'confirmed' ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' : 'bg-amber-950 border border-amber-800 text-amber-400'
+            }">${appt.status}</span>
+            <span class="text-xs text-slate-400">${appt.service_type || 'Estate Cleaning'}</span>
+          </div>
+          <p class="text-slate-200 font-semibold text-base mt-1">${appt.appointment_date || 'TBD'}</p>
+          <p class="text-slate-400 text-xs mt-0.5">${appt.notes || 'Standard Service Package'}</p>
+        </div>
+        <div class="text-right border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
+          <span class="text-xs uppercase tracking-wider text-slate-500 block">Time Slot</span>
+          <span class="text-sm font-mono text-[#C5A059] font-semibold">${appt.time_slot || 'Morning Session'}</span>
         </div>
       </div>
-    </div>
+    `).join('');
+  }
 
-  </main>
+  // Modal Controls
+  const bookingModal = document.getElementById('booking-modal');
+  document.getElementById('open-booking-btn').addEventListener('click', () => bookingModal.classList.remove('hidden'));
+  document.getElementById('close-modal-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
+  document.getElementById('cancel-booking-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
 
-  <!-- Booking Modal -->
-  <div id="booking-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-slate-900 border border-slate-800 max-w-lg w-full rounded-2xl p-6 shadow-2xl space-y-5">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <h3 class="text-lg font-serif font-bold text-[#C5A059]">Schedule Estate Service</h3>
-        <button id="close-modal-btn" class="text-slate-400 hover:text-white text-lg">&times;</button>
-      </div>
+  // Handle Appointment Booking Submission
+  document.getElementById('booking-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentUser) return;
 
-      <form id="booking-form" class="space-y-4">
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Service Package</label>
-          <select id="book-service" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-[#C5A059]">
-            <option value="Signature Estate Cleaning">Signature Estate Cleaning</option>
-            <option value="Deep Restoration & Detail">Deep Restoration & Detail</option>
-            <option value="Recurring Maintenance Session">Recurring Maintenance Session</option>
-          </select>
-        </div>
+    // Retrieve values using exact form IDs
+    const service_type = document.getElementById('book-service').value;
+    const appointment_date = document.getElementById('book-date').value;
+    const time_slot = document.getElementById('book-time').value;
+    const notes = document.getElementById('book-notes').value;
 
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Requested Date</label>
-          <input type="date" id="book-date" required class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-[#C5A059] text-slate-100">
-        </div>
+    // 1. Save directly to Supabase Database
+    const { error } = await _supabase
+      .from('appointments')
+      .insert([{
+        user_id: currentUser.id,
+        service_type: service_type,
+        appointment_date: appointment_date,
+        time_slot: time_slot,
+        notes: notes,
+        status: 'confirmed'
+      }]);
 
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Preferred Time Window</label>
-          <select id="book-time" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-[#C5A059]">
-            <option value="Morning Window (8:00 AM - 12:00 PM)">Morning Window (8:00 AM - 12:00 PM)</option>
-            <option value="Afternoon Window (12:00 PM - 4:00 PM)">Afternoon Window (12:00 PM - 4:00 PM)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Special Instructions / Notes</label>
-          <textarea id="book-notes" placeholder="Access code, focus areas, pet instructions..." rows="3" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-[#C5A059]"></textarea>
-        </div>
-
-        <div class="flex justify-end space-x-3 pt-2">
-          <button type="button" id="cancel-booking-btn" class="px-4 py-2.5 rounded-xl border border-slate-700 text-slate-400 hover:text-white text-xs font-semibold uppercase tracking-wider">Cancel</button>
-          <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider hover:opacity-90">Confirm Booking</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // Initialize EmailJS with your Public Key
-    emailjs.init("0zMvCnJB9Jy4_IokL");
-
-    const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    let isEditing = false;
-    let currentUser = null;
-
-    function generateMemberNo(userId) {
-      if (!userId) return '#LXE-00000';
-      const hash = userId.replace(/[^a-zA-Z0-9]/g, '').slice(-5).toUpperCase();
-      return `#LXE-${hash}`;
+    if (error) {
+      showStatus(error.message, true);
+      return;
     }
 
-    function showStatus(message, isError = false) {
-      const alertBox = document.getElementById('status-alert');
-      alertBox.classList.remove('hidden', 'bg-red-900/50', 'text-red-300', 'bg-emerald-900/50', 'text-emerald-300');
-      alertBox.classList.add(isError ? 'bg-red-900/50' : 'bg-emerald-900/50', isError ? 'text-red-300' : 'text-emerald-300');
-      alertBox.textContent = message;
-      setTimeout(() => alertBox.classList.add('hidden'), 4000);
-    }
-
-    function toggleEditMode(enable) {
-      isEditing = enable;
-      const inputs = ['input-name', 'input-phone', 'input-address'];
-      inputs.forEach(id => {
-        const el = document.getElementById(id);
-        el.disabled = !enable;
-        el.classList.toggle('bg-slate-900', enable);
-        el.classList.toggle('bg-slate-950', !enable);
-      });
-
-      document.getElementById('save-actions').classList.toggle('hidden', !enable);
-      document.getElementById('edit-toggle-btn').classList.toggle('hidden', enable);
-    }
-
-    function renderUser(user) {
-      currentUser = user;
-      const meta = user.user_metadata || {};
-      const fullName = meta.full_name || 'Client Member';
-
-      document.getElementById('welcome-member-no').textContent = generateMemberNo(user.id);
-      document.getElementById('welcome-name').textContent = fullName;
-      document.getElementById('input-name').value = fullName;
-      document.getElementById('input-email').value = user.email;
-      document.getElementById('input-phone').value = meta.phone || '';
-      document.getElementById('input-address').value = meta.address || '';
-      document.getElementById('user-display-id').textContent = user.id;
-
-      fetchAppointments(user.id);
-    }
-
-    async function fetchAppointments(userId) {
-      const container = document.getElementById('appointments-container');
-
-      const { data: appointments, error } = await _supabase
-        .from('appointments')
-        .select('*')
-        .eq('user_id', userId)
-        .order('appointment_date', { ascending: true });
-
-      if (error || !appointments || appointments.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-8 border border-dashed border-slate-800 rounded-xl">
-            <p class="text-slate-500 text-sm">No upcoming confirmed appointments scheduled.</p>
-          </div>`;
-        return;
-      }
-
-      container.innerHTML = appointments.map(appt => `
-        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded ${
-                appt.status === 'confirmed' ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' : 'bg-amber-950 border border-amber-800 text-amber-400'
-              }">${appt.status}</span>
-              <span class="text-xs text-slate-400">${appt.service_type || 'Estate Cleaning'}</span>
-            </div>
-            <p class="text-slate-200 font-semibold text-base mt-1">${appt.appointment_date || 'TBD'}</p>
-            <p class="text-slate-400 text-xs mt-0.5">${appt.notes || 'Standard Service Package'}</p>
-          </div>
-          <div class="text-right border-t md:border-t-0 border-slate-800 pt-3 md:pt-0">
-            <span class="text-xs uppercase tracking-wider text-slate-500 block">Time Slot</span>
-            <span class="text-sm font-mono text-[#C5A059] font-semibold">${appt.time_slot || 'Morning Session'}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Modal Control
-    const bookingModal = document.getElementById('booking-modal');
-    document.getElementById('open-booking-btn').addEventListener('click', () => bookingModal.classList.remove('hidden'));
-    document.getElementById('close-modal-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
-    document.getElementById('cancel-booking-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
-
-    // Handle Appointment Booking Submission
-    document.getElementById('booking-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!currentUser) return;
-
-      const service_type = document.getElementById('book-service').value;
-      const appointment_date = document.getElementById('book-date').value;
-      const time_slot = document.getElementById('book-time').value;
-      const notes = document.getElementById('book-notes').value;
-
-      // Save to Supabase Database
-      const { error } = await _supabase
-        .from('appointments')
-        .insert([{
-          user_id: currentUser.id,
-          service_type,
-          appointment_date,
-          time_slot,
-          notes,
-          status: 'confirmed'
-        }]);
-
-      if (error) {
-        showStatus(error.message, true);
-        return;
-      }
-
-      // Attempt Email Notification
-      try {
-        if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
-          await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
-            client_email: currentUser.email,
-            service_type: service_type,
-            appointment_date: appointment_date,
-            time_slot: time_slot,
-            notes: notes
-          });
-        }
-      } catch (emailError) {
-        console.error("Email notification error:", emailError);
-      }
-
-      // Hide modal, show status, reset form, and reload list
-      bookingModal.classList.add('hidden');
-      document.getElementById('booking-form').reset();
-      showStatus('Appointment scheduled successfully!');
-      fetchAppointments(currentUser.id);
-    });
-
-    // Profile Edit Controls
-    document.getElementById('edit-toggle-btn').addEventListener('click', () => toggleEditMode(true));
-    document.getElementById('cancel-btn').addEventListener('click', () => {
-      if (currentUser) renderUser(currentUser);
-      toggleEditMode(false);
-    });
-
-    // Profile Update Handler
-    document.getElementById('profile-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const updatedName = document.getElementById('input-name').value;
-      const updatedPhone = document.getElementById('input-phone').value;
-      const updatedAddress = document.getElementById('input-address').value;
-
-      const { data, error } = await _supabase.auth.updateUser({
-        data: {
-          full_name: updatedName,
-          phone: updatedPhone,
-          address: updatedAddress
-        }
-      });
-
-      if (error) {
-        showStatus(error.message, true);
-      } else {
-        showStatus('Profile updated successfully!');
-        toggleEditMode(false);
-        renderUser(data.user);
-      }
-    });
-
-    // Auth Listener
-    _supabase.auth.onAuthStateChange((event, session) => {
-      if (!session && event !== 'INITIAL_SESSION') {
-        window.location.replace('portal-login.html');
-      } else if (session) {
-        renderUser(session.user);
-      } else {
-        _supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-          if (!currentSession) {
-            window.location.replace('portal-login.html');
-          } else {
-            renderUser(currentSession.user);
-          }
+    // 2. Safely attempt EmailJS notification
+    try {
+      if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
+        await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
+          client_email: currentUser.email,
+          service_type: service_type,
+          appointment_date: appointment_date,
+          time_slot: time_slot,
+          notes: notes
         });
       }
+    } catch (emailError) {
+      console.error("EmailJS notification error:", emailError);
+    }
+
+    // 3. Close Modal, Reset Form, Display Status, and Refresh List
+    bookingModal.classList.add('hidden');
+    document.getElementById('booking-form').reset();
+    showStatus('Appointment scheduled successfully!');
+    fetchAppointments(currentUser.id);
+  });
+
+  // Profile Edit Controls
+  document.getElementById('edit-toggle-btn').addEventListener('click', () => toggleEditMode(true));
+  document.getElementById('cancel-btn').addEventListener('click', () => {
+    if (currentUser) renderUser(currentUser);
+    toggleEditMode(false);
+  });
+
+  // Profile Update Handler
+  document.getElementById('profile-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const updatedName = document.getElementById('input-name').value;
+    const updatedPhone = document.getElementById('input-phone').value;
+    const updatedAddress = document.getElementById('input-address').value;
+
+    const { data, error } = await _supabase.auth.updateUser({
+      data: {
+        full_name: updatedName,
+        phone: updatedPhone,
+        address: updatedAddress
+      }
     });
 
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-      await _supabase.auth.signOut();
-      window.location.replace('index.html');
-    });
-  </script>
-</body>
-</html>
+    if (error) {
+      showStatus(error.message, true);
+    } else {
+      showStatus('Profile updated successfully!');
+      toggleEditMode(false);
+      renderUser(data.user);
+    }
+  });
+
+  // Auth Listener
+  _supabase.auth.onAuthStateChange((event, session) => {
+    if (!session && event !== 'INITIAL_SESSION') {
+      window.location.replace('portal-login.html');
+    } else if (session) {
+      renderUser(session.user);
+    } else {
+      _supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+        if (!currentSession) {
+          window.location.replace('portal-login.html');
+        } else {
+          renderUser(currentSession.user);
+        }
+      });
+    }
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await _supabase.auth.signOut();
+    window.location.replace('index.html');
+  });
+</script>
