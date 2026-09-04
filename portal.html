@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -221,7 +220,7 @@
               <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded ${
                 appt.status === 'confirmed' ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' : 'bg-amber-950 border border-amber-800 text-amber-400'
               }">${appt.status}</span>
-              <span class="text-xs text-slate-400">${appt.service_type || 'Estate Cleaning'}</span>
+              <span class="text-xs text-slate-400">${appt.service || appt.service_type || 'Estate Cleaning'}</span>
             </div>
             <p class="text-slate-200 font-semibold text-base mt-1">${appt.appointment_date || 'TBD'}</p>
             <p class="text-slate-400 text-xs mt-0.5">${appt.notes || 'Standard Service Package'}</p>
@@ -240,7 +239,7 @@
     document.getElementById('close-modal-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
     document.getElementById('cancel-booking-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
 
-    // Handle Appointment Booking Submission with Robust Error Trapping
+    // Handle Appointment Booking Submission with Corrected Database Column Mapping
     document.getElementById('booking-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!currentUser) return;
@@ -255,12 +254,12 @@
       const notes = document.getElementById('book-notes').value;
 
       try {
-        // 1. Save directly to Supabase Database
+        // 1. Save directly to Supabase Database matching the 'service' column
         const { error } = await _supabase
           .from('appointments')
           .insert([{
             user_id: currentUser.id,
-            service_type: service_type,
+            service: service_type,
             appointment_date: appointment_date,
             time_slot: time_slot,
             notes: notes,
@@ -271,7 +270,7 @@
           throw new Error(error.message);
         }
 
-        // 2. Safely attempt EmailJS notification (Optional/Safe fallback)
+        // 2. Safely attempt EmailJS notification
         try {
           if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
             await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
@@ -294,7 +293,7 @@
 
       } catch (err) {
         console.error("Booking error:", err);
-        showStatus(err.message || 'Failed to create appointment. Please check your database connection or table schema.', true);
+        showStatus(err.message || 'Failed to create appointment.', true);
       } finally {
         confirmBtn.disabled = false;
         confirmBtn.textContent = 'Confirm Booking';
@@ -333,7 +332,7 @@
       }
     });
 
-    // Auth Listener & Session Guard
+    // Auth Listener
     _supabase.auth.onAuthStateChange((event, session) => {
       if (!session && event !== 'INITIAL_SESSION') {
         window.location.replace('index.html');
@@ -357,5 +356,3 @@
   </script>
 </body>
 </html>
-
-```
