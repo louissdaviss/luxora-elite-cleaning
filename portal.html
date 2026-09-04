@@ -220,7 +220,7 @@
               <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded ${
                 appt.status === 'confirmed' ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' : 'bg-amber-950 border border-amber-800 text-amber-400'
               }">${appt.status}</span>
-              <span class="text-xs text-slate-400">${appt.service || 'Estate Cleaning'}</span>
+              <span class="text-xs text-slate-400">${appt.service || appt.service_type || 'Estate Cleaning'}</span>
             </div>
             <p class="text-slate-200 font-semibold text-base mt-1">${appt.appointment_date || 'TBD'}</p>
             <p class="text-slate-400 text-xs mt-0.5">${appt.notes || 'Standard Service Package'}</p>
@@ -248,7 +248,7 @@
       confirmBtn.disabled = true;
       confirmBtn.textContent = 'Scheduling...';
 
-      const serviceVal = document.getElementById('book-service').value;
+      const serviceVal = document.getElementById('book-service').value || 'Signature Estate Cleaning';
       const appointmentDateVal = document.getElementById('book-date').value;
       const timeSlotVal = document.getElementById('book-time').value;
       const notesVal = document.getElementById('book-notes').value;
@@ -259,6 +259,7 @@
           .insert([{
             user_id: currentUser.id,
             service: serviceVal,
+            service_type: serviceVal,
             appointment_date: appointmentDateVal,
             time_slot: timeSlotVal,
             notes: notesVal,
@@ -269,7 +270,6 @@
           throw new Error(error.message);
         }
 
-        // Optional EmailJS integration block
         try {
           if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
             await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
