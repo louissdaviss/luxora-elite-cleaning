@@ -220,7 +220,7 @@
               <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded ${
                 appt.status === 'confirmed' ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' : 'bg-amber-950 border border-amber-800 text-amber-400'
               }">${appt.status}</span>
-              <span class="text-xs text-slate-400">${appt.service || appt.service_type || 'Estate Cleaning'}</span>
+              <span class="text-xs text-slate-400">${appt.service || 'Estate Cleaning'}</span>
             </div>
             <p class="text-slate-200 font-semibold text-base mt-1">${appt.appointment_date || 'TBD'}</p>
             <p class="text-slate-400 text-xs mt-0.5">${appt.notes || 'Standard Service Package'}</p>
@@ -239,7 +239,7 @@
     document.getElementById('close-modal-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
     document.getElementById('cancel-booking-btn').addEventListener('click', () => bookingModal.classList.add('hidden'));
 
-    // Handle Appointment Booking Submission with Corrected Database Column Mapping
+    // Handle Appointment Booking Submission
     document.getElementById('booking-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!currentUser) return;
@@ -248,21 +248,20 @@
       confirmBtn.disabled = true;
       confirmBtn.textContent = 'Scheduling...';
 
-      const service_type = document.getElementById('book-service').value;
-      const appointment_date = document.getElementById('book-date').value;
-      const time_slot = document.getElementById('book-time').value;
-      const notes = document.getElementById('book-notes').value;
+      const serviceVal = document.getElementById('book-service').value;
+      const appointmentDateVal = document.getElementById('book-date').value;
+      const timeSlotVal = document.getElementById('book-time').value;
+      const notesVal = document.getElementById('book-notes').value;
 
       try {
-        // 1. Save directly to Supabase Database matching the 'service' column
         const { error } = await _supabase
           .from('appointments')
           .insert([{
             user_id: currentUser.id,
-            service: service_type,
-            appointment_date: appointment_date,
-            time_slot: time_slot,
-            notes: notes,
+            service: serviceVal,
+            appointment_date: appointmentDateVal,
+            time_slot: timeSlotVal,
+            notes: notesVal,
             status: 'confirmed'
           }]);
 
@@ -270,22 +269,21 @@
           throw new Error(error.message);
         }
 
-        // 2. Safely attempt EmailJS notification
+        // Optional EmailJS integration block
         try {
           if (typeof YOUR_SERVICE_ID !== 'undefined' && typeof YOUR_TEMPLATE_ID !== 'undefined') {
             await emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, {
               client_email: currentUser.email,
-              service_type: service_type,
-              appointment_date: appointment_date,
-              time_slot: time_slot,
-              notes: notes
+              service: serviceVal,
+              appointment_date: appointmentDateVal,
+              time_slot: timeSlotVal,
+              notes: notesVal
             });
           }
         } catch (emailError) {
-          console.warn("EmailJS notification skipped/errored:", emailError);
+          console.warn("EmailJS notification skipped:", emailError);
         }
 
-        // 3. Close Modal, Reset Form, Display Status, and Refresh List
         bookingModal.classList.add('hidden');
         document.getElementById('booking-form').reset();
         showStatus('Appointment scheduled successfully!');
