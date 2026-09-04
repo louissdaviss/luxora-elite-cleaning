@@ -62,6 +62,15 @@
     const toggleBtn = document.getElementById('toggle-mode-btn');
     const alertBox = document.getElementById('alert-box');
 
+    // Auto-check session on load
+    async function checkAuthStatus() {
+      const { data: { session } } = await _supabase.auth.getSession();
+      if (session) {
+        window.location.replace('portal.html');
+      }
+    }
+    checkAuthStatus();
+
     toggleBtn.addEventListener('click', () => {
       isSignUp = !isSignUp;
       showAlert('', false);
@@ -113,8 +122,8 @@
         if (error) {
           showAlert(error.message, true);
         } else {
-          showAlert('Account created! Redirecting to your portal...', false);
-          setTimeout(() => { window.location.href = 'portal.html'; }, 1500);
+          showAlert('Account created! Redirecting...', false);
+          setTimeout(() => { window.location.replace('portal.html'); }, 1000);
         }
       } else {
         const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
@@ -122,7 +131,7 @@
         if (error) {
           showAlert(error.message, true);
         } else {
-          window.location.href = 'portal.html';
+          window.location.replace('portal.html');
         }
       }
     });
