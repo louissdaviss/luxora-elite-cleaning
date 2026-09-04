@@ -3,170 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Portal | Luxora Elite Cleaning</title>
+  <title>Client Portal Login | Luxora Elite Cleaning</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
-    .gold-text { color: #C5A059; }
-    .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-    .time-slot.selected { border-color: #C5A059; background-color: rgba(197, 160, 89, 0.2); }
-  </style>
 </head>
-<body class="min-h-screen p-6">
-  <!-- Header -->
-  <header class="max-w-6xl mx-auto flex justify-between items-center pb-6 border-b border-slate-800">
-    <h1 class="text-xl font-bold tracking-wider gold-text">LUXORA ELITE</h1>
-    <div class="flex items-center gap-4 text-xs">
-      <span id="userEmail" class="text-slate-400">Loading...</span>
-      <button id="logoutBtn" class="border border-slate-700 px-3 py-1 rounded-lg hover:border-red-500 hover:text-red-400 transition-colors">LOG OUT</button>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-6">
+
+  <div class="max-w-md w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-xl space-y-6">
+    <div class="text-center">
+      <h1 class="text-2xl font-bold text-[#C5A059] tracking-wider font-serif">LUXORA ELITE</h1>
+      <p id="form-title" class="text-slate-400 text-sm mt-1">Sign in to access your private portal</p>
     </div>
-  </header>
 
-  <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-    <!-- Account Profile Section -->
-    <section class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
-      <div class="flex justify-between items-center">
-        <h2 class="text-sm font-bold uppercase tracking-wider gold-text">Account Profile</h2>
-        <button id="editProfileBtn" class="text-xs gold-text hover:underline">Edit Profile</button>
-      </div>
-      <div class="text-xs space-y-2 text-slate-300">
-        <p><strong>Primary Contact:</strong> <span id="profileEmail">Loading...</span></p>
-        <p><strong>Service Residence:</strong> <span id="residenceText">Pending Profile Configuration</span></p>
-        <p><strong>Active Plan:</strong> Executive Residential Cleaning</p>
+    <!-- Alert Box -->
+    <div id="alert-box" class="hidden p-3 rounded-lg text-xs font-semibold text-center"></div>
+
+    <!-- Auth Form -->
+    <form id="auth-form" class="space-y-4">
+      <div id="name-field" class="hidden">
+        <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Full Name</label>
+        <input type="text" id="full-name" placeholder="John Doe" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]">
       </div>
 
-      <!-- Special Instructions -->
-      <div class="pt-4 border-t border-slate-800 space-y-2">
-        <h3 class="text-xs font-bold uppercase tracking-wider gold-text">Special Instructions</h3>
-        <textarea id="instructionsInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 focus:outline-none focus:border-[#C5A059]" placeholder="clean the kitchen counter sweep and mop"></textarea>
-        <button id="saveInstructionsBtn" class="w-full py-2 rounded-xl border border-slate-700 text-xs font-bold uppercase tracking-wider hover:border-[#C5A059] gold-text transition-colors">Save Instructions</button>
-      </div>
-
-      <!-- Balance & Billing -->
-      <div class="pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
-        <div>
-          <p class="text-slate-400">Current Balance: <strong class="text-white">$0.00</strong></p>
-          <p class="text-slate-400">Prepaid Credits: <strong class="text-white">2 Sessions</strong></p>
-        </div>
-        <button class="gold-bg-gradient text-white px-3 py-2 rounded-xl text-xs font-bold uppercase hover:opacity-90 transition-opacity">Make Payment / Prepay</button>
-      </div>
-    </section>
-
-    <!-- Schedule & Availability Section -->
-    <section class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4 flex flex-col justify-between">
       <div>
-        <h2 class="text-sm font-bold uppercase tracking-wider gold-text mb-4">Schedule & Availability</h2>
-        
-        <div class="space-y-4">
-          <div>
-            <label class="block text-xs text-slate-400 mb-1">Select Date</label>
-            <input type="date" id="scheduleDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 focus:outline-none focus:border-[#C5A059]">
-          </div>
-
-          <div>
-            <label class="block text-xs text-slate-400 mb-2">Available Time Slots</label>
-            <div class="grid grid-cols-2 gap-2" id="slotContainer">
-              <button class="time-slot border border-slate-800 bg-slate-950 p-3 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors" data-slot="09:00 AM - 12:00 PM">09:00 AM - 12:00 PM</button>
-              <button class="time-slot border border-slate-800 bg-slate-950 p-3 rounded-xl text-xs text-slate-300 hover:border-[#C5A059] transition-colors" data-slot="01:00 PM - 04:00 PM">01:00 PM - 04:00 PM</button>
-            </div>
-          </div>
-        </div>
+        <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Email Address</label>
+        <input type="email" id="email" required placeholder="client@example.com" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]">
       </div>
 
-      <!-- Upcoming Appointment Confirmation -->
-      <div class="pt-4 border-t border-slate-800 space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider gold-text">Upcoming Appointment</h3>
-        <div id="appointmentCard" class="text-xs text-slate-400 bg-slate-950 p-3 rounded-xl border border-slate-800">
-          No active bookings scheduled for this cycle. Choose a date and slot above to lock in your next estate maintenance.
-        </div>
-        <button id="confirmAppointmentBtn" class="w-full py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">Confirm Appointment</button>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Password</label>
+        <input type="password" id="password" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#C5A059]">
       </div>
-    </section>
-  </main>
+
+      <button type="submit" id="submit-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#DFBF77] to-[#C5A059] text-xs font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity">
+        Log In
+      </button>
+    </form>
+
+    <!-- Toggle Login / Signup -->
+    <div class="text-center pt-2">
+      <button id="toggle-mode-btn" class="text-xs text-slate-400 hover:text-[#C5A059] transition-colors">
+        Don't have an account? Create one here
+      </button>
+    </div>
+  </div>
 
   <script>
     const SUPABASE_URL = 'https://yeabwnysjhhmjoimprbb.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BjyrfHBBJ8V13lC00V5p2A_gSxohGxZ';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let selectedTimeSlot = null;
+    let isSignUp = false;
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      // 1. Check Auth Session
-      const { data: { session } } = await _supabase.auth.getSession();
-      if (!session) {
-        window.location.href = 'portal-login.html';
+    const form = document.getElementById('auth-form');
+    const formTitle = document.getElementById('form-title');
+    const nameField = document.getElementById('name-field');
+    const submitBtn = document.getElementById('submit-btn');
+    const toggleBtn = document.getElementById('toggle-mode-btn');
+    const alertBox = document.getElementById('alert-box');
+
+    // Toggle between Login & Account Creation
+    toggleBtn.addEventListener('click', () => {
+      isSignUp = !isSignUp;
+      showAlert('', false);
+
+      if (isSignUp) {
+        formTitle.textContent = 'Create a new client profile';
+        nameField.classList.remove('hidden');
+        submitBtn.textContent = 'Create Account';
+        toggleBtn.textContent = 'Already have an account? Log in';
+      } else {
+        formTitle.textContent = 'Sign in to access your private portal';
+        nameField.classList.add('hidden');
+        submitBtn.textContent = 'Log In';
+        toggleBtn.textContent = "Don't have an account? Create one here";
+      }
+    });
+
+    function showAlert(message, isError = true) {
+      if (!message) {
+        alertBox.classList.add('hidden');
         return;
       }
+      alertBox.classList.remove('hidden', 'bg-red-900/50', 'text-red-300', 'bg-emerald-900/50', 'text-emerald-300');
+      if (isError) {
+        alertBox.classList.add('bg-red-900/50', 'text-red-300');
+      } else {
+        alertBox.classList.add('bg-emerald-900/50', 'text-emerald-300');
+      }
+      alertBox.textContent = message;
+    }
 
-      const userEmail = session.user.email;
-      document.getElementById('userEmail').textContent = userEmail;
-      document.getElementById('profileEmail').textContent = userEmail;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const fullName = document.getElementById('full-name').value;
 
-      // Set default date to today
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('scheduleDate').value = today;
+      showAlert('', false);
 
-      // 2. Time Slot Selection Handler
-      const slotButtons = document.querySelectorAll('.time-slot');
-      slotButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          slotButtons.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          selectedTimeSlot = btn.dataset.slot;
+      if (isSignUp) {
+        // Handle User Sign Up
+        const { data, error } = await _supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: fullName }
+          }
         });
-      });
 
-      // 3. Edit Profile Action
-      document.getElementById('editProfileBtn').addEventListener('click', () => {
-        const residenceElem = document.getElementById('residenceText');
-        const currentRes = residenceElem.textContent === 'Pending Profile Configuration' ? '' : residenceElem.textContent;
-        const newAddress = prompt('Enter Service Residence Address:', currentRes);
-        if (newAddress && newAddress.trim() !== '') {
-          residenceElem.textContent = newAddress.trim();
-          alert('Residence address updated!');
-        }
-      });
-
-      // 4. Save Special Instructions
-      document.getElementById('saveInstructionsBtn').addEventListener('click', () => {
-        const text = document.getElementById('instructionsInput').value;
-        if (text.trim() === '') {
-          alert('Please write special instructions before saving.');
+        if (error) {
+          showAlert(error.message, true);
         } else {
-          alert('Special instructions saved!');
+          showAlert('Account created! Redirecting to your portal...', false);
+          setTimeout(() => { window.location.href = 'portal.html'; }, 1500);
         }
-      });
+      } else {
+        // Handle User Login
+        const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
 
-      // 5. Confirm Appointment Action
-      document.getElementById('confirmAppointmentBtn').addEventListener('click', () => {
-        const dateVal = document.getElementById('scheduleDate').value;
-        const instructionsVal = document.getElementById('instructionsInput').value;
-
-        if (!dateVal || !selectedTimeSlot) {
-          alert('Please select both a date and an available time slot.');
-          return;
+        if (error) {
+          showAlert(error.message, true);
+        } else {
+          window.location.href = 'portal.html';
         }
-
-        const appointmentCard = document.getElementById('appointmentCard');
-        appointmentCard.innerHTML = `
-          <div class="text-slate-200 space-y-1">
-            <p><strong>Date:</strong> ${dateVal}</p>
-            <p><strong>Slot:</strong> ${selectedTimeSlot}</p>
-            <p><strong>Instructions:</strong> ${instructionsVal || 'None provided'}</p>
-            <span class="inline-block mt-2 text-[10px] bg-emerald-900/50 text-emerald-400 border border-emerald-700 px-2 py-0.5 rounded">Confirmed</span>
-          </div>
-        `;
-
-        alert('Appointment successfully confirmed!');
-      });
-
-      // 6. Logout Action
-      document.getElementById('logoutBtn').addEventListener('click', async () => {
-        await _supabase.auth.signOut();
-        window.location.href = 'portal-login.html';
-      });
+      }
     });
   </script>
 </body>
