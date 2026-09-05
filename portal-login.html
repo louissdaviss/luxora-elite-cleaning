@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Service | Luxora Elite Cleaning SA</title>
+  <title>Client Portal | Luxora Elite Cleaning SA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
@@ -132,6 +132,9 @@
 
   <!-- Script Handler -->
   <script>
+    const serviceID = 'service_oklex4t';
+
+    // 1. Submit New & Confirmed Booking Request (Template 1)
     document.getElementById('luxoraBookingForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
@@ -140,17 +143,16 @@
 
       result.classList.remove('hidden');
       result.className = 'text-center text-xs mt-3 text-slate-400';
-      result.innerHTML = "Sending request...";
+      result.innerHTML = "Sending booking request...";
       btn.disabled = true;
 
-      // Your Active Service ID and Fixed Template ID
-      const serviceID = 'service_oklex4t';
-      const templateID = 'template_hegta2c';
+      // Template 1 ID: Dual-sent to Admin & Client
+      const bookingTemplateID = 'template_hegta2c';
 
-      emailjs.sendForm(serviceID, templateID, this)
+      emailjs.sendForm(serviceID, bookingTemplateID, this)
         .then(() => {
           result.className = 'text-center text-xs mt-3 text-emerald-400 font-bold';
-          result.innerHTML = "Booking request sent successfully! We will contact you shortly.";
+          result.innerHTML = "Booking request submitted! Check your inbox for confirmation.";
           document.getElementById('luxoraBookingForm').reset();
           btn.disabled = false;
         }, (error) => {
@@ -159,6 +161,25 @@
           btn.disabled = false;
         });
     });
+
+    // 2. Trigger Cancellation Notice (Template 2)
+    function sendCancellationNotice(clientName, clientEmail, serviceType) {
+      const templateParams = {
+        user_name: clientName,
+        user_email: clientEmail,
+        service_type: serviceType
+      };
+
+      // Replace 'template_cancelled' with your actual 2nd Template ID from EmailJS
+      const cancellationTemplateID = 'template_cancelled';
+
+      emailjs.send(serviceID, cancellationTemplateID, templateParams)
+        .then(() => {
+          alert('Cancellation notice sent to ' + clientEmail);
+        }, (error) => {
+          alert('Failed to send cancellation notice: ' + (error.text || JSON.stringify(error)));
+        });
+    }
   </script>
 
 </body>
