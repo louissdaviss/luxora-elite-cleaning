@@ -11,7 +11,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
     (function() {
-      // Paste your EmailJS Public Key here
+      // Your Active EmailJS Public Key
       emailjs.init("0zMvCnJB9Jy4_IokL");
     })();
   </script>
@@ -143,9 +143,9 @@
       result.innerHTML = "Sending request...";
       btn.disabled = true;
 
-      // Paste your EmailJS Service ID and Template ID here
-      const serviceID = 'YOUR_SERVICE_ID';
-      const templateID = 'YOUR_TEMPLATE_ID';
+      // Your Active Service ID and Fixed Template ID
+      const serviceID = 'service_oklex4t';
+      const templateID = 'template_hegta2c';
 
       emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
@@ -155,7 +155,7 @@
           btn.disabled = false;
         }, (error) => {
           result.className = 'text-center text-xs mt-3 text-rose-400 font-bold';
-          result.innerHTML = "Failed to send request. Check your keys or console.";
+          result.innerHTML = "Failed to send request. Error: " + (error.text || JSON.stringify(error));
           btn.disabled = false;
         });
     });
