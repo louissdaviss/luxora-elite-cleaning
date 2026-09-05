@@ -149,7 +149,7 @@
         Our site is currently undergoing updates. Enter a passcode to preview.
       </p>
 
-      <form id="lockForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         <input 
           type="password" 
           id="accessPassword" 
@@ -167,7 +167,7 @@
         >
           Unlock Access
         </button>
-      </form>
+      </div>
     </div>
 
     <p style="color: #64748B; font-size: 0.75rem; margin: 0;">© 2026 Luxora Elite Cleaning SA</p>
@@ -176,17 +176,21 @@
   <!-- Lock Screen Logic -->
   <script>
     (function() {
-      // 1. Check if unlocked in this browsing session
-      if (sessionStorage.getItem('luxora_unlocked') === 'true') {
-        var modal = document.getElementById('lockScreenModal');
-        if (modal) modal.remove();
-        return;
+      function checkUnlock() {
+        if (sessionStorage.getItem('luxora_unlocked') === 'true') {
+          var modal = document.getElementById('lockScreenModal');
+          if (modal) modal.style.display = 'none';
+          document.body.style.overflow = '';
+          return true;
+        }
+        return false;
       }
 
-      // 2. Disable scrolling while locked
+      if (checkUnlock()) return;
+
       document.body.style.overflow = 'hidden';
 
-      function attemptUnlock() {
+      function doUnlock() {
         var input = document.getElementById('accessPassword');
         var err = document.getElementById('errorMessage');
         var modal = document.getElementById('lockScreenModal');
@@ -199,7 +203,7 @@
         if (validKeys.indexOf(val) !== -1) {
           sessionStorage.setItem('luxora_unlocked', 'true');
           document.body.style.overflow = '';
-          if (modal) modal.remove();
+          if (modal) modal.style.display = 'none';
         } else {
           if (err) err.style.display = 'block';
           input.value = '';
@@ -207,26 +211,25 @@
         }
       }
 
-      // Attach button and keypress handlers when DOM is ready
-      function initLock() {
+      function bindEvents() {
         var btn = document.getElementById('unlockBtn');
         var input = document.getElementById('accessPassword');
         
-        if (btn) btn.addEventListener('click', attemptUnlock);
+        if (btn) btn.onclick = doUnlock;
         if (input) {
-          input.addEventListener('keypress', function(e) {
+          input.onkeydown = function(e) {
             if (e.key === 'Enter') {
               e.preventDefault();
-              attemptUnlock();
+              doUnlock();
             }
-          });
+          };
         }
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initLock);
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        bindEvents();
       } else {
-        initLock();
+        document.addEventListener('DOMContentLoaded', bindEvents);
       }
     })();
   </script>
