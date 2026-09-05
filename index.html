@@ -734,29 +734,33 @@
     const passwordInput = document.getElementById('accessPassword');
     const errorMessage = document.getElementById('errorMessage');
 
+    // Passcodes (All lowercase for accurate matching)
     const VALID_PASSCODES = ['guest123', 'admin2026', 'luxora2026'];
 
-    // Check if user is already unlocked in this session
+    // Check if previously unlocked
     if (sessionStorage.getItem('luxora_unlocked') === 'true') {
-      lockModal.style.display = 'none';
+      if (lockModal) lockModal.style.display = 'none';
+      document.body.style.overflow = '';
     } else {
       document.body.style.overflow = 'hidden';
     }
 
-    lockForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const enteredPasscode = passwordInput.value.trim();
+    if (lockForm) {
+      lockForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const enteredPasscode = passwordInput.value.trim().toLowerCase();
 
-      if (VALID_PASSCODES.includes(enteredPasscode)) {
-        sessionStorage.setItem('luxora_unlocked', 'true');
-        lockModal.style.display = 'none';
-        document.body.style.overflow = '';
-      } else {
-        errorMessage.classList.remove('hidden');
-        passwordInput.value = '';
-        passwordInput.focus();
-      }
-    });
+        if (VALID_PASSCODES.includes(enteredPasscode)) {
+          sessionStorage.setItem('luxora_unlocked', 'true');
+          lockModal.style.display = 'none';
+          document.body.style.overflow = '';
+        } else {
+          errorMessage.classList.remove('hidden');
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      });
+    }
   })();
 </script>
 </body>
