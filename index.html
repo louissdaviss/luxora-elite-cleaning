@@ -525,5 +525,109 @@
         estimateForm.addEventListener('change', calculateEstimate);
         calculateEstimate();
     </script>
+    <!-- Lock Screen Modal Overlay -->
+<div id="lockScreenModal" class="fixed inset-0 z-[9999] bg-[#0B0F17] flex flex-col justify-between items-center px-6 py-12 overflow-y-auto">
+  
+  <!-- Background Glowing Accents -->
+  <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Header / Brand Logo -->
+  <header class="flex flex-col items-center gap-4 text-center z-10 mt-8">
+    <img src="Logo.png" alt="Luxora Elite Logo" class="h-20 w-auto object-contain drop-shadow-lg">
+    <div class="flex flex-col items-center">
+      <span class="text-3xl font-bold tracking-widest uppercase text-white leading-tight">
+        Luxora <span style="color: #C5A059;">Elite</span>
+      </span>
+      <span class="text-xs font-semibold tracking-[0.3em] text-white uppercase mt-1">
+        CLEANING SA
+      </span>
+    </div>
+  </header>
+
+  <!-- Lock Screen Card -->
+  <main class="max-w-md w-full bg-slate-900/90 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl text-center space-y-6 z-10 my-auto">
+    <div class="space-y-3">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 text-[#C5A059] shadow-inner">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      <span class="inline-block px-3 py-1 text-[10px] uppercase font-bold tracking-widest bg-[#C5A059]/10 text-[#C5A059] border border-[#C5A059]/30 rounded-full">
+        Private Access Only
+      </span>
+      <h1 class="text-2xl font-bold text-white tracking-wide">Coming Soon</h1>
+      <p class="text-xs text-slate-400 leading-relaxed">
+        Our digital portal and platform are currently undergoing exclusive updates. Please enter a valid password to access the site.
+      </p>
+    </div>
+
+    <!-- Password Input Form -->
+    <form id="lockForm" class="space-y-4 pt-2">
+      <input 
+        type="password" 
+        id="accessPassword" 
+        placeholder="Enter Passcode..." 
+        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#C5A059] transition-colors text-center font-mono tracking-widest"
+        required
+      >
+      <p id="errorMessage" class="text-[11px] text-rose-400 font-semibold hidden">
+        Incorrect passcode. Please try again.
+      </p>
+      <button 
+        type="submit" 
+        class="w-full py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-lg hover:opacity-90 transition-opacity"
+        style="background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%);"
+      >
+        Unlock Access
+      </button>
+    </form>
+
+    <!-- Passcode Hints -->
+    <div class="pt-4 border-t border-slate-800/80 text-[11px] text-slate-400 flex flex-col gap-1">
+      <span>Guest Passcode: <strong class="font-mono text-[#C5A059]">guest123</strong></span>
+      <span>Admin Passcode: <strong class="font-mono text-[#C5A059]">admin2026</strong></span>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-[11px] text-slate-500 z-10">
+    © 2026 Luxora Elite Cleaning SA. All rights reserved.
+  </footer>
+</div>
+
+<!-- Lock Screen Logic -->
+<script>
+  (function() {
+    const lockModal = document.getElementById('lockScreenModal');
+    const lockForm = document.getElementById('lockForm');
+    const passwordInput = document.getElementById('accessPassword');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const VALID_PASSCODES = ['guest123', 'admin2026', 'luxora2026'];
+
+    // Check if user is already unlocked in this session
+    if (sessionStorage.getItem('luxora_unlocked') === 'true') {
+      lockModal.style.display = 'none';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+
+    lockForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const enteredPasscode = passwordInput.value.trim();
+
+      if (VALID_PASSCODES.includes(enteredPasscode)) {
+        sessionStorage.setItem('luxora_unlocked', 'true');
+        lockModal.style.display = 'none';
+        document.body.style.overflow = '';
+      } else {
+        errorMessage.classList.remove('hidden');
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
+  })();
+</script>
 </body>
 </html>
