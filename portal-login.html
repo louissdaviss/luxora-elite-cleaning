@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Service | Luxora Elite Cleaning SA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- EmailJS SDK Integration -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      // Paste your EmailJS Public Key here
+      emailjs.init("YOUR_PUBLIC_KEY");
+    })();
+  </script>
+
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
     .gold-text { color: #C5A059; }
@@ -14,28 +24,37 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between p-6">
 
-  <div class="max-w-lg mx-auto w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-xl my-12">
+  <!-- Header -->
+  <header class="max-w-7xl mx-auto w-full flex items-center justify-between py-4 border-b border-slate-800">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="Logo.png" alt="Luxora Elite Logo" class="h-10 w-auto object-contain">
+      <span class="text-lg font-bold tracking-widest uppercase text-white">
+        Luxora <span class="gold-text">Elite</span>
+      </span>
+    </a>
+    <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors">
+      ← Back to Home
+    </a>
+  </header>
+
+  <!-- Booking Container -->
+  <div class="max-w-lg mx-auto w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl my-10">
     <div class="text-center mb-8">
       <h1 class="text-2xl font-bold uppercase tracking-wider text-white">
-        Luxora <span class="gold-text">Elite</span>
+        Client <span class="gold-text">Portal</span>
       </h1>
-      <p class="text-xs text-slate-400 mt-1">Book Your Private Cleaning Service</p>
+      <p class="text-xs text-slate-400 mt-1">Submit your private cleaning service request below</p>
     </div>
 
     <!-- Booking Form -->
-    <form action="https://api.web3forms.com/submit" method="POST" id="luxoraBookingForm" class="space-y-4">
+    <form id="luxoraBookingForm" class="space-y-4">
       
-      <!-- Web3Forms Config Keys -->
-      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
-      <input type="hidden" name="subject" value="New Luxora Elite Service Request">
-      <input type="hidden" name="from_name" value="Luxora Elite Booking Portal">
-
       <!-- Full Name -->
       <div>
         <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Full Name</label>
         <input 
           type="text" 
-          name="Client Name" 
+          name="user_name" 
           placeholder="Jane Doe" 
           required 
           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
@@ -47,7 +66,7 @@
         <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Email Address</label>
         <input 
           type="email" 
-          name="Client Email" 
+          name="user_email" 
           placeholder="jane@example.com" 
           required 
           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
@@ -59,7 +78,7 @@
         <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Phone Number</label>
         <input 
           type="tel" 
-          name="Client Phone" 
+          name="user_phone" 
           placeholder="(210) 555-0199" 
           required 
           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
@@ -70,7 +89,7 @@
       <div>
         <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Service Type</label>
         <select 
-          name="Service Requested" 
+          name="service_type" 
           required 
           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
         >
@@ -80,13 +99,14 @@
         </select>
       </div>
 
-      <!-- Special Instructions -->
+      <!-- Notes / Address -->
       <div>
-        <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Special Notes / Address</label>
+        <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Property Address & Details</label>
         <textarea 
-          name="Booking Details" 
+          name="message" 
           rows="3" 
-          placeholder="Property details, preferred date, or entry instructions..." 
+          placeholder="Service address, preferred dates, gate codes, or special instructions..." 
+          required
           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
         ></textarea>
       </div>
@@ -94,48 +114,50 @@
       <!-- Submit Button -->
       <button 
         type="submit" 
-        class="w-full py-3.5 gold-bg-gradient text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-lg hover:opacity-90 transition-opacity mt-4"
+        id="submitBtn"
+        class="w-full py-3.5 gold-bg-gradient text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-lg hover:opacity-90 transition-opacity mt-4 cursor-pointer"
       >
         Submit Booking Request
       </button>
 
-      <!-- Success / Error Status Messages -->
+      <!-- Feedback Status Message -->
       <div id="formResult" class="text-center text-xs mt-3 hidden"></div>
     </form>
   </div>
 
-  <!-- JavaScript Submission Handler -->
-  <script>
-    const form = document.getElementById('luxoraBookingForm');
-    const result = document.getElementById('formResult');
+  <!-- Footer -->
+  <footer class="text-center text-xs text-slate-600 py-4">
+    © 2026 Luxora Elite Cleaning SA. All rights reserved.
+  </footer>
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+  <!-- Script Handler -->
+  <script>
+    document.getElementById('luxoraBookingForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const result = document.getElementById('formResult');
+      const btn = document.getElementById('submitBtn');
+
       result.classList.remove('hidden');
       result.className = 'text-center text-xs mt-3 text-slate-400';
       result.innerHTML = "Sending request...";
+      btn.disabled = true;
 
-      const formData = new FormData(form);
+      // Paste your EmailJS Service ID and Template ID here
+      const serviceID = 'YOUR_SERVICE_ID';
+      const templateID = 'YOUR_TEMPLATE_ID';
 
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
-      })
-      .then(async (response) => {
-        let json = await response.json();
-        if (response.status == 200) {
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
           result.className = 'text-center text-xs mt-3 text-emerald-400 font-bold';
-          result.innerHTML = "Booking request sent! Check your inbox soon.";
-          form.reset();
-        } else {
+          result.innerHTML = "Booking request sent successfully! We will contact you shortly.";
+          document.getElementById('luxoraBookingForm').reset();
+          btn.disabled = false;
+        }, (error) => {
           result.className = 'text-center text-xs mt-3 text-rose-400 font-bold';
-          result.innerHTML = json.message || "Something went wrong. Please try again.";
-        }
-      })
-      .catch(error => {
-        result.className = 'text-center text-xs mt-3 text-rose-400 font-bold';
-        result.innerHTML = "Failed to send. Please check your internet connection.";
-      });
+          result.innerHTML = "Failed to send request. Check your keys or console.";
+          btn.disabled = false;
+        });
     });
   </script>
 
