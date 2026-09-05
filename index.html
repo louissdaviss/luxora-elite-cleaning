@@ -1,767 +1,235 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <title>Luxora Elite Cleaning SA | Five-Star Property Care</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        luxury: {
-                            bg: '#FFFFFF',
-                            surface: '#F8F9FA',
-                            card: '#FFFFFF',
-                            border: '#E5E7EB',
-                            dark: '#0B0F19',
-                            gold: '#C5A059',
-                            'gold-light': '#D4AF37',
-                            'gold-dark': '#9A7B38',
-                            muted: '#6B7280'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts: Inter & Playfair Display -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FFFFFF;
-            color: #1F2937;
-        }
-        h1, h2, h3, .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        .gold-gradient {
-            background: linear-gradient(135deg, #D4AF37 0%, #C5A059 50%, #9A7B38 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gold-bg-gradient {
-            background: linear-gradient(135deg, #D4AF37 0%, #C5A059 50%, #9A7B38 100%);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxora Elite Cleaning SA | Premium House & Estate Cleaning San Antonio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
+    .gold-text { color: #C5A059; }
+    .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
+    .gold-border { border-color: #C5A059; }
+  </style>
 </head>
-<body class="bg-white text-slate-800 antialiased selection:bg-[#C5A059] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center space-x-3 group">
-                <div class="w-10 h-10 rounded-full border border-[#C5A059]/60 flex items-center justify-center bg-slate-50 group-hover:border-[#C5A059] transition-colors shadow-sm">
-                    <span class="text-[#C5A059] font-serif font-bold text-xs">LXE</span>
-                </div>
-                <div>
-                    <span class="font-serif tracking-widest text-sm font-bold text-slate-900 block">LUXORA ELITE</span>
-                    <span class="text-[9px] uppercase tracking-[0.25em] text-[#C5A059] font-semibold block">Cleaning SA</span>
-                </div>
-            </a>
-
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
-                <a href="#home" class="text-slate-600 hover:text-[#C5A059] transition-colors">Home</a>
-                <a href="#services" class="text-slate-600 hover:text-[#C5A059] transition-colors">Services</a>
-                <a href="#about" class="text-slate-600 hover:text-[#C5A059] transition-colors">The Standard</a>
-                <a href="#calculator" class="text-slate-600 hover:text-[#C5A059] transition-colors">Estimate</a>
-                <a href="#contact" class="text-slate-600 hover:text-[#C5A059] transition-colors">Contact</a>
-                <a href="portal-login.html" class="text-slate-600 hover:text-[#C5A059] transition-colors">Client Portal</a>
-            </nav>
-
-            <!-- CTA Button -->
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="#contact" class="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-widest gold-bg-gradient text-white hover:opacity-90 transition-opacity shadow-md shadow-[#C5A059]/20">
-                    Request Consultation
-                </a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-slate-700 hover:text-[#C5A059] focus:outline-none">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
+  <!-- Header Navigation -->
+  <header class="border-b border-slate-800 bg-[#0B0F17]/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="Logo.png" alt="Luxora Elite Logo" class="h-12 w-auto object-contain">
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-widest uppercase text-white leading-tight">
+            Luxora <span class="gold-text">Elite</span>
+          </span>
+          <span class="text-[10px] font-semibold tracking-[0.25em] text-white uppercase mt-0.5">
+            CLEANING SA
+          </span>
         </div>
+      </a>
 
-        <!-- Mobile Menu Drawer -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-4 shadow-lg">
-            <a href="#home" class="block text-slate-700 hover:text-[#C5A059] text-sm tracking-wider uppercase">Home</a>
-            <a href="#services" class="block text-slate-700 hover:text-[#C5A059] text-sm tracking-wider uppercase">Services</a>
-            <a href="#about" class="block text-slate-700 hover:text-[#C5A059] text-sm tracking-wider uppercase">The Standard</a>
-            <a href="#calculator" class="block text-slate-700 hover:text-[#C5A059] text-sm tracking-wider uppercase">Estimate</a>
-            <a href="#contact" class="block text-slate-700 hover:text-[#C5A059] text-sm tracking-wider uppercase">Contact</a>
-            <a href="portal-login.html" class="block text-slate-700 hover:text-[#C5A059] text-sm tracking-wider uppercase">Client Portal</a>
-            <div class="pt-4">
-                <a href="#contact" class="block w-full text-center py-3 rounded-full text-xs font-semibold uppercase tracking-widest gold-bg-gradient text-white">
-                    Request Consultation
-                </a>
-            </div>
-        </div>
-    </header>
+      <nav class="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider text-slate-300">
+        <a href="#services" class="hover:text-[#C5A059] transition-colors">Services</a>
+        <a href="#about" class="hover:text-[#C5A059] transition-colors">About Us</a>
+        <a href="#memberships" class="hover:text-[#C5A059] transition-colors">Memberships</a>
+        <a href="portal-login.html" class="gold-text hover:underline font-semibold">Client Portal</a>
+      </nav>
 
-    <section id="home" class="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
-        <div class="absolute inset-0 z-0 opacity-15">
-            <img src="https://placehold.co/1920x1080/FFFFFF/CCCCCC?text=Luxora+Elite+Estate" alt="Luxury Interior" class="w-full h-full object-cover">
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center relative z-10">
-            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-[#C5A059]/40 bg-white shadow-sm mb-6">
-                <i class="fa-solid fa-shield-halved text-[#C5A059] text-xs"></i>
-                <span class="text-xs uppercase tracking-[0.2em] text-[#C5A059] font-medium">San Antonio's Premier Estate Care</span>
-            </div>
-
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight text-slate-900 max-w-4xl mx-auto leading-tight mb-6">
-                Discretion. Precision. <span class="gold-gradient">Perfection.</span>
-            </h1>
-
-            <p class="text-lg sm:text-2xl text-slate-600 font-serif italic mb-4">
-                "The Standard of Immaculate Living"
-            </p>
-
-            <p class="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto font-light leading-relaxed mb-10">
-                White-glove housekeeping and high-end property maintenance tailored for San Antonio’s most discerning residences and executive spaces.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest gold-bg-gradient text-white hover:scale-105 transition-transform shadow-xl shadow-[#C5A059]/20">
-                    Schedule Private Consultation
-                </a>
-                <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-300 hover:border-[#C5A059] text-slate-700 transition-colors bg-white shadow-sm">
-                    Explore Our Tiers
-                </a>
-            </div>
-
-            <!-- Trust Badges Bar -->
-            <div class="mt-20 pt-12 border-t border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
-                    <div class="text-[#C5A059] font-serif text-2xl font-bold mb-1">100%</div>
-                    <div class="text-xs uppercase tracking-wider text-slate-500 font-medium">Vetted & Bonded Staff</div>
-                </div>
-                <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
-                    <div class="text-[#C5A059] font-serif text-2xl font-bold mb-1">5-Star</div>
-                    <div class="text-xs uppercase tracking-wider text-slate-500 font-medium">Hospitality Standard</div>
-                </div>
-                <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
-                    <div class="text-[#C5A059] font-serif text-2xl font-bold mb-1">Strict</div>
-                    <div class="text-xs uppercase tracking-wider text-slate-500 font-medium">NDA & Privacy Protocols</div>
-                </div>
-                <div class="p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
-                    <div class="text-[#C5A059] font-serif text-2xl font-bold mb-1">Eco-Luxe</div>
-                    <div class="text-xs uppercase tracking-wider text-slate-500 font-medium">Organic Non-Toxic Formulations</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="py-28 bg-slate-50 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <span class="text-xs uppercase tracking-[0.3em] text-[#C5A059] font-semibold block mb-3">Tailored Offerings</span>
-                <h2 class="text-3xl sm:text-5xl font-serif font-bold text-slate-900 mb-6">Signature Cleaning Tiers</h2>
-                <p class="text-slate-600 text-base font-light">Every service is executed with meticulous attention to detail, customized to protect your fine furnishings, marble surfaces, and architectural finishes.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tier 1 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200 hover:border-[#C5A059] transition-all duration-300 flex flex-col justify-between group relative shadow-sm hover:shadow-xl">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-[#C5A059]/30 flex items-center justify-center text-[#C5A059] mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-house-chimney text-xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-serif font-semibold text-slate-900 mb-3">Residential Estates</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6">Comprehensive recurring maintenance designed for luxury homes, high-rise penthouses, and private compounds. Includes sweep, mop, dust, wipe and vacuum common areas.</p>
-                        <ul class="space-y-3 text-sm text-slate-600 mb-8">
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Fine furniture & wood care</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Kitchen sanitization & stainless polish</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Luxury bathroom disinfection</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Bed linens refreshed & staged</span></li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="block text-center py-3 rounded-xl border border-slate-300 hover:border-[#C5A059] text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#C5A059] transition-colors">
-                        Inquire For Residence
-                    </a>
-                </div>
-
-                <!-- Tier 2 -->
-                <div class="bg-white rounded-3xl p-8 border-2 border-[#C5A059] shadow-xl flex flex-col justify-between relative">
-                    <div class="absolute -top-3 right-8 gold-bg-gradient text-white text-[10px] uppercase font-bold tracking-widest px-4 py-1 rounded-full shadow">Featured</div>
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-[#C5A059] flex items-center justify-center text-[#C5A059] mb-6">
-                            <i class="fa-solid fa-building text-xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-serif font-semibold text-slate-900 mb-3">Executive Commercial</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6">Discreet after-hours janitorial and detailing care for corporate boardrooms, law firms, and private family offices.</p>
-                        <ul class="space-y-3 text-sm text-slate-600 mb-8">
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Boardroom & executive suite care</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Confidential document security protocols</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Glass partitioning & electronics dusting</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Customized night cleaning schedules</span></li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="block text-center py-3 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity shadow-md">
-                        Inquire For Office
-                    </a>
-                </div>
-
-                <!-- Tier 3 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200 hover:border-[#C5A059] transition-all duration-300 flex flex-col justify-between group relative shadow-sm hover:shadow-xl">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-[#C5A059]/30 flex items-center justify-center text-[#C5A059] mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-gem text-xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-serif font-semibold text-slate-900 mb-3">Concierge Deep Clean</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6">Ultra-thorough restoration cleaning, move-in/move-out prep, and pre-event or post-gala property transformations.</p>
-                        <ul class="space-y-3 text-sm text-slate-600 mb-8">
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Intensive crown molding & baseboard wash</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Interior cabinetry & pantry detailing</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Chandelier & light fixture cleaning</span></li>
-                            <li class="flex items-center space-x-3"><i class="fa-solid fa-check text-[#C5A059] text-xs"></i><span>Marble crystallization & floor care</span></li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="block text-center py-3 rounded-xl border border-slate-300 hover:border-[#C5A059] text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#C5A059] transition-colors">
-                        Inquire For Concierge
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="py-28 bg-white relative overflow-hidden border-t border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <span class="text-xs uppercase tracking-[0.3em] text-[#C5A059] font-semibold block mb-3">Uncompromising Integrity</span>
-                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-slate-900 mb-6 leading-tight">The Luxora Elite Standard of Privacy & Trust</h2>
-                    <p class="text-slate-600 text-base font-light leading-relaxed mb-6">
-                        We understand that inviting service professionals into your sanctuary requires absolute peace of mind. Every member of our cleaning corps undergoes rigorous background verification, bonded security checks, and elite hotel-tier housekeeping mentorship.
-                    </p>
-                    <p class="text-slate-600 text-base font-light leading-relaxed mb-8">
-                        Operating with strict non-disclosure agreements and tailored security clearance, our teams maintain complete discretion for high-profile clients, executives, and luxury estates throughout San Antonio.
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="flex items-start space-x-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                            <div class="w-10 h-10 rounded-xl bg-white border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059] shrink-0 shadow-sm">
-                                <i class="fa-solid fa-key text-sm"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-900 font-serif font-semibold mb-1 text-sm">Key-Holder Trust</h4>
-                                <p class="text-xs text-slate-500">Secure digital access log management.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                            <div class="w-10 h-10 rounded-xl bg-white border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059] shrink-0 shadow-sm">
-                                <i class="fa-solid fa-award text-sm"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-900 font-serif font-semibold mb-1 text-sm">Insured & Bonded</h4>
-                                <p class="text-xs text-slate-500">Up to $2M comprehensive liability.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-[#C5A059]/10 to-transparent rounded-3xl blur-2xl"></div>
-                    <div class="relative bg-slate-900 text-white border border-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl">
-                        <div class="space-y-6">
-                            <div class="flex items-center space-x-4 pb-6 border-b border-slate-800">
-                                <div class="w-14 h-14 rounded-full border border-[#C5A059] flex items-center justify-center bg-slate-800 text-[#C5A059] font-serif font-bold text-xl">LXE</div>
-                                <div>
-                                    <h4 class="text-white font-serif font-semibold text-lg">White-Glove Protocol</h4>
-                                    <p class="text-xs text-slate-400">Meticulous checklist execution</p>
-                                </div>
-                            </div>
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-slate-300">Surface Care & Polishing</span>
-                                    <span class="text-[#C5A059] font-semibold">100% Verified</span>
-                                </div>
-                                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                                    <div class="gold-bg-gradient h-full w-full"></div>
-                                </div>
-                            </div>
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-slate-300">Discretion & NDA Compliance</span>
-                                    <span class="text-[#C5A059] font-semibold">Absolute</span>
-                                </div>
-                                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                                    <div class="gold-bg-gradient h-full w-full"></div>
-                                </div>
-                            </div>
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-slate-300">Client Satisfaction Guarantee</span>
-                                    <span class="text-[#C5A059] font-semibold">5-Star Rated</span>
-                                </div>
-                                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                                    <div class="gold-bg-gradient h-full w-full"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="calculator" class="py-28 bg-slate-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-xs uppercase tracking-[0.3em] text-[#C5A059] font-semibold block mb-3">Interactive Estimator</span>
-                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mb-4">Calculate Your Estate Care Investment</h2>
-                <p class="text-slate-600 text-sm font-light">Select your property specifications to receive a customized preliminary rate estimate.</p>
-            </div>
-
-            <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl">
-                <div id="estimate-form" class="space-y-8">
-                    <!-- Service Tiers -->
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-[#C5A059] mb-3 font-semibold">1. Select Service Tier</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <label class="cursor-pointer border border-slate-200 rounded-2xl p-4 text-center hover:border-[#C5A059] transition-colors bg-slate-50 flex flex-col items-center justify-center">
-                                <input type="radio" name="tier" value="residential" checked class="hidden peer">
-                                <span class="text-sm font-semibold text-slate-900 peer-checked:text-[#C5A059]">Residential Estate</span>
-                                <span class="text-[11px] text-slate-500 mt-1">Recurring Care</span>
-                            </label>
-                            <label class="cursor-pointer border border-slate-200 rounded-2xl p-4 text-center hover:border-[#C5A059] transition-colors bg-slate-50 flex flex-col items-center justify-center">
-                                <input type="radio" name="tier" value="commercial" class="hidden peer">
-                                <span class="text-sm font-semibold text-slate-900 peer-checked:text-[#C5A059]">Executive Office</span>
-                                <span class="text-[11px] text-slate-500 mt-1">Commercial Clean</span>
-                            </label>
-                            <label class="cursor-pointer border border-slate-200 rounded-2xl p-4 text-center hover:border-[#C5A059] transition-colors bg-slate-50 flex flex-col items-center justify-center">
-                                <input type="radio" name="tier" value="concierge" class="hidden peer">
-                                <span class="text-sm font-semibold text-slate-900 peer-checked:text-[#C5A059]">Concierge Deep Clean</span>
-                                <span class="text-[11px] text-slate-500 mt-1">Restoration / Event</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Square Footage Range -->
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-[#C5A059] mb-3 font-semibold">2. Property Square Footage</label>
-                        <select id="sqft" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
-                            <option value="250">Under 3,000 sq. ft.</option>
-                            <option value="350" selected>3,000 - 5,000 sq. ft.</option>
-                            <option value="500">5,000 - 8,000 sq. ft.</option>
-                            <option value="750">8,000+ sq. ft. (Estate)</option>
-                        </select>
-                    </div>
-
-                    <!-- Frequency -->
-                    <div>
-                        <label class="block text-xs uppercase tracking-wider text-[#C5A059] mb-3 font-semibold">3. Service Frequency</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <label class="cursor-pointer border border-slate-200 rounded-2xl p-4 text-center hover:border-[#C5A059] transition-colors bg-slate-50">
-                                <input type="radio" name="frequency" value="weekly" checked class="hidden peer">
-                                <span class="text-sm font-semibold text-slate-900 peer-checked:text-[#C5A059] block">Weekly</span>
-                                <span class="text-[10px] text-[#C5A059] font-medium">20% Priority Discount</span>
-                            </label>
-                            <label class="cursor-pointer border border-slate-200 rounded-2xl p-4 text-center hover:border-[#C5A059] transition-colors bg-slate-50">
-                                <input type="radio" name="frequency" value="biweekly" class="hidden peer">
-                                <span class="text-sm font-semibold text-slate-900 peer-checked:text-[#C5A059] block">Bi-Weekly</span>
-                                <span class="text-[10px] text-[#C5A059] font-medium">15% Discount</span>
-                            </label>
-                            <label class="cursor-pointer border border-slate-200 rounded-2xl p-4 text-center hover:border-[#C5A059] transition-colors bg-slate-50">
-                                <input type="radio" name="frequency" value="monthly" class="hidden peer">
-                                <span class="text-sm font-semibold text-slate-900 peer-checked:text-[#C5A059] block">Monthly / One-Time</span>
-                                <span class="text-[10px] text-slate-500">Standard Rate</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Estimate Result Box -->
-                    <div class="p-6 rounded-2xl bg-slate-900 text-[#DFBF77] border border-[#C5A059]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div>
-                            <span class="text-xs uppercase tracking-wider text-slate-400 block mb-1">Estimated Investment Range</span>
-                            <div id="estimate-output" class="text-3xl font-serif font-bold text-white">$350 - $480 <span class="text-xs font-sans text-[#C5A059] font-normal">/ visit</span></div>
-                        </div>
-                        <a href="#contact" class="px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest gold-bg-gradient text-white hover:opacity-90 transition-opacity shadow-lg">
-                            Lock In Estimate
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-28 bg-white relative border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                <div>
-                    <span class="text-xs uppercase tracking-[0.3em] text-[#C5A059] font-semibold block mb-3">Private Concierge</span>
-                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-slate-900 mb-6">Begin Your Partnership</h2>
-                    <p class="text-slate-600 text-base font-light leading-relaxed mb-8">
-                        Contact our client care director to schedule an in-home walk-through consultation in San Antonio or surrounding exclusive communities.
-                    </p>
-
-                    <div class="space-y-6">
-                        <div class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#C5A059] shadow-sm">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-900 font-serif font-semibold">Service Region</h4>
-                                <p class="text-xs text-slate-500">San Antonio, Alamo Heights, Terrell Hills, Dominion, Fair Oaks Ranch</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#C5A059] shadow-sm">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-900 font-serif font-semibold">Private Line</h4>
-                                <p class="text-xs text-slate-500">(210) 555-LUXE (5893)</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#C5A059] shadow-sm">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-900 font-serif font-semibold">Direct Concierge</h4>
-                                <p class="text-xs text-slate-500">concierge@luxoraelitecleaning.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Card -->
-                <div class="bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl">
-                    <form action="https://formspree.io/f/xvkokkod" method="POST" class="space-y-6">
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Full Name</label>
-                            <input type="text" name="name" required placeholder="Lord/Lady or Mr./Ms. Surname" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Phone Number</label>
-                                <input type="tel" name="phone" required placeholder="(210) 000-0000" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
-                            </div>
-                            <div>
-                                <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Email Address</label>
-                                <input type="email" name="email" required placeholder="name@domain.com" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Property Location / Neighborhood</label>
-                            <input type="text" name="location" required placeholder="e.g., The Dominion, San Antonio, TX" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]">
-                        </div>
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-slate-600 mb-2 font-medium">Specific Requirements or Notes</label>
-                            <textarea name="message" rows="4" placeholder="Detail any fine marble, artwork, or scheduling preferences..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 text-sm focus:outline-none focus:border-[#C5A059]"></textarea>
-                        </div>
-                        <button type="submit" class="w-full py-4 rounded-full text-xs font-bold uppercase tracking-widest gold-bg-gradient text-white hover:opacity-90 transition-opacity shadow-xl shadow-[#C5A059]/20">
-                            Submit Consultation Request
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-slate-900 text-white border-t border-slate-800 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-full border border-[#C5A059] flex items-center justify-center bg-slate-800">
-                    <span class="text-[#C5A059] font-serif font-bold text-xs">LXE</span>
-                </div>
-                <div>
-                    <span class="font-serif tracking-widest text-sm font-bold text-white">LUXORA ELITE CLEANING SA</span>
-                </div>
-            </div>
-            <p class="text-xs text-slate-400">&copy; 2026 Luxora Elite Cleaning SA. All Rights Reserved. Discretion & Excellence.</p>
-            <div class="flex space-x-6 text-sm text-slate-400">
-                <a href="#" class="hover:text-[#C5A059] transition-colors"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="hover:text-[#C5A059] transition-colors"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="#" class="hover:text-[#C5A059] transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-        // Interactive Estimate Calculator Logic
-        const estimateForm = document.getElementById('estimate-form');
-        const sqftSelect = document.getElementById('sqft');
-        const outputDiv = document.getElementById('estimate-output');
-
-        function calculateEstimate() {
-            const tierInput = document.querySelector('input[name="tier"]:checked').value;
-            const freqInput = document.querySelector('input[name="frequency"]:checked').value;
-            const baseMultiplier = parseInt(sqftSelect.value);
-
-            let tierMultiplier = 1.0;
-            if (tierInput === 'commercial') tierMultiplier = 1.15;
-            if (tierInput === 'concierge') tierMultiplier = 1.4;
-
-            let discount = 1.0;
-            if (freqInput === 'weekly') discount = 0.80;
-            if (freqInput === 'biweekly') discount = 0.85;
-
-            const minVal = Math.round(baseMultiplier * tierMultiplier * discount);
-            const maxVal = Math.round(minVal * 1.35);
-
-            outputDiv.innerHTML = `$${minVal} - $${maxVal} <span class="text-xs font-sans text-[#C5A059] font-normal">/ visit</span>`;
-        }
-
-        estimateForm.addEventListener('change', calculateEstimate);
-        calculateEstimate();
-    </script>
-    <!-- Lock Screen Modal Overlay -->
-<div id="lockScreenModal" class="fixed inset-0 z-[9999] bg-[#0B0F17] flex flex-col justify-between items-center px-6 py-12 overflow-y-auto">
-  
-  <!-- Background Glowing Accents -->
-  <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
-
-  <!-- Header / Brand Logo -->
-  <header class="flex flex-col items-center gap-4 text-center z-10 mt-8">
-    <img src="Logo.png" alt="Luxora Elite Logo" class="h-20 w-auto object-contain drop-shadow-lg">
-    <div class="flex flex-col items-center">
-      <span class="text-3xl font-bold tracking-widest uppercase text-white leading-tight">
-        Luxora <span style="color: #C5A059;">Elite</span>
-      </span>
-      <span class="text-xs font-semibold tracking-[0.3em] text-white uppercase mt-1">
-        CLEANING SA
-      </span>
+      <div>
+        <a href="portal-login.html" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">
+          Book Service
+        </a>
+      </div>
     </div>
   </header>
 
-  <!-- Lock Screen Card -->
-  <main class="max-w-md w-full bg-slate-900/90 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl text-center space-y-6 z-10 my-auto">
-    <div class="space-y-3">
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 text-[#C5A059] shadow-inner">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      </div>
-      <span class="inline-block px-3 py-1 text-[10px] uppercase font-bold tracking-widest bg-[#C5A059]/10 text-[#C5A059] border border-[#C5A059]/30 rounded-full">
-        Private Access Only
+  <!-- Hero Section -->
+  <section class="relative py-24 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="space-y-6">
+      <span class="inline-block px-3 py-1 text-[10px] uppercase font-bold tracking-widest bg-[#C5A059]/10 gold-text border border-[#C5A059]/30 rounded-full">
+        San Antonio's Premier Cleaning Service
       </span>
-      <h1 class="text-2xl font-bold text-white tracking-wide">Coming Soon</h1>
-      <p class="text-xs text-slate-400 leading-relaxed">
-        Our digital portal and platform are currently undergoing exclusive updates. Please enter a valid password to access the site.
+      <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight">
+        White-Glove Elegance <br>For Your <span class="gold-text">Private Residence</span>
+      </h1>
+      <p class="text-sm text-slate-400 max-w-lg leading-relaxed">
+        Luxora Elite Cleaning SA delivers bespoke residential cleaning, routine estate management, and detailed deep cleans tailored exclusively to your standard of living.
       </p>
+      <div class="flex flex-col sm:flex-row gap-4 pt-4">
+        <a href="portal-login.html" class="px-8 py-3.5 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-lg text-center hover:opacity-90 transition-opacity">
+          Access Member Portal
+        </a>
+        <a href="#services" class="px-8 py-3.5 rounded-xl border border-slate-700 text-xs font-bold uppercase tracking-wider text-slate-300 text-center hover:border-[#C5A059] hover:text-[#C5A059] transition-colors">
+          Explore Services
+        </a>
+      </div>
     </div>
 
-    <!-- Password Input Form -->
-    <form id="lockForm" class="space-y-4 pt-2">
-      <input 
-        type="password" 
-        id="accessPassword" 
-        placeholder="Enter Passcode..." 
-        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#C5A059] transition-colors text-center font-mono tracking-widest"
-        required
-      >
-      <p id="errorMessage" class="text-[11px] text-rose-400 font-semibold hidden">
-        Incorrect passcode. Please try again.
-      </p>
-      <button 
-        type="submit" 
-        class="w-full py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-lg hover:opacity-90 transition-opacity"
-        style="background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%);"
-      >
-        Unlock Access
-      </button>
-    </form>
-
-    <!-- Passcode Hints -->
-    <div class="pt-4 border-t border-slate-800/80 text-[11px] text-slate-400 flex flex-col gap-1">
-      <span>Guest Passcode: <strong class="font-mono text-[#C5A059]">guest123</strong></span>
-      <span>Admin Passcode: <strong class="font-mono text-[#C5A059]">admin2026</strong></span>
+    <div class="relative flex justify-center items-center">
+      <div class="absolute w-80 h-80 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="bg-slate-900/80 border border-slate-800 p-8 rounded-3xl shadow-2xl relative z-10 space-y-6 max-w-md w-full">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+          <h3 class="text-sm font-bold uppercase tracking-wider gold-text">Executive Service Guarantee</h3>
+          <span class="text-[10px] text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 px-2 py-0.5 rounded">Verified Team</span>
+        </div>
+        <ul class="space-y-3 text-xs text-slate-300">
+          <li class="flex items-center gap-3">
+            <span class="gold-text font-bold">✓</span> Background-checked & bonded professionals
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="gold-text font-bold">✓</span> Eco-conscious luxury cleaning solutions
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="gold-text font-bold">✓</span> Flexible recurring portal scheduling
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="gold-text font-bold">✓</span> 100% Satisfaction or re-cleaning credit
+          </li>
+        </ul>
+      </div>
     </div>
-  </main>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 bg-slate-950 border-t border-slate-800/80 px-6">
+    <div class="max-w-7xl mx-auto space-y-12">
+      <div class="text-center space-y-3">
+        <h2 class="text-2xl md:text-3xl font-bold text-white tracking-wide uppercase">Bespoke Cleaning Solutions</h2>
+        <p class="text-xs text-slate-400 max-w-md mx-auto">Custom tailored care for luxury estates, executive homes, and modern residences.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-[#C5A059]/50 transition-colors">
+          <h3 class="text-lg font-bold text-white gold-text">Executive Maintenance</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Weekly or bi-weekly detailed cleaning maintaining pristine perfection across all primary living areas.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-[#C5A059]/50 transition-colors">
+          <h3 class="text-lg font-bold text-white gold-text">Deep Estate Restorative</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Top-to-bottom meticulous restoration including interior cabinetry, detailed trim work, and high-touch sanitize.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-[#C5A059]/50 transition-colors">
+          <h3 class="text-lg font-bold text-white gold-text">Move-In / Move-Out Elite</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Turnkey property preparation designed specifically for high-end luxury home real estate transitions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="text-center text-[11px] text-slate-500 z-10">
-    © 2026 Luxora Elite Cleaning SA. All rights reserved.
+  <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <span>© 2026 Luxora Elite Cleaning SA. All rights reserved.</span>
+      <div class="flex space-x-6">
+        <a href="portal-login.html" class="hover:text-slate-300">Client Portal</a>
+        <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+        <a href="#" class="hover:text-slate-300">Terms of Service</a>
+      </div>
+    </div>
   </footer>
-</div>
 
-<!-- Lock Screen Modal Overlay -->
-<div id="lockScreenModal" class="fixed inset-0 z-[9999] bg-[#0B0F17] flex flex-col justify-between items-center px-6 py-12 overflow-y-auto">
-  
-  <!-- Background Glowing Accents -->
-  <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
-
-  <!-- Header / Brand Logo -->
-  <header class="flex flex-col items-center gap-4 text-center z-10 mt-8">
-    <img src="Logo.png" alt="Luxora Elite Logo" class="h-20 w-auto object-contain drop-shadow-lg">
-    <div class="flex flex-col items-center">
-      <span class="text-3xl font-bold tracking-widest uppercase text-white leading-tight">
+  <!-- Lock Screen Modal Overlay -->
+  <div id="lockScreenModal" style="position: fixed; inset: 0; z-index: 999999; background-color: #0B0F17; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 3rem 1.5rem; overflow-y: auto; font-family: sans-serif;">
+    
+    <div style="text-align: center; margin-top: 2rem;">
+      <img src="Logo.png" alt="Luxora Elite Logo" style="height: 5rem; width: auto; margin: 0 auto;">
+      <h1 style="color: white; font-size: 1.5rem; font-weight: bold; margin-top: 1rem; text-transform: uppercase;">
         Luxora <span style="color: #C5A059;">Elite</span>
-      </span>
-      <span class="text-xs font-semibold tracking-[0.3em] text-white uppercase mt-1">
-        CLEANING SA
-      </span>
+      </h1>
+      <p style="color: #94A3B8; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;">CLEANING SA</p>
     </div>
-  </header>
 
-  <!-- Lock Screen Card -->
-  <main class="max-w-md w-full bg-slate-900/90 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl text-center space-y-6 z-10 my-auto">
-    <div class="space-y-3">
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 text-[#C5A059] shadow-inner">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      </div>
-      <span class="inline-block px-3 py-1 text-[10px] uppercase font-bold tracking-widest bg-[#C5A059]/10 text-[#C5A059] border border-[#C5A059]/30 rounded-full">
+    <div style="max-width: 28rem; width: 100%; background-color: #0F172A; border: 1px solid #1E293B; padding: 2rem; border-radius: 1.5rem; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+      <span style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.65rem; text-transform: uppercase; font-weight: bold; color: #C5A059; background-color: rgba(197, 160, 89, 0.1); border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 9999px; margin-bottom: 1rem;">
         Private Access Only
       </span>
-      <h1 class="text-2xl font-bold text-white tracking-wide">Coming Soon</h1>
-      <p class="text-xs text-slate-400 leading-relaxed">
-        Our digital portal and platform are currently undergoing exclusive updates. Please enter a valid password to access the site.
+      <h2 style="color: white; font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">Coming Soon</h2>
+      <p style="color: #94A3B8; font-size: 0.75rem; margin-bottom: 1.5rem; line-height: 1.5;">
+        Our site is currently undergoing updates. Enter a passcode to preview.
       </p>
+
+      <form id="lockForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <input 
+          type="password" 
+          id="accessPassword" 
+          placeholder="Enter Passcode..." 
+          style="width: 100%; background-color: #020617; border: 1px solid #1E293B; border-radius: 0.75rem; padding: 0.75rem 1rem; font-size: 0.875rem; color: #F8FAFC; text-align: center; outline: none;"
+          required
+        >
+        <p id="errorMessage" style="color: #FB7185; font-size: 0.75rem; display: none; margin: 0;">
+          Incorrect passcode. Please try again.
+        </p>
+        <button 
+          type="button" 
+          id="unlockBtn"
+          style="width: 100%; padding: 0.875rem; border-radius: 0.75rem; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: white; background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); border: none; cursor: pointer;"
+        >
+          Unlock Access
+        </button>
+      </form>
     </div>
 
-    <!-- Password Input Form -->
-    <form id="lockForm" class="space-y-4 pt-2">
-      <input 
-        type="password" 
-        id="accessPassword" 
-        placeholder="Enter Passcode..." 
-        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#C5A059] transition-colors text-center font-mono tracking-widest"
-        required
-      >
-      <p id="errorMessage" class="text-[11px] text-rose-400 font-semibold hidden">
-        Incorrect passcode. Please try again.
-      </p>
-      <button 
-        type="submit" 
-        class="w-full py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-lg hover:opacity-90 transition-opacity"
-        style="background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%);"
-      >
-        Unlock Access
-      </button>
-    </form>
-  </main>
+    <p style="color: #64748B; font-size: 0.75rem; margin: 0;">© 2026 Luxora Elite Cleaning SA</p>
+  </div>
 
-  <!-- Footer -->
-  <footer class="text-center text-[11px] text-slate-500 z-10">
-    © 2026 Luxora Elite Cleaning SA. All rights reserved.
-  </footer>
-</div>
+  <!-- Lock Screen Logic -->
+  <script>
+    (function() {
+      // 1. Check if unlocked in this browsing session
+      if (sessionStorage.getItem('luxora_unlocked') === 'true') {
+        var modal = document.getElementById('lockScreenModal');
+        if (modal) modal.remove();
+        return;
+      }
 
-<!-- Lock Screen Modal Overlay -->
-<div id="lockScreenModal" class="fixed inset-0 z-[9999] bg-[#0B0F17] flex flex-col justify-between items-center px-6 py-12 overflow-y-auto">
-  
-  <!-- Background Glowing Accents -->
-  <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
-
-  <!-- Header / Brand Logo -->
-  <header class="flex flex-col items-center gap-4 text-center z-10 mt-8">
-    <img src="Logo.png" alt="Luxora Elite Logo" class="h-20 w-auto object-contain drop-shadow-lg">
-    <div class="flex flex-col items-center">
-      <span class="text-3xl font-bold tracking-widest uppercase text-white leading-tight">
-        Luxora <span style="color: #C5A059;">Elite</span>
-      </span>
-      <span class="text-xs font-semibold tracking-[0.3em] text-white uppercase mt-1">
-        CLEANING SA
-      </span>
-    </div>
-  </header>
-
-  <!-- Lock Screen Card -->
-  <main class="max-w-md w-full bg-slate-900/90 backdrop-blur-md border border-slate-800 p-8 rounded-3xl shadow-2xl text-center space-y-6 z-10 my-auto">
-    <div class="space-y-3">
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 text-[#C5A059] shadow-inner">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      </div>
-      <span class="inline-block px-3 py-1 text-[10px] uppercase font-bold tracking-widest bg-[#C5A059]/10 text-[#C5A059] border border-[#C5A059]/30 rounded-full">
-        Private Access Only
-      </span>
-      <h1 class="text-2xl font-bold text-white tracking-wide">Coming Soon</h1>
-      <p class="text-xs text-slate-400 leading-relaxed">
-        Our digital portal and platform are currently undergoing exclusive updates. Please enter a valid password to access the site.
-      </p>
-    </div>
-
-    <!-- Password Input Form -->
-    <form id="lockForm" class="space-y-4 pt-2">
-      <input 
-        type="password" 
-        id="accessPassword" 
-        placeholder="Enter Passcode..." 
-        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#C5A059] transition-colors text-center font-mono tracking-widest"
-        required
-      >
-      <p id="errorMessage" class="text-[11px] text-rose-400 font-semibold hidden">
-        Incorrect passcode. Please try again.
-      </p>
-      <button 
-        type="submit" 
-        class="w-full py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-lg hover:opacity-90 transition-opacity"
-        style="background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%);"
-      >
-        Unlock Access
-      </button>
-    </form>
-  </main>
-
-  <!-- Footer -->
-  <footer class="text-center text-[11px] text-slate-500 z-10">
-    © 2026 Luxora Elite Cleaning SA. All rights reserved.
-  </footer>
-</div>
-
-<!-- Lock Screen Logic -->
-<script>
-  (function() {
-    const lockModal = document.getElementById('lockScreenModal');
-    const lockForm = document.getElementById('lockForm');
-    const passwordInput = document.getElementById('accessPassword');
-    const errorMessage = document.getElementById('errorMessage');
-
-    // Passcodes (All lowercase for accurate matching)
-    const VALID_PASSCODES = ['guest123', 'admin2026', 'luxora2026'];
-
-    // Check if previously unlocked
-    if (sessionStorage.getItem('luxora_unlocked') === 'true') {
-      if (lockModal) lockModal.style.display = 'none';
-      document.body.style.overflow = '';
-    } else {
+      // 2. Disable scrolling while locked
       document.body.style.overflow = 'hidden';
-    }
 
-    if (lockForm) {
-      lockForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const enteredPasscode = passwordInput.value.trim().toLowerCase();
+      function attemptUnlock() {
+        var input = document.getElementById('accessPassword');
+        var err = document.getElementById('errorMessage');
+        var modal = document.getElementById('lockScreenModal');
+        
+        if (!input) return;
+        
+        var val = input.value.trim().toLowerCase();
+        var validKeys = ['guest123', 'admin2026', 'luxora2026'];
 
-        if (VALID_PASSCODES.includes(enteredPasscode)) {
+        if (validKeys.indexOf(val) !== -1) {
           sessionStorage.setItem('luxora_unlocked', 'true');
-          lockModal.style.display = 'none';
           document.body.style.overflow = '';
+          if (modal) modal.remove();
         } else {
-          errorMessage.classList.remove('hidden');
-          passwordInput.value = '';
-          passwordInput.focus();
+          if (err) err.style.display = 'block';
+          input.value = '';
+          input.focus();
         }
-      });
-    }
-  })();
-</script>
+      }
+
+      // Attach button and keypress handlers when DOM is ready
+      function initLock() {
+        var btn = document.getElementById('unlockBtn');
+        var input = document.getElementById('accessPassword');
+        
+        if (btn) btn.addEventListener('click', attemptUnlock);
+        if (input) {
+          input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              attemptUnlock();
+            }
+          });
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLock);
+      } else {
+        initLock();
+      }
+    })();
+  </script>
+
 </body>
 </html>
