@@ -1,186 +1,165 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Portal | Luxora Elite Cleaning SA</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- EmailJS SDK Integration -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script type="text/javascript">
-    (function() {
-      // Your Active EmailJS Public Key
-      emailjs.init("0zMvCnJB9Jy4_IokL");
-    })();
-  </script>
-
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
-    .gold-text { color: #C5A059; }
-    .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Luxora Elite Cleaning SA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK Integration -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Your Active EmailJS Public Key
+            emailjs.init("0zMvCnJB9Jy4_IokL");
+        })();
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0B0F17;
+            color: #F8FAFC;
+        }
+        .gold-text {
+            color: #C5A059;
+        }
+        .gold-bg-gradient {
+            background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%);
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-6">
 
-  <!-- Header -->
-  <header class="max-w-7xl mx-auto w-full flex items-center justify-between py-4 border-b border-slate-800">
-    <a href="index.html" class="flex items-center gap-3">
-      <img src="Logo.png" alt="Luxora Elite Logo" class="h-10 w-auto object-contain">
-      <span class="text-lg font-bold tracking-widest uppercase text-white">
-        Luxora <span class="gold-text">Elite</span>
-      </span>
-    </a>
-    <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors">
-      ← Back to Home
-    </a>
-  </header>
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto w-full flex items-center justify-between py-4 border-b border-slate-800">
+        <a href="index.html" class="flex items-center gap-3">
+            <img src="Logo.png" alt="Luxora Elite Logo" class="h-10 w-auto object-contain">
+            <span class="text-lg font-bold tracking-widest uppercase text-white">
+                Luxora <span class="gold-text">Elite</span>
+            </span>
+        </a>
+        <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors">
+            ← Back to Home
+        </a>
+    </header>
 
-  <!-- Booking Container -->
-  <div class="max-w-lg mx-auto w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl my-10">
-    <div class="text-center mb-8">
-      <h1 class="text-2xl font-bold uppercase tracking-wider text-white">
-        Client <span class="gold-text">Portal</span>
-      </h1>
-      <p class="text-xs text-slate-400 mt-1">Submit your private cleaning service request below</p>
+    <!-- Booking Container -->
+    <div class="max-w-lg mx-auto w-full bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl my-10">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold uppercase tracking-wider text-white">
+                Sign In
+            </h1>
+            <p class="text-xs gold-text font-medium tracking-wide uppercase mt-1">
+                Luxora Elite Cleaning SA
+            </p>
+            <p class="text-xs text-slate-400 mt-2">Submit your private cleaning service request below</p>
+        </div>
+
+        <!-- Booking Form -->
+        <form id="luxoraBookingForm" class="space-y-4">
+            <!-- Full Name -->
+            <div>
+                <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Full Name</label>
+                <input type="text" name="user_name" placeholder="Jane Doe" required 
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]">
+            </div>
+
+            <!-- Email Address -->
+            <div>
+                <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Email Address</label>
+                <input type="email" name="user_email" placeholder="jane@example.com" required 
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]">
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+                <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Phone Number</label>
+                <input type="tel" name="user_phone" placeholder="(210) 555-0199" required 
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]">
+            </div>
+
+            <!-- Service Requested -->
+            <div>
+                <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Service Type</label>
+                <select name="service_type" required 
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]">
+                    <option value="Executive Maintenance Cleaning">Executive Maintenance Cleaning</option>
+                    <option value="Deep Estate Restorative Cleaning">Deep Estate Restorative Cleaning</option>
+                    <option value="Move-In / Move-Out Elite">Move-In / Move-Out Elite</option>
+                </select>
+            </div>
+
+            <!-- Notes / Address -->
+            <div>
+                <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Property Address & Details</label>
+                <textarea name="message" rows="3" placeholder="Service address, preferred dates, gate codes, or special instructions..." required 
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn" 
+                class="w-full py-3.5 gold-bg-gradient text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-lg hover:opacity-90 transition-opacity mt-4 cursor-pointer">
+                Submit Booking Request
+            </button>
+
+            <!-- Feedback Status Message -->
+            <div id="formResult" class="text-center text-xs mt-3 hidden"></div>
+        </form>
     </div>
 
-    <!-- Booking Form -->
-    <form id="luxoraBookingForm" class="space-y-4">
-      
-      <!-- Full Name -->
-      <div>
-        <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Full Name</label>
-        <input 
-          type="text" 
-          name="user_name" 
-          placeholder="Jane Doe" 
-          required 
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
-        >
-      </div>
+    <!-- Footer -->
+    <footer class="text-center text-xs text-slate-600 py-4">
+        © 2026 Luxora Elite Cleaning SA. All rights reserved.
+    </footer>
 
-      <!-- Email Address -->
-      <div>
-        <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Email Address</label>
-        <input 
-          type="email" 
-          name="user_email" 
-          placeholder="jane@example.com" 
-          required 
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
-        >
-      </div>
+    <!-- Script Handler -->
+    <script>
+        const serviceID = 'service_oklex4t';
 
-      <!-- Phone Number -->
-      <div>
-        <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Phone Number</label>
-        <input 
-          type="tel" 
-          name="user_phone" 
-          placeholder="(210) 555-0199" 
-          required 
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
-        >
-      </div>
+        // 1. Submit New & Confirmed Booking Request (Template 1)
+        document.getElementById('luxoraBookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const result = document.getElementById('formResult');
+            const btn = document.getElementById('submitBtn');
+            
+            result.classList.remove('hidden');
+            result.className = 'text-center text-xs mt-3 text-slate-400';
+            result.innerHTML = "Sending booking request...";
+            btn.disabled = true;
 
-      <!-- Service Requested -->
-      <div>
-        <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Service Type</label>
-        <select 
-          name="service_type" 
-          required 
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
-        >
-          <option value="Executive Maintenance Cleaning">Executive Maintenance Cleaning</option>
-          <option value="Deep Estate Restorative Cleaning">Deep Estate Restorative Cleaning</option>
-          <option value="Move-In / Move-Out Elite">Move-In / Move-Out Elite</option>
-        </select>
-      </div>
+            // Template 1 ID: Dual-sent to Admin & Client
+            const bookingTemplateID = 'template_hegta2c';
 
-      <!-- Notes / Address -->
-      <div>
-        <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Property Address & Details</label>
-        <textarea 
-          name="message" 
-          rows="3" 
-          placeholder="Service address, preferred dates, gate codes, or special instructions..." 
-          required
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C5A059]"
-        ></textarea>
-      </div>
-
-      <!-- Submit Button -->
-      <button 
-        type="submit" 
-        id="submitBtn"
-        class="w-full py-3.5 gold-bg-gradient text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-lg hover:opacity-90 transition-opacity mt-4 cursor-pointer"
-      >
-        Submit Booking Request
-      </button>
-
-      <!-- Feedback Status Message -->
-      <div id="formResult" class="text-center text-xs mt-3 hidden"></div>
-    </form>
-  </div>
-
-  <!-- Footer -->
-  <footer class="text-center text-xs text-slate-600 py-4">
-    © 2026 Luxora Elite Cleaning SA. All rights reserved.
-  </footer>
-
-  <!-- Script Handler -->
-  <script>
-    const serviceID = 'service_oklex4t';
-
-    // 1. Submit New & Confirmed Booking Request (Template 1)
-    document.getElementById('luxoraBookingForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const result = document.getElementById('formResult');
-      const btn = document.getElementById('submitBtn');
-
-      result.classList.remove('hidden');
-      result.className = 'text-center text-xs mt-3 text-slate-400';
-      result.innerHTML = "Sending booking request...";
-      btn.disabled = true;
-
-      // Template 1 ID: Dual-sent to Admin & Client
-      const bookingTemplateID = 'template_hegta2c';
-
-      emailjs.sendForm(serviceID, bookingTemplateID, this)
-        .then(() => {
-          result.className = 'text-center text-xs mt-3 text-emerald-400 font-bold';
-          result.innerHTML = "Booking request submitted! Check your inbox for confirmation.";
-          document.getElementById('luxoraBookingForm').reset();
-          btn.disabled = false;
-        }, (error) => {
-          result.className = 'text-center text-xs mt-3 text-rose-400 font-bold';
-          result.innerHTML = "Failed to send request. Error: " + (error.text || JSON.stringify(error));
-          btn.disabled = false;
+            emailjs.sendForm(serviceID, bookingTemplateID, this)
+                .then(() => {
+                    result.className = 'text-center text-xs mt-3 text-emerald-400 font-bold';
+                    result.innerHTML = "Booking request submitted! Check your inbox for confirmation.";
+                    document.getElementById('luxoraBookingForm').reset();
+                    btn.disabled = false;
+                }, (error) => {
+                    result.className = 'text-center text-xs mt-3 text-rose-400 font-bold';
+                    result.innerHTML = "Failed to send request. Error: " + (error.text || JSON.stringify(error));
+                    btn.disabled = false;
+                });
         });
-    });
 
-    // 2. Trigger Cancellation Notice (Template 2)
-    function sendCancellationNotice(clientName, clientEmail, serviceType) {
-      const templateParams = {
-        user_name: clientName,
-        user_email: clientEmail,
-        service_type: serviceType
-      };
+        // 2. Trigger Cancellation Notice (Template 2)
+        function sendCancellationNotice(clientName, clientEmail, serviceType) {
+            const templateParams = {
+                user_name: clientName,
+                user_email: clientEmail,
+                service_type: serviceType
+            };
 
-      // Replace 'template_cancelled' with your actual 2nd Template ID from EmailJS
-      const cancellationTemplateID = 'template_cancelled';
+            const cancellationTemplateID = 'template_cancelled';
 
-      emailjs.send(serviceID, cancellationTemplateID, templateParams)
-        .then(() => {
-          alert('Cancellation notice sent to ' + clientEmail);
-        }, (error) => {
-          alert('Failed to send cancellation notice: ' + (error.text || JSON.stringify(error)));
-        });
-    }
-  </script>
-
+            emailjs.send(serviceID, cancellationTemplateID, templateParams)
+                .then(() => {
+                    alert('Cancellation notice sent to ' + clientEmail);
+                }, (error) => {
+                    alert('Failed to send cancellation notice: ' + (error.text || JSON.stringify(error)));
+                });
+        }
+    </script>
 </body>
 </html>
