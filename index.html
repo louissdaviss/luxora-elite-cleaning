@@ -1,238 +1,321 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luxora Elite Cleaning SA | Premium House & Estate Cleaning San Antonio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F17; color: #F8FAFC; }
-    .gold-text { color: #C5A059; }
-    .gold-bg-gradient { background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); }
-    .gold-border { border-color: #C5A059; }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col justify-between">
-
-  <!-- Header Navigation -->
-  <header class="border-b border-slate-800 bg-[#0B0F17]/90 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3 group">
-        <img src="Logo.png" alt="Luxora Elite Logo" class="h-12 w-auto object-contain">
-        <div class="flex flex-col">
-          <span class="text-xl font-bold tracking-widest uppercase text-white leading-tight">
-            Luxora <span class="gold-text">Elite</span>
-          </span>
-          <span class="text-[10px] font-semibold tracking-[0.25em] text-white uppercase mt-0.5">
-            CLEANING SA
-          </span>
-        </div>
-      </a>
-
-      <nav class="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider text-slate-300">
-        <a href="#services" class="hover:text-[#C5A059] transition-colors">Services</a>
-        <a href="#about" class="hover:text-[#C5A059] transition-colors">About Us</a>
-        <a href="#memberships" class="hover:text-[#C5A059] transition-colors">Memberships</a>
-        <a href="portal-login.html" class="gold-text hover:underline font-semibold">Client Portal</a>
-      </nav>
-
-      <div>
-        <a href="portal-login.html" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-md hover:opacity-90 transition-opacity">
-          Book Service
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="relative py-24 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-    <div class="space-y-6">
-      <span class="inline-block px-3 py-1 text-[10px] uppercase font-bold tracking-widest bg-[#C5A059]/10 gold-text border border-[#C5A059]/30 rounded-full">
-        San Antonio's Premier Cleaning Service
-      </span>
-      <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight">
-        White-Glove Elegance <br>For Your <span class="gold-text">Private Residence</span>
-      </h1>
-      <p class="text-sm text-slate-400 max-w-lg leading-relaxed">
-        Luxora Elite Cleaning SA delivers bespoke residential cleaning, routine estate management, and detailed deep cleans tailored exclusively to your standard of living.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 pt-4">
-        <a href="portal-login.html" class="px-8 py-3.5 rounded-xl gold-bg-gradient text-xs font-bold uppercase tracking-wider text-white shadow-lg text-center hover:opacity-90 transition-opacity">
-          Access Member Portal
-        </a>
-        <a href="#services" class="px-8 py-3.5 rounded-xl border border-slate-700 text-xs font-bold uppercase tracking-wider text-slate-300 text-center hover:border-[#C5A059] hover:text-[#C5A059] transition-colors">
-          Explore Services
-        </a>
-      </div>
-    </div>
-
-    <div class="relative flex justify-center items-center">
-      <div class="absolute w-80 h-80 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="bg-slate-900/80 border border-slate-800 p-8 rounded-3xl shadow-2xl relative z-10 space-y-6 max-w-md w-full">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-          <h3 class="text-sm font-bold uppercase tracking-wider gold-text">Executive Service Guarantee</h3>
-          <span class="text-[10px] text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 px-2 py-0.5 rounded">Verified Team</span>
-        </div>
-        <ul class="space-y-3 text-xs text-slate-300">
-          <li class="flex items-center gap-3">
-            <span class="gold-text font-bold">✓</span> Background-checked & bonded professionals
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="gold-text font-bold">✓</span> Eco-conscious luxury cleaning solutions
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="gold-text font-bold">✓</span> Flexible recurring portal scheduling
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="gold-text font-bold">✓</span> 100% Satisfaction or re-cleaning credit
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section id="services" class="py-20 bg-slate-950 border-t border-slate-800/80 px-6">
-    <div class="max-w-7xl mx-auto space-y-12">
-      <div class="text-center space-y-3">
-        <h2 class="text-2xl md:text-3xl font-bold text-white tracking-wide uppercase">Bespoke Cleaning Solutions</h2>
-        <p class="text-xs text-slate-400 max-w-md mx-auto">Custom tailored care for luxury estates, executive homes, and modern residences.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-[#C5A059]/50 transition-colors">
-          <h3 class="text-lg font-bold text-white gold-text">Executive Maintenance</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Weekly or bi-weekly detailed cleaning maintaining pristine perfection across all primary living areas.</p>
-        </div>
-        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-[#C5A059]/50 transition-colors">
-          <h3 class="text-lg font-bold text-white gold-text">Deep Estate Restorative</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Top-to-bottom meticulous restoration including interior cabinetry, detailed trim work, and high-touch sanitize.</p>
-        </div>
-        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-[#C5A059]/50 transition-colors">
-          <h3 class="text-lg font-bold text-white gold-text">Move-In / Move-Out Elite</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Turnkey property preparation designed specifically for high-end luxury home real estate transitions.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <span>© 2026 Luxora Elite Cleaning SA. All rights reserved.</span>
-      <div class="flex space-x-6">
-        <a href="portal-login.html" class="hover:text-slate-300">Client Portal</a>
-        <a href="#" class="hover:text-slate-300">Privacy Policy</a>
-        <a href="#" class="hover:text-slate-300">Terms of Service</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Lock Screen Modal Overlay -->
-  <div id="lockScreenModal" style="position: fixed; inset: 0; z-index: 999999; background-color: #0B0F17; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 3rem 1.5rem; overflow-y: auto; font-family: sans-serif;">
-    
-    <div style="text-align: center; margin-top: 2rem;">
-      <img src="Logo.png" alt="Luxora Elite Logo" style="height: 5rem; width: auto; margin: 0 auto;">
-      <h1 style="color: white; font-size: 1.5rem; font-weight: bold; margin-top: 1rem; text-transform: uppercase;">
-        Luxora <span style="color: #C5A059;">Elite</span>
-      </h1>
-      <p style="color: #94A3B8; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;">CLEANING SA</p>
-    </div>
-
-    <div style="max-width: 28rem; width: 100%; background-color: #0F172A; border: 1px solid #1E293B; padding: 2rem; border-radius: 1.5rem; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
-      <span style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.65rem; text-transform: uppercase; font-weight: bold; color: #C5A059; background-color: rgba(197, 160, 89, 0.1); border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 9999px; margin-bottom: 1rem;">
-        Private Access Only
-      </span>
-      <h2 style="color: white; font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">Coming Soon</h2>
-      <p style="color: #94A3B8; font-size: 0.75rem; margin-bottom: 1.5rem; line-height: 1.5;">
-        Our site is currently undergoing updates. Enter a passcode to preview.
-      </p>
-
-      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <input 
-          type="password" 
-          id="accessPassword" 
-          placeholder="Enter Passcode..." 
-          style="width: 100%; background-color: #020617; border: 1px solid #1E293B; border-radius: 0.75rem; padding: 0.75rem 1rem; font-size: 0.875rem; color: #F8FAFC; text-align: center; outline: none;"
-          required
-        >
-        <p id="errorMessage" style="color: #FB7185; font-size: 0.75rem; display: none; margin: 0;">
-          Incorrect passcode. Please try again.
-        </p>
-        <button 
-          type="button" 
-          id="unlockBtn"
-          style="width: 100%; padding: 0.875rem; border-radius: 0.75rem; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: white; background: linear-gradient(135deg, #DFBF77 0%, #C5A059 100%); border: none; cursor: pointer;"
-        >
-          Unlock Access
-        </button>
-      </div>
-    </div>
-
-    <p style="color: #64748B; font-size: 0.75rem; margin: 0;">© 2026 Luxora Elite Cleaning SA</p>
-  </div>
-
-  <!-- Lock Screen Logic -->
-  <script>
-    (function() {
-      function checkUnlock() {
-        if (sessionStorage.getItem('luxora_unlocked') === 'true') {
-          var modal = document.getElementById('lockScreenModal');
-          if (modal) modal.style.display = 'none';
-          document.body.style.overflow = '';
-          return true;
-        }
-        return false;
-      }
-
-      if (checkUnlock()) return;
-
-      document.body.style.overflow = 'hidden';
-
-      function doUnlock() {
-        var input = document.getElementById('accessPassword');
-        var err = document.getElementById('errorMessage');
-        var modal = document.getElementById('lockScreenModal');
-        
-        if (!input) return;
-        
-        var val = input.value.trim().toLowerCase();
-        var validKeys = ['guest123', 'admin2026', 'luxora2026'];
-
-        if (validKeys.indexOf(val) !== -1) {
-          sessionStorage.setItem('luxora_unlocked', 'true');
-          document.body.style.overflow = '';
-          if (modal) modal.style.display = 'none';
-        } else {
-          if (err) err.style.display = 'block';
-          input.value = '';
-          input.focus();
-        }
-      }
-
-      function bindEvents() {
-        var btn = document.getElementById('unlockBtn');
-        var input = document.getElementById('accessPassword');
-        
-        if (btn) btn.onclick = doUnlock;
-        if (input) {
-          input.onkeydown = function(e) {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              doUnlock();
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <title>Luxora Elite Cleaning | Luxury Property Care & Maid Service</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0F172A',
+                            800: '#1E293B',
+                            700: '#334155',
+                        },
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#E6CA65',
+                            dark: '#AA8C2C',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
             }
-          };
         }
-      }
+    </script>
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #F3E7C4 0%, #D4AF37 50%, #AA8C2C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-bg-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #AA8C2C 100%);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-slate-100 antialiased selection:bg-gold selection:text-dark-900">
 
-      if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        bindEvents();
-      } else {
-        document.addEventListener('DOMContentLoaded', bindEvents);
-      }
-    })();
-  </script>
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-dark-900/90 backdrop-blur-md border-b border-dark-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center bg-dark-800">
+                    <span class="text-gold font-serif font-bold text-sm">LE</span>
+                </div>
+                <div>
+                    <span class="font-serif tracking-widest text-sm font-bold text-white block">LUXORA ELITE</span>
+                    <span class="text-[9px] uppercase tracking-[0.25em] text-gold block">Cleaning Services</span>
+                </div>
+            </a>
 
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#home" class="text-slate-300 hover:text-gold transition-colors">Home</a>
+                <a href="#services" class="text-slate-300 hover:text-gold transition-colors">Services</a>
+                <a href="#about" class="text-slate-300 hover:text-gold transition-colors">About</a>
+                <a href="#calculator" class="text-slate-300 hover:text-gold transition-colors">Calculator</a>
+                <a href="#contact" class="text-slate-300 hover:text-gold transition-colors">Contact</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#contact" class="px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-widest gold-bg-gradient text-dark-900 hover:opacity-90 transition-opacity shadow-lg shadow-gold/10">
+                    Book Consultation
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-gold focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-b border-dark-700 px-6 py-6 space-y-4">
+            <a href="#home" class="block text-slate-300 hover:text-gold text-sm tracking-wider uppercase">Home</a>
+            <a href="#services" class="block text-slate-300 hover:text-gold text-sm tracking-wider uppercase">Services</a>
+            <a href="#about" class="block text-slate-300 hover:text-gold text-sm tracking-wider uppercase">About</a>
+            <a href="#calculator" class="block text-slate-300 hover:text-gold text-sm tracking-wider uppercase">Calculator</a>
+            <a href="#contact" class="block text-slate-300 hover:text-gold text-sm tracking-wider uppercase">Contact</a>
+            <div class="pt-4">
+                <a href="#contact" class="block w-full text-center py-3 rounded-full text-xs font-semibold uppercase tracking-widest gold-bg-gradient text-dark-900">
+                    Book Consultation
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-20">
+            <img src="https://placehold.co/1920x1080/0F172A/334155?text=Luxury+Interior" alt="Luxury Interior" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/60 via-dark-900/80 to-dark-900 z-0"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center relative z-10">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-gold/30 bg-dark-800/80 backdrop-blur mb-6">
+                <i class="fa-solid fa-gem text-gold text-xs"></i>
+                <span class="text-xs uppercase tracking-[0.2em] text-gold font-medium">San Antonio's Premier Cleaning Service</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight mb-6">
+                The Pinnacle of <span class="gold-gradient">Immaculate Living</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                Bespoke residential and commercial cleaning tailored to elite standards. Experience unparalleled attention to detail and pristine environments.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest gold-bg-gradient text-dark-900 hover:scale-105 transition-transform shadow-xl shadow-gold/20">
+                    Explore Our Tiers
+                </a>
+                <a href="#calculator" class="w-full sm:w-auto px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-700 hover:border-gold text-slate-300 transition-colors bg-dark-800/50">
+                    Calculate Estimate
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-28 bg-dark-800/50 relative border-t border-dark-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold block mb-3">Service Portfolio</span>
+                <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mb-6">Transparent, Tailored Pricing</h2>
+                <p class="text-slate-400 text-base font-light">Experience uncompromising property care with service tiers crafted to match your exact lifestyle demands.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Service Tier 1 -->
+                <div class="bg-dark-800 rounded-2xl p-8 border border-dark-700 hover:border-gold transition-all flex flex-col justify-between shadow-lg">
+                    <div>
+                        <div class="flex justify-between items-baseline mb-6">
+                            <h3 class="text-xl font-serif font-bold text-white">Elite Maintenance Clean</h3>
+                            <span class="text-2xl font-bold text-gold">$120</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6">Regular upkeep and detail cleaning designed for residences already maintained to high standards.</p>
+                        <ul class="space-y-3 mb-8 text-sm text-slate-300">
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Surface dusting & polishing</li>
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Kitchen exterior & sanitization</li>
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Bathroom deep sanitize</li>
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Floor care (vacuum & mop)</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="block w-full text-center py-3 px-6 rounded-xl border border-slate-700 text-slate-300 font-medium hover:border-gold hover:text-gold transition-colors">Select Package</a>
+                </div>
+
+                <!-- Service Tier 2 -->
+                <div class="bg-dark-800 rounded-2xl p-8 border-2 border-gold shadow-xl relative flex flex-col justify-between">
+                    <div class="absolute -top-4 right-8 bg-gold text-dark-900 text-[10px] tracking-widest uppercase font-bold px-3 py-1 rounded-full">Most Popular</div>
+                    <div>
+                        <div class="flex justify-between items-baseline mb-6">
+                            <h3 class="text-xl font-serif font-bold text-white">Signature Deep Property Care</h3>
+                            <span class="text-2xl font-bold text-gold">$250</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6">Comprehensive top-to-bottom restoration ideal for initial detailing or seasonal refreshes.</p>
+                        <ul class="space-y-3 mb-8 text-sm text-slate-300">
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Everything in Maintenance Clean</li>
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Baseboards & door frame detailing</li>
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Interior window sills & glass spot-clean</li>
+                            <li class="flex items-center"><i class="fas fa-check text-gold mr-3"></i> Appliance exterior deep polish</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="block w-full text-center py-3 px-6 rounded-xl gold-bg-gradient text-dark-900 font-bold hover:opacity-90 transition-opacity">Select Package</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-28 bg-dark-900 relative border-t border-dark-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold block mb-3">Our Standards</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mb-6 leading-tight">Uncompromising Quality & Trust</h2>
+                    <p class="text-slate-400 text-base font-light leading-relaxed mb-6">
+                        Every professional on our team is thoroughly vetted, insured, and trained in high-end hospitality cleaning methods. We respect your private sanctuary with absolute discretion.
+                    </p>
+                    <p class="text-slate-400 text-base font-light leading-relaxed">
+                        Serving San Antonio and surrounding elite communities with bespoke packages customized to fit your schedule.
+                    </p>
+                </div>
+                <div class="bg-dark-800 p-8 sm:p-12 rounded-3xl border border-dark-700">
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-dark-700 flex items-center justify-center text-gold">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-serif font-semibold">100% Bonded & Insured</h4>
+                                <p class="text-xs text-slate-400">Total peace of mind for your estate</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-dark-700 flex items-center justify-center text-gold">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-serif font-semibold">Eco-Luxe Formulations</h4>
+                                <p class="text-xs text-slate-400">Safe for fine stone, wood, and family</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="py-28 bg-dark-800/50 border-t border-dark-700/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold block mb-3">Interactive Estimator</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">Calculate Your Estimate</h2>
+                <p class="text-slate-400 text-sm font-light">Select your property specifications for a preliminary quote.</p>
+            </div>
+
+            <div class="bg-dark-800 rounded-3xl p-8 sm:p-12 border border-dark-700 shadow-2xl">
+                <div id="estimate-form" class="space-y-8">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gold mb-3 font-semibold">1. Property Square Footage</label>
+                        <select id="sqft" class="w-full bg-dark-900 border border-dark-700 rounded-2xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-gold">
+                            <option value="250">Under 3,000 sq. ft.</option>
+                            <option value="350" selected>3,000 - 5,000 sq. ft.</option>
+                            <option value="500">5,000 - 8,000 sq. ft.</option>
+                            <option value="750">8,000+ sq. ft. (Estate)</option>
+                        </select>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-dark-900 border border-gold/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-slate-400 block mb-1">Estimated Investment Range</span>
+                            <div id="estimate-output" class="text-3xl font-serif font-bold text-white">$350 - $480 <span class="text-xs font-sans text-gold font-normal">/ visit</span></div>
+                        </div>
+                        <a href="#contact" class="px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest gold-bg-gradient text-dark-900 font-bold hover:opacity-95 shadow-lg">
+                            Lock In Estimate
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-28 bg-dark-900 border-t border-dark-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.3em] text-gold font-semibold block mb-3">Get in Touch</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mb-6">Schedule a Consultation</h2>
+                    <p class="text-slate-400 text-base font-light leading-relaxed mb-8">
+                        Contact our team to discuss your property needs in San Antonio and surrounding communities.
+                    </p>
+                    <div class="space-y-4 text-sm text-slate-300">
+                        <div class="flex items-center space-x-3"><i class="fa-solid fa-phone text-gold"></i><span>(210) 555-LUXE</span></div>
+                        <div class="flex items-center space-x-3"><i class="fa-solid fa-envelope text-gold"></i><span>concierge@luxoraelitecleaning.com</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-800 rounded-3xl p-8 sm:p-12 border border-dark-700 shadow-2xl">
+                    <form action="https://formspree.io/f/xvkokkod" method="POST" class="space-y-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-medium">Full Name</label>
+                            <input type="text" name="name" required placeholder="Your Name" class="w-full bg-dark-900 border border-dark-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-medium">Email Address</label>
+                            <input type="email" name="email" required placeholder="name@domain.com" class="w-full bg-dark-900 border border-dark-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-medium">Message</label>
+                            <textarea name="message" rows="4" placeholder="How can we assist you?" class="w-full bg-dark-900 border border-dark-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-gold"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 rounded-full text-xs font-bold uppercase tracking-widest gold-bg-gradient text-dark-900 hover:opacity-90 transition-opacity shadow-lg">
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark-900 text-slate-400 border-t border-dark-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
+            <div class="flex items-center space-x-3">
+                <span class="font-serif tracking-widest text-sm font-bold text-white">LUXORA ELITE CLEANING</span>
+            </div>
+            <p>&copy; 2026 Luxora Elite Cleaning. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        const sqftSelect = document.getElementById('sqft');
+        const outputDiv = document.getElementById('estimate-output');
+        sqftSelect.addEventListener('change', () => {
+            const base = parseInt(sqftSelect.value);
+            const min = Math.round(base * 1.2);
+            const max = Math.round(min * 1.35);
+            outputDiv.innerHTML = `$${min} - $${max} <span class="text-xs font-sans text-gold font-normal">/ visit</span>`;
+        });
+    </script>
 </body>
 </html>
